@@ -11,6 +11,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 ## Integrantes
 
 * Amanda Eufrasio Cacholi
+
 * Anderson Marques Rosa
 * Luiz Fernando Ribeiro Ferreira
 * Marcus Vinicius Marinho Ferreira
