@@ -11,7 +11,6 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 ## Integrantes
 
 * Amanda Eufrasio Cacholi
-
 * Anderson Marques Rosa
 * Luiz Fernando Ribeiro Ferreira
 * Marcus Vinicius Marinho Ferreira
@@ -20,7 +19,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 ## Orientador
 
-* Nome completo do professor 1
+* Soraia Lúcia da Silva
 
 ## Instruções de utilização
 
