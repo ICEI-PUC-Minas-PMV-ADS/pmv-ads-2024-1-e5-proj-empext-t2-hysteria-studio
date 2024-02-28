@@ -10,10 +10,12 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Amanda Eufrasio Cacholi
+* Anderson Marques Rosa
+* Luiz Fernando Ribeiro Ferreira
+* Marcus Vinicius Marinho Ferreira
+* Patrick Douglas dos Santos
+* Stephanie Ingrid de Oliveira Pinto
 
 ## Orientador
 
