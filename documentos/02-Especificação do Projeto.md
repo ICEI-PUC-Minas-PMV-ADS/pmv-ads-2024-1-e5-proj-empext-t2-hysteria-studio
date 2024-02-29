@@ -6,19 +6,12 @@
 
 | ID     | Descrição do Requisito                                                             | Prioridade |
 | ------ | ---------------------------------------------------------------------------------- | ---------- |
-| RF-001 | CRUD de horarios                                                                   | MÉDIA      |
-| RF-002 | CRUD de dias.                                                                      | MÉDIA      |
-| RF-003 | CRUD de serviços.                                                                  | MÉDIA      |
-| RF-004 | CRUD de historico.                                                                 | MÉDIA      |
-| RF-005 | CRUD de faturamento.                                                               | MÉDIA      |
-| RF-006 | CRUD de usarios.                                                                   | MÉDIA      |
-| RF-007 | CRUD de agenda.                                                                    | MÉDIA      |
-| RF-008 | CRUD de avaliação.                                                                 | MÉDIA      |
-| RF-009 | Disponibilizar filtros de pesquisa serviço.                                        | ALTA       |
-| RF-010 | Disponibilizar filtro	de historico.                                               | ALTA       |
-| RF-011 | Dispoonibilizar filtro de busca por usuario.                                       | ALTA       |
-| RF-012 | Dispoonibilizar avaliação.                                                         | ALTA       |
-| RF-013 | Dispoonibilizar alterar perfil do usuario.                                         | ALTA       |
+| RF-001 | CRUD de serviços.                                                                  | MÉDIA      |
+| RF-002 | CRUD de usuários.                                                                  | MÉDIA      |
+| RF-003 | CRUD de agenda.                                                                    | MÉDIA      |
+| RF-004 | Listagem de histórico.                                                             | MÉDIA      |
+| RF-005 | Busca por usuário na listagem de histórico.                                        | MÉDIA      |
+| RF-006 | Filtro por data na listagem de histórico.                                          | MÉDIA      |
 
 ### Requisitos não Funcionais
 
@@ -30,7 +23,6 @@
 | RNF-004 | A interface para o usuário será intuitiva e de facíl entendimento para o usuário.       | ALTA       |
 | RNF-005 | O sistema deve funcionar em todos os navegadores de uso geral.                          | MÉDIA      |
 | RNF-006 | O serviço estará disponivel em servidor para a utilização geral.                        | MÉDIA      |
-| RNF-006 | envio de confirmação para agendamento.                                                  | BAIXA      |
 
 ## Restrições
 
