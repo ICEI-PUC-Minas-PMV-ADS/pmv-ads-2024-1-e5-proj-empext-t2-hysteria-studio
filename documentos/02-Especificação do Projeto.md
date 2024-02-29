@@ -12,6 +12,8 @@
 | RF-004 | Listagem de histórico.                                                             | MÉDIA      |
 | RF-005 | Busca por usuário na listagem de histórico.                                        | MÉDIA      |
 | RF-006 | Filtro por data na listagem de histórico.                                          | MÉDIA      |
+| RF-007 | O sistema deve fornecer login para admin, para acesso a funcionalidades exclusivas.| MÉDIA      |
+| RF-008 | O sistema deve fornecer login para usuário, para acesso às funcionalidades básicas.| MÉDIA      |
 
 ### Requisitos não Funcionais
 
