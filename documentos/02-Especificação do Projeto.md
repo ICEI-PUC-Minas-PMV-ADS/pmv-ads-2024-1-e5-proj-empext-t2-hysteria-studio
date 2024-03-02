@@ -1,14 +1,10 @@
 # Especificações do Projeto
 
-<span style="color:red">Pré-requisitos: <a href="1-Documentação de Contexto.md"> Documentação de Contexto</a></span>
-
-Definição do problema e ideia de solução a partir da perspectiva do usuário. É composta pela definição do  diagrama de personas, histórias de usuários, requisitos funcionais e não funcionais além das restrições do projeto.
-
-Apresente uma visão geral do que será abordado nesta parte do documento, enumerando as técnicas e/ou ferramentas utilizadas para realizar a especificações do projeto
+Os clientes em diversos setores estão em busca de facilidade e acessibilidade. Nos dias atuais, até as atividades mais simples foram automatizadas, inclusive para o controle e gestão do lojista, essas tecnologias oferecem mais suporte e autonomia. O aplicativo web Hysteria Studio surge para atender às demandas tanto do lojista quanto do cliente, proporcionando facilidade de agendamento e acompanhamento dos serviços oferecidos, incluindo descrição e valores, acessíveis de qualquer lugar. O lojista tem acesso aos agendamentos e pode confirmar ou cancelar as solicitações, além de consultar histórico e filtrar clientes.
 
 ## Arquitetura e Tecnologias
 
-o	Descreva brevemente a arquitetura definida para o projeto e as tecnologias a serem utilizadas. Sugere-se a criação de um diagrama de componentes da solução.
+Para o gerenciamento de tarefas, será utilizado o Trello. O desenvolvimento do backend será realizado com a linguagem Node.js, que se comunicará com o banco de dados relacional MySQL. Para as interfaces de usuário interativas e dinâmicas, será utilizada a linguagem React.
 
 ## Project Model Canvas
 
