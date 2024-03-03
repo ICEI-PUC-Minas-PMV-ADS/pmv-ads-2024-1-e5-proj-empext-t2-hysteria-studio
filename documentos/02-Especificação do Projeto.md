@@ -61,7 +61,7 @@ Enumere as restrições à sua solução. Lembre-se de que as restrições geral
 
 ## Diagrama de Casos de Uso
 
-![Texto Alternativo]('./diagrama-casos-de-uso.jpg')
+![Texto Alternativo](./img/diagrama-casos-de-uso.jpg)
 
 As referências abaixo irão auxiliá-lo na geração do artefato “Diagrama de Casos de Uso”.
 
