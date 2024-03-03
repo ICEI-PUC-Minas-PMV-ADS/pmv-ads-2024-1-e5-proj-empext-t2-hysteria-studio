@@ -38,4 +38,7 @@ Relacionar a situação-problema da organização com o impacto social esperado 
 
 ## Descrição do Parceiro
 
-Apresente uma descrição resumida sobre a organização onde o projeto será desenvolvido para que possa ser compreendido o cenário sistema sociotécnico.
+Ewerton Feitoza é um empreendedor e profissional talentoso que sempre foi apaixonado por cuidados masculinos. Ele é o fundador e proprietário do Hysteria Studio, uma barbearia de destaque localizada no estado do Rio de Janeiro e especializada em serviços de corte de cabelo, barba e sobrancelha voltados para o público masculino. Ewerton busca constantemente inovação e aprimoramento para oferecer aos seus clientes uma experiência excepcional.
+
+Reconhecendo a importância da tecnologia no mundo dos negócios, decidiu buscar uma parceria para criar uma aplicação inovadora. Esta aplicação permitirá que seus clientes agendem facilmente os horários de atendimento no Hysteria Studio. Com essa parceria estratégica, Ewerton está comprometido em levar a experiência do cliente a um novo nível, proporcionando uma maneira simples e rápida de reservar serviços de corte de cabelo, barba e sobrancelha. Combinando sua expertise em cuidados masculinos com a tecnologia moderna.
+
