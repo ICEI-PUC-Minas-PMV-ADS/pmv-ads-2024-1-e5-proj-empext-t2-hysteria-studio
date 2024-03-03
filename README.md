@@ -6,7 +6,7 @@
 
 `SEMESTRE`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O projeto em desenvolvimento visa a criação de uma aplicação abrangente, consistindo em um site completo e intuitivo, com o propósito de simplificar o agendamento de serviços em uma barbearia. A iniciativa tem como metas principais a ampliação da visibilidade do estabelecimento por meio de uma presença online mais marcante, assim como a fidelização dos clientes através de uma experiência de agendamento eficiente e de fácil acesso. O objetivo final é melhorar a gestão operacional da barbearia, promovendo a interação com os clientes de maneira mais eficaz e fortalecendo sua presença digital.
 
 ## Integrantes
 
