@@ -56,6 +56,8 @@ O Modelo ER representa através de um diagrama como as entidades (coisas, objeto
 
 ![Processo 1](img/01-Diagrama-ER.png)
 
-## Projeto da Base de Dados
+## Projeto da Base de Dados 
+ 
+![Processo 1](img/base_de_dados.png) 
 
-O projeto da base de dados corresponde à representação das entidades e relacionamentos identificadas no Modelo ER, no formato de tabelas, com colunas e chaves primárias/estrangeiras necessárias para representar corretamente as restrições de integridade.
+> - [Projeto de Banco de Dados - HYSTERIA STUDIO](../codigo-fonte/db/banco.sql)
