@@ -8,10 +8,8 @@ Para o gerenciamento de tarefas, será utilizado o Trello. O desenvolvimento do 
 
 ## Project Model Canvas
 
-Colocar a imagem do modelo construído apresentando a proposta de solução.
+![Model Canvas](img/projectModelCanvas.png)
 
-> **Links Úteis**:
-> Disponíveis em material de apoio do projeto
 
 ## Requisitos
 
