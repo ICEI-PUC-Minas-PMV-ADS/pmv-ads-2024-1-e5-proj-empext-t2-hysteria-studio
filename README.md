@@ -1,10 +1,10 @@
 # TÍTULO DO PROJETO
 
-`CURSO`
+`Análise e Desenvolvimento de Sistemas`
 
-`DISCIPLINA`
+`Eixo 5 - Projeto: Desenvolvimento de um Sistema Sociotécnico Inovador - Turma 02 - 2024/1`
 
-`SEMESTRE`
+`QUINTO SEMESTRE`
 
 O projeto em desenvolvimento visa a criação de uma aplicação abrangente, consistindo em um site completo e intuitivo, com o propósito de simplificar o agendamento de serviços em uma barbearia. A iniciativa tem como metas principais a ampliação da visibilidade do estabelecimento por meio de uma presença online mais marcante, assim como a fidelização dos clientes através de uma experiência de agendamento eficiente e de fácil acesso. O objetivo final é melhorar a gestão operacional da barbearia, promovendo a interação com os clientes de maneira mais eficaz e fortalecendo sua presença digital.
 
