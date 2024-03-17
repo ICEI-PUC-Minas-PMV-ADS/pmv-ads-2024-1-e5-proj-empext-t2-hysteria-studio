@@ -5,6 +5,7 @@ import { customTheme } from "./theme";
 import { ThemeProvider, createTheme } from "@mui/material";
 import LoginPage from "./pages/login-page";
 import RegisterPage from "./pages/register-page";
+import ListsPage from "./pages/lists-page";
 
 function App() {
   const theme = createTheme(customTheme);
@@ -21,6 +22,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/cadastro" element={<RegisterPage />} />
+        </Routes>
+        <Routes>
+          <Route path="/inicio" element={<ListsPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

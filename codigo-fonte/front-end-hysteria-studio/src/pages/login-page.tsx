@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
 
 interface LoginPageFormValues {
   email: string;
@@ -17,10 +18,12 @@ interface LoginPageFormValues {
 
 const LoginPage = () => {
   const formMethods = useForm<LoginPageFormValues>();
+  const navigate = useNavigate();
   const { handleSubmit, register } = formMethods;
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    navigate("/inicio");
   });
 
   return (
