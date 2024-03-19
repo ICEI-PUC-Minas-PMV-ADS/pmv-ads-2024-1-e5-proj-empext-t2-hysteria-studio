@@ -6,6 +6,6 @@
 
 ## Ata de Reunião
 
-### Reunião 1
+### Reunião Etapa 1
 
-<a href="./ADS - Ata de Reunião.docx.pdf">Primeira Reunião</a>
+<a href="./Reunião Etapa 1/ADS - Ata de Reunião.docx.pdf">Reunião Etapa 1</a>
