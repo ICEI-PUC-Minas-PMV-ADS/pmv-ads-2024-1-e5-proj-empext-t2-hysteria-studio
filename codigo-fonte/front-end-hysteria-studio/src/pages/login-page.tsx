@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   CssBaseline,
+  Paper,
   Stack,
   TextField,
 } from "@mui/material";
@@ -35,7 +36,7 @@ const LoginPage = () => {
           width: "100%",
           backgroundSize: "100% 20%",
           backgroundRepeat: "no-repeat",
-          backgroundColor: "secondary.light",
+          backgroundColor: "secondary.main",
           height: "100vh",
         }}
       >
@@ -56,12 +57,12 @@ const LoginPage = () => {
             <Box
               sx={{
                 p: 5,
-                backgroundColor: "background.paper",
                 borderRadius: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
               }}
+              component={Paper}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />

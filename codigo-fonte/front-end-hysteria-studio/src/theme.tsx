@@ -8,7 +8,7 @@ const customTheme = {
       dark: "#835B00",
     },
     secondary: {
-      main: "#000000",
+      main: "#051118",
       light: "#2A272A",
       dark: "#4B4A54",
     },

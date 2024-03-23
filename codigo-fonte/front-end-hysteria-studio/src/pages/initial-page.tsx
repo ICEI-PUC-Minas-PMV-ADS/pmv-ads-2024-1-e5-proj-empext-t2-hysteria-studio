@@ -1,4 +1,4 @@
-import { Box, Container, CssBaseline, Stack, Typography } from "@mui/material";
+import { Box, Container, CssBaseline, Stack } from "@mui/material";
 
 const InitialPage = () => {
   return (
@@ -10,7 +10,7 @@ const InitialPage = () => {
           width: "100%",
           backgroundSize: "100% 20%",
           backgroundRepeat: "no-repeat",
-          backgroundColor: "secondary.light",
+          backgroundColor: "secondary.main",
           height: "100vh",
         }}
       >
@@ -28,7 +28,16 @@ const InitialPage = () => {
             useFlexGap
             sx={{ width: { xs: "100%", sm: "70%" } }}
           >
-            <Typography
+            {/* <img
+              src="../../public/logo-branca.svg"
+              style={{
+                width: "50%",
+                maxWidth: "300px",
+                height: "auto",
+              }}
+              // onClick={() => navigate("/")}
+            /> */}
+            {/* <Typography
               component="h1"
               variant="h3"
               color="white"
@@ -40,7 +49,7 @@ const InitialPage = () => {
               }}
             >
               Marque um horário com a gente
-            </Typography>
+            </Typography> */}
           </Stack>
         </Container>
       </Box>
