@@ -39,7 +39,7 @@ npm install
 Inicie o servidor local:
 
 ```bash
-npm start
+yarn dev
 ```
 
 Inicie o servidor para desenvolvimento do projeto:
