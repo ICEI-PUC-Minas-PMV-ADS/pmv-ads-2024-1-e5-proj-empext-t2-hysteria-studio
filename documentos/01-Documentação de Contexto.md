@@ -18,7 +18,7 @@ A Barbearia enfrenta hoje os seguintes desafios:
 • Perda de clientes: A ausência de um sistema de agendamento online e uma presença digital efetiva tem resultado na perda de clientes para a concorrência.
 
 ## Objetivos
-### Objetivos Gerais
+### Objetivo Geral
 
 Este trabalho objetiva a criação de uma aplicacao que engloba um site completo e intuitivo que facilite o agendamento de serviços, aumente a divulgação da barbearia e fidelize os clientes.
 ### Objetivos Específicos
