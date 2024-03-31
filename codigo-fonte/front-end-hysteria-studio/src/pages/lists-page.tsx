@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   CssBaseline,
-  Fab,
   Stack,
   Tab,
   Tabs,
@@ -10,8 +9,9 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
-import TableList from "../components/table-list";
-import AddIcon from "@mui/icons-material/Add";
+import TableSchedulingLists from "../components/table-scheduling-lists";
+import TableServicesList from "../components/table-services-list";
+import NewSchedulingDialog from "../dialogs/new-scheduling-dialog";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -40,7 +40,7 @@ const ListsPage = () => {
   const isSmallScreen = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("sm")
   );
-  console.log(isSmallScreen);
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -77,30 +77,18 @@ const ListsPage = () => {
             >
               <Tab label="Agendamentos" />
               <Tab label="Histórico" />
-              <Tab label="Pedidos" />
+              <Tab label="Serviços" />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <TableList listType="scheduled" />
+              <TableSchedulingLists listType="scheduled" />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <TableList listType="history" />
+              <TableSchedulingLists listType="history" />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <TableList listType="requests" />
+              <TableServicesList />
             </CustomTabPanel>
-            <Fab
-              color="primary"
-              sx={{
-                margin: 0,
-                top: "auto",
-                right: 20,
-                bottom: 20,
-                left: "auto",
-                position: "fixed",
-              }}
-            >
-              <AddIcon />
-            </Fab>
+            <NewSchedulingDialog />
           </Stack>
         </Container>
       </Box>

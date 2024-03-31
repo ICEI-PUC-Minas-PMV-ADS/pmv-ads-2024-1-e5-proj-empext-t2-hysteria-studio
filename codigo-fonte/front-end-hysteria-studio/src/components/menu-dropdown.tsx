@@ -16,6 +16,10 @@ const MenuDropdown = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSchedulingRequests = () => {
+    setAnchorEl(null);
+    navigate("/pedidos-de-agendamento");
+  };
   const handleMyInformation = () => {
     setAnchorEl(null);
     navigate("/minhas-informacoes");
@@ -49,7 +53,9 @@ const MenuDropdown = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem>Adicionar novo serviço</MenuItem>
+        <MenuItem onClick={handleSchedulingRequests}>
+          Pedidos de agendamento
+        </MenuItem>
         <MenuItem onClick={handleMyInformation}>Minhas informações</MenuItem>
         <MenuItem onClick={handleLogout}>Sair</MenuItem>
       </Menu>

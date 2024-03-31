@@ -148,11 +148,12 @@ const AppAppBar = () => {
                   variant="outlined"
                   component="a"
                   onClick={() => {
+                    navigate("/pedidos-de-agendamento");
                     toggleDrawer();
                   }}
                   sx={{ width: "100%" }}
                 >
-                  Adicionar novo serviço
+                  Pedidos de agendamento
                 </Button>
               </MenuItem>
               <MenuItem>

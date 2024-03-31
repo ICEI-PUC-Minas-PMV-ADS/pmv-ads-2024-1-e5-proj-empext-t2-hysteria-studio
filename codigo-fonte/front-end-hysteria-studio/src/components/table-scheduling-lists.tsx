@@ -6,11 +6,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
-import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
+import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
@@ -33,7 +33,7 @@ const rows = [
   createData("Stephanie", "18/03/2024 14:30", "Corte de cabelo", false),
 ];
 
-const TableList = ({ listType }: TableListProps) => {
+const TableSchedulingLists = ({ listType }: TableListProps) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -127,11 +127,7 @@ const TableList = ({ listType }: TableListProps) => {
               ) : (
                 <TableCell>
                   {listType === "scheduled" ? (
-                    <Tooltip title="Editar" arrow>
-                      <IconButton color="primary" size="small">
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <EditSchedulingDialog />
                   ) : (
                     <Tooltip title="Confirmar" arrow>
                       <IconButton color="success" size="small">
@@ -139,11 +135,7 @@ const TableList = ({ listType }: TableListProps) => {
                       </IconButton>
                     </Tooltip>
                   )}
-                  <Tooltip title="Cancelar" arrow>
-                    <IconButton color="error" size="small">
-                      <CancelIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                  <DeleteSchedulingDialog />
                 </TableCell>
               )}
             </TableRow>
@@ -154,4 +146,4 @@ const TableList = ({ listType }: TableListProps) => {
   );
 };
 
-export default TableList;
+export default TableSchedulingLists;
