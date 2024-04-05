@@ -4,6 +4,7 @@ import { AtualizarServicoController } from './controllers/servico/AtualizarServi
 import { ListarServicoController } from './controllers/servico/ListarServicoController';
 import { ListarServicoIdController } from './controllers/servico/ListarServicoIdController';
 import { ExcluirServicoController } from './controllers/servico/ExcluirServicoController';
+import { CriarUsuarioController } from './controllers/usuarioController/CriarUsuarioController';
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.put('/servico', new AtualizarServicoController().handle)
 router.get('/servicos', new ListarServicoController().handle)
 router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
+
+router.post('/usuario', new CriarUsuarioController().handle)
 
 export { router };
