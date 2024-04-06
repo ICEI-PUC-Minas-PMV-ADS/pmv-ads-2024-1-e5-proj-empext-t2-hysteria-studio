@@ -20,7 +20,7 @@ router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
 router.post('/agenda', new NovaAgendaController().handle)
-router.get('/agenda', new ListarAgendaController().handle);
-router.put('/agenda', new FinalizarAgendaController().handle);
+router.get('/agenda', new ListarAgendaController().handle)
+router.put('/agenda', new FinalizarAgendaController().handle)
 
 export { router };
