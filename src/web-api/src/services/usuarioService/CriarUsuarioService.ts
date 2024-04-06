@@ -1,5 +1,6 @@
 import prismaClient from '../../prisma';
 import { isEmail } from 'validator';
+import { hash } from 'bcrypt';
 
 interface UsuarioRequest {
     nome: string;
@@ -40,6 +41,8 @@ class CriarUsuarioService {
             throw new Error("Usuario já Cadastrado, tente novamente ou entre em contato com o administrador")
         }
 
+        const hash_password = await hash(senha, 8);
+
 
         const dataNascimento = new Date(data_de_nascimento);
 
@@ -56,7 +59,7 @@ class CriarUsuarioService {
                 flag_maior_idade,
                 responsavel,
                 login,
-                senha,
+                senha: hash_password,
                 flag_admin,
                 dt_criacao,
             }
