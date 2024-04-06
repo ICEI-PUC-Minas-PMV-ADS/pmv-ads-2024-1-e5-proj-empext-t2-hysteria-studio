@@ -23,7 +23,7 @@ class CriarUsuarioService {
             throw new Error( "Dados incompletos, verifique os campos" );
         }
 
-        if (!isEmail(email)) {
+        if ( !isEmail( email ) ) {
             throw new Error( 'Email inválido' );
         }
 
@@ -37,14 +37,13 @@ class CriarUsuarioService {
             },
         });
 
-        if(usuarioExistente){
-            throw new Error("Usuario já Cadastrado, tente novamente ou entre em contato com o administrador")
+        if( usuarioExistente ){
+            throw new Error( "Usuario já Cadastrado, tente novamente ou entre em contato com o administrador" )
         }
 
-        const hash_password = await hash(senha, 8);
+        const hash_password = await hash( senha, 8 );
 
-
-        const dataNascimento = new Date(data_de_nascimento);
+        const dataNascimento = new Date( data_de_nascimento );
 
         const dt_criacao = new Date();
 
