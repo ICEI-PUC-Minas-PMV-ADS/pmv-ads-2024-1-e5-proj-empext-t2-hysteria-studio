@@ -10,7 +10,7 @@ class NovaAgendaService{
   async execute({ user_id, servico_id, cliente}: AgendaRequest){
 
     if(cliente === '' || servico_id === ''){
-      throw new Error("Error schedule new service.")
+      throw new Error("Erro ao agendar novo serviço.")
     }
 
     const agenda = await prismaClient.servico.create({
