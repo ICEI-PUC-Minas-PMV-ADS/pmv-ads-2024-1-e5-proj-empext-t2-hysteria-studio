@@ -1,30 +1,43 @@
-# React + TypeScript + Vite
+<h1>Front-end web Hysteria Studio</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Antes de seguir os passos para rodar o projeto local, certifique-se que tenha instalado <strong>NodeJS</strong> e <strong>NPM</strong>
 
-Currently, two official plugins are available:
+- [Instalar NPM e NodeJS para Windows](https://nodejs.org/en/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para instalar no linux rodar esses comandos no terminal:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```bash
+nvm install 18.18.0
+```
+
+<h2> Como instalar as dependências do projeto; </h2>
+
+## Rodar localmente
+
+No terminal na sua maquina, clone o repositório:
+
+```bash
+git clone https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio.git
+```
+
+Vá até o diretório do projeto:
+
+```bash
+cd src/front-end-hysteria-studio
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Inicie o servidor para desenvolvimento do projeto:
+
+```bash
+npm run dev
+```
