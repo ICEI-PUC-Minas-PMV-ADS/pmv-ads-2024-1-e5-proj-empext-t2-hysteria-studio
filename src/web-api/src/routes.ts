@@ -6,6 +6,10 @@ import { ListarServicoIdController } from './controllers/servico/ListarServicoId
 import { ExcluirServicoController } from './controllers/servico/ExcluirServicoController';
 import { CriarUsuarioController } from './controllers/usuarioController/CriarUsuarioController';
 
+import { NovaAgendaController } from './controllers/agenda/NovaAgendaController';
+import { ListarAgendaController } from './controllers/agenda/ListarAgendaController';
+import { FinalizarAgendaController } from './controllers/agenda/FinalizarAgendaController';
+
 const router = Router();
 
 
@@ -17,5 +21,10 @@ router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
 router.post('/usuario', new CriarUsuarioController().handle)
+
+
+router.post('/agenda', new NovaAgendaController().handle)
+router.get('/agenda', new ListarAgendaController().handle)
+router.put('/agenda', new FinalizarAgendaController().handle)
 
 export { router };
