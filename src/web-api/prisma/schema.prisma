@@ -20,11 +20,11 @@ model Usuario{
   data_de_nascimento DateTime? 
   telefone String?
   endereco String?
-  email String?
+  email String @unique
   flag_maior_idade Int?
   responsavel String?
   login String?
-  senha String?
+  senha String
   flag_admin Int? @default(1)
   dt_criacao DateTime? @default(now())
 
