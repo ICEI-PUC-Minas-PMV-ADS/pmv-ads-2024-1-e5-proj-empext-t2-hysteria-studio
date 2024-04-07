@@ -6,12 +6,14 @@ Ewerton Feitoza é um empreendedor e profissional **talentoso** que sempre foi a
 
 ## Apresentação
 
-<a href="./pdf/Apresentação%20do%20projeto.pdf"> Apresentação do Projeto</a>
+### Cliente Vinculado ao Projeto
+
+<a href="./pdf/Apresentação-do-projeto.pdf">Apresentação detalhada do cliente e do projeto</a>
 
 ## Project Model Canvas
 
 ![Model Canvas](../documentos/img/projectModelCanvas.png)
 
-
 ## Diagrama de Caso de Uso
+
 ![Model Canvas](../documentos/img/casodeuso.jpeg)
