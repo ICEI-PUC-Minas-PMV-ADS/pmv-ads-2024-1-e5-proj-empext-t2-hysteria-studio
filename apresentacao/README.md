@@ -6,7 +6,7 @@ Ewerton Feitoza é um empreendedor e profissional **talentoso** que sempre foi a
 
 ## Apresentação
 
-![Apresentação](./pdf/Apresentação%20do%20projeto.pdf)
+<a href="./pdf/Apresentação%20do%20projeto.pdf"> Apresentação</a>
 
 ## Project Model Canvas
 
