@@ -1,8 +1,15 @@
 # Planos de Testes de Software
 
-Apresente os cenários de testes utilizados na realização dos testes da sua aplicação. Escolha cenários de testes que demonstrem os requisitos sendo satisfeitos.
+Testes aplicação back-end:
 
-Enumere quais cenários de testes foram selecionados para teste. Neste tópico o grupo deve detalhar quais funcionalidades avaliadas, o grupo de usuários que foi escolhido para participar do teste e as ferramentas utilizadas.
+# BACK-END  
+Testes aplicação back-end:  
+
+Clique aqui em <a href="../src/web-api/README.md"> API - AJUDA AÍ </a> para iniciar a aplicação backend.<br/><br/>
+
+Dentro da documentação, vai conter o comando: <p style="color:violet">npm test</p> Assim que a aplicação estiver rodando, usando esse comando no mesmo diretorio, porém em outro terminal, irá rodar os testes unitarios na aplicação.
+
+![Evidencias de Testes UNitarios Back-end](./img/testes-unitarios.png)  
  
 # Evidências de Testes de Software
 
