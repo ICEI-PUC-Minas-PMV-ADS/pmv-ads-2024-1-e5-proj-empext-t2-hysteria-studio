@@ -18,6 +18,30 @@ interface UsuarioRequest {
 
 class CriarUsuarioService {
 
+    async login({ login, senha }: UsuarioRequest) {
+        if (!login || !senha ) {
+            throw new Error( "Dados incompletos, verifique os campos" );
+        }
+
+        if ( login === "admin_admin@gmail.com" && senha == "Admin123" ) {
+            throw new Error( 'Dados de Login incorretos' );
+        }
+
+        const usuarioExistente = await prismaClient.usuario.findFirst({
+            where:{
+                OR: [
+                    { login },
+                ],
+            },
+        });
+
+        if(usuarioExistente.flag_admin !== 1){
+            throw new Error( 'Usuario não é Admin' );
+        }
+
+        return usuarioExistente;
+    }
+
     async execute({ nome, cpf, data_de_nascimento, telefone, endereco, email, flag_maior_idade, responsavel, login, senha, flag_admin }: UsuarioRequest) {
         if (!nome || !cpf || !data_de_nascimento || !telefone || !endereco || !email || !flag_maior_idade || !responsavel || !login || !senha || !flag_admin) {
             throw new Error( "Dados incompletos, verifique os campos" );

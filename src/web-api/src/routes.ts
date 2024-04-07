@@ -17,5 +17,6 @@ router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
 router.post('/usuario', new CriarUsuarioController().handle)
+router.post('/usuario/login', new CriarUsuarioController().login)
 
 export { router };
