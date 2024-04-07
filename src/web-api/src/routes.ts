@@ -6,6 +6,10 @@ import { ListarServicoIdController } from './controllers/servico/ListarServicoId
 import { ExcluirServicoController } from './controllers/servico/ExcluirServicoController';
 import { CriarUsuarioController } from './controllers/usuarioController/CriarUsuarioController';
 
+import { LoginUsuarioController } from './controllers/login/LoginUsuarioController';
+
+import { AuthMiddleware } from './middlewares/auth';
+
 const router = Router();
 
 
@@ -17,5 +21,8 @@ router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
 router.post('/usuario', new CriarUsuarioController().handle)
+
+// Rotas login do usuário
+router.post('/login', new LoginUsuarioController().authenticate)
 
 export { router };
