@@ -4,3 +4,5 @@ node_modules
 .env
 .eslintrc.js
 .prettierrc
+package-lock.json
+yarn.lock
