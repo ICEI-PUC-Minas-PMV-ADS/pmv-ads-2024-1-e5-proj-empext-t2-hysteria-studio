@@ -43,8 +43,18 @@ class CriarUsuarioService {
     }
 
     async execute({ nome, cpf, data_de_nascimento, telefone, endereco, email, flag_maior_idade, responsavel, login, senha, flag_admin }: UsuarioRequest) {
-        if (!nome || !cpf || !data_de_nascimento || !telefone || !endereco || !email || !flag_maior_idade || !responsavel || !login || !senha || !flag_admin) {
-            throw new Error( "Dados incompletos, verifique os campos" );
+        if (!nome || !cpf || !data_de_nascimento || !telefone || !endereco || !email || !login || !senha) {
+            throw new Error( "Dados incompletos, verifique os campos." );
+        }
+
+        if(flag_maior_idade == null) throw new Error( "Dados incompletos, verifique os campos." );
+
+        if (!flag_maior_idade && !responsavel || responsavel == "") {
+            throw new Error( "Responsavel deve ser informado." );
+        }
+
+        if (flag_admin) {
+            throw new Error( "Usuario não pode ter esse tipo de configuração. Caso necessário, solicite o suporte do serviço." );
         }
 
         if ( !isEmail( email ) ) {

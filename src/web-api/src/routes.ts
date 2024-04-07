@@ -16,7 +16,10 @@ router.get('/servicos', new ListarServicoController().handle)
 router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
+// Rotas tipos de usuario
 router.post('/usuario', new CriarUsuarioController().handle)
+
+// Rotas tipos de login
 router.post('/usuario/login', new CriarUsuarioController().login)
 
 export { router };
