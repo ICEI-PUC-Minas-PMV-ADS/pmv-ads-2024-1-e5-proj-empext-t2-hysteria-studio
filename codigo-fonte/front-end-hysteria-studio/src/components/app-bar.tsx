@@ -68,7 +68,7 @@ const AppAppBar = () => {
           }}
         >
           <MenuDropdown />
-          {/* <Button
+          <Button
             color="primary"
             variant="text"
             size="small"
@@ -85,7 +85,7 @@ const AppAppBar = () => {
             onClick={() => navigate("/cadastro")}
           >
             Cadastro
-          </Button> */}
+          </Button>
         </Box>
         <Box sx={{ display: { sm: "", md: "none" } }}>
           <Button
