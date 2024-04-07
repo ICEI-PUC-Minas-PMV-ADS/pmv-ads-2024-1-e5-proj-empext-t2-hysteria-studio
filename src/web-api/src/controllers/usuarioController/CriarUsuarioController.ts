@@ -22,6 +22,7 @@ class CriarUsuarioController {
         flag_admin,
       });
 
+      
       return response.json( usuario );
     } catch ( exception: any ) {
       return response.status( 400 ).json( { error: exception.message } );
