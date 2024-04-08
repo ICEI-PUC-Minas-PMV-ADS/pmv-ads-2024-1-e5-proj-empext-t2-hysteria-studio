@@ -8,4 +8,8 @@
 
 ### Reunião Etapa 1
 
-<a href="./Reunião Etapa 1/ADS - Ata de Reunião.docx.pdf">Reunião Etapa 1</a>
+<a href="./Reunião Etapa 1/ADS - Ata de Reunião.docx.pdf">Ata Etapa 1</a>
+
+### Reunião Etapa 2
+
+<a href="./Reunião Etapa 2/ADS - Ata de Reunião 2.pdf">Ata Etapa 2</a>

@@ -26,13 +26,18 @@ router.get('/servicos', new ListarServicoController().handle)
 router.get('/servico/id', new ListarServicoIdController().handle)
 router.delete('/servico', new ExcluirServicoController().handle)
 
+// Rotas tipos de usuario
 router.post('/usuario', new CriarUsuarioController().handle)
-
-router.post('/agenda', new NovaAgendaController().handle)
-router.get('/agenda', new ListarAgendaController().handle)
-router.put('/agenda', new FinalizarAgendaController().handle)
 
 // Rotas login do usuário
 router.post('/login', new LoginUsuarioController().authenticate)
+
+// Rotas tipos de login
+router.post('/usuario/login', new CriarUsuarioController().login)
+
+router.get('/agendas', new ListarAgendaController().listAll)
+router.get('/agenda', new ListarAgendaController().handle)
+router.post('/agenda', new NovaAgendaController().handle)
+router.put('/agenda', new FinalizarAgendaController().handle)
 
 export { router };

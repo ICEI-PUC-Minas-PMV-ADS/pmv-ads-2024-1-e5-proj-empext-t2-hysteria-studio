@@ -1,23 +1,25 @@
 import prismaClient from "../../prisma";
 
 interface AgendaRequest{
-  user_id: string;
-  servico_id: string;
-  cliente: string;
+  usuario: string;
+  servico: string;
+  data_hora_atendimento: Date;
 }
 
 class NovaAgendaService{
-  async execute({ user_id, servico_id, cliente}: AgendaRequest){
+  async execute({ usuario, servico, data_hora_atendimento}: AgendaRequest){
 
-    if(cliente === '' || servico_id === ''){
+    if(!data_hora_atendimento || servico === '' || usuario === ''){
       throw new Error("Erro ao agendar novo serviço.")
     }
 
-    const agenda = await prismaClient.servico.create({
+    const data_hora = new Date( data_hora_atendimento );
+
+    const agenda = await prismaClient.agenda.create({
       data:{
-        cliente,
-        servico_id,
-        user_id
+        servico_id: servico,
+        usuarioId: usuario,
+        data_hora_atendimento: data_hora
       }
     })
 
