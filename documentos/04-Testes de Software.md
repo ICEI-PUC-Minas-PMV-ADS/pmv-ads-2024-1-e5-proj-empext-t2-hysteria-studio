@@ -13,4 +13,40 @@ Dentro da documentação, vai conter o comando: <p style="color:violet">npm test
  
 # Evidências de Testes de Software
 
-Apresente imagens e/ou vídeos que comprovam que um determinado teste foi executado, e o resultado esperado foi obtido. Normalmente são screenshots de telas, ou vídeos do software em funcionamento.
+## Testes de Agenda 
+
+###  Listar agenda
+
+![Listar](img/registros-backend/listagem-de-agenda.png)
+
+###  Buscar agenda por ID
+
+![Listar](img/registros-backend/buscar-agenda-por-id.png)
+
+###  Criar agenda
+
+![Listar](img/registros-backend/criar-agenda.png)
+
+## Testes de Usuario
+
+###  Criar Usuario
+
+![Listar](img/registros-backend/criar-usuario.png)
+
+###  Login Admin
+
+![Listar](img/registros-backend/login-admin.png)
+
+## Testes de Serviços 
+
+###  Listar Serviços
+
+![Listar](img/registros-backend/listagem-de-servicos.png)
+
+###  Buscar Serviço por ID
+
+![Listar](img/registros-backend/busca-de-servico-por-id.png)
+
+###  Criar Serviço
+
+![Listar](img/registros-backend/criar-servico.png)
