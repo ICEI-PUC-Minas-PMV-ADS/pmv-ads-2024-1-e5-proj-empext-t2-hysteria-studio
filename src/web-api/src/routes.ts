@@ -35,8 +35,9 @@ router.post('/login', new LoginUsuarioController().authenticate)
 // Rotas tipos de login
 router.post('/usuario/login', new CriarUsuarioController().login)
 
-router.post('/agenda', new NovaAgendaController().handle)
+router.get('/agendas', new ListarAgendaController().listAll)
 router.get('/agenda', new ListarAgendaController().handle)
+router.post('/agenda', new NovaAgendaController().handle)
 router.put('/agenda', new FinalizarAgendaController().handle)
 
 export { router };

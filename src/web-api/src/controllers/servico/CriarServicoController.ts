@@ -13,7 +13,7 @@ class CriarServicoController{
       descricao
     });
 
-    return response.json(servico);
+    return response.status(201).json(servico);
 
   }
 }
