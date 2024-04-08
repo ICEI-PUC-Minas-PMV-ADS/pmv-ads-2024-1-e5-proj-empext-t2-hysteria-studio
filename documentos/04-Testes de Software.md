@@ -11,7 +11,7 @@ Dentro da documentação, vai conter o comando: <p style="color:violet">npm test
 
 ![Evidencias de Testes UNitarios Back-end](./img/testes-unitarios.png)  
  
-# Evidências de Testes de Software
+# Evidências de Testes de Software (BACKEND ROTAS)
 
 ## Testes de Agenda 
 
@@ -50,3 +50,27 @@ Dentro da documentação, vai conter o comando: <p style="color:violet">npm test
 ###  Criar Serviço
 
 ![Listar](img/registros-backend/criar-servico.png)
+
+# Evidências de Testes de Software (FRONTEND)
+
+## Exibição principal
+
+###  Login
+
+![Listar](img/registros-frontend/login.png)
+
+###  Listagem de serviços
+
+![Listar](img/registros-frontend/listagem-de-servico.png)
+
+###  Listagem de historico
+
+![Listar](img/registros-frontend/listagem-de-historico.png)
+
+###  Listagem de agendamento
+
+![Listar](img/registros-frontend/listagem-de-agendamentos.png)
+
+###  Criar Agendamento
+
+![Listar](img/registros-frontend/criar-agendamento.png)

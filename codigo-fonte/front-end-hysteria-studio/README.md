@@ -27,7 +27,7 @@ git clone https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empex
 Vá até o diretório do projeto:
 
 ```bash
-cd src/front-end-hysteria-studio
+cd codigo-fonte/front-end-hysteria-studio
 ```
 
 Instale as dependências:
