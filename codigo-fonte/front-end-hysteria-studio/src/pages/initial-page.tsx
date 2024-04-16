@@ -1,11 +1,6 @@
 import { Box, Container, CssBaseline, Stack } from "@mui/material";
-import { useGetPokemonByNameQuery } from "../services/endpoins";
 
 const InitialPage = () => {
-  // teste de chamada com rtk query
-  const { data } = useGetPokemonByNameQuery("pikachu");
-  console.log(data);
-
   return (
     <>
       <CssBaseline />

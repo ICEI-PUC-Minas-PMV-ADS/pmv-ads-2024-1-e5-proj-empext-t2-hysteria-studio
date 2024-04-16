@@ -1,15 +1,32 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Define a service using a base URL and expected endpoints
-export const endpointsApi: any = createApi({
+interface GetAgendaResult {
+  data_hora_atendimento: string;
+  dt_criacao: string;
+  id: string;
+  servico_id: string;
+  usuarioId: string;
+}
+
+interface GetServicosResult {
+  id: string;
+  nome: string;
+  preco: number;
+  descricao: string;
+  dt_criacao: string;
+}
+
+export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://pokeapi.co/api/v2/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://hysteria-ppxi.onrender.com/" }),
   endpoints: (builder) => ({
-    getPokemonByName: builder.query<any, string>({
-      query: (name) => `pokemon/${name}`,
+    getAgendas: builder.query<Array<GetAgendaResult>, void>({
+      query: () => "agendas",
+    }),
+    getServicos: builder.query<Array<GetServicosResult>, void>({
+      query: () => "servicos",
     }),
   }),
 });
 
-export const { useGetPokemonByNameQuery } = endpointsApi;
+export const { useGetAgendasQuery, useGetServicosQuery } = endpointsApi;

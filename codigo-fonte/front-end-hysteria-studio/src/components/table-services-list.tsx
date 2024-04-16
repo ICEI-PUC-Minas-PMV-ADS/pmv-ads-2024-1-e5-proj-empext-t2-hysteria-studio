@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   IconButton,
+  LinearProgress,
   Paper,
   Table,
   TableBody,
@@ -14,115 +15,131 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import CancelIcon from "@mui/icons-material/Cancel";
-
-function createData(service: string, price: number, estimatedTime: string) {
-  return { service, price, estimatedTime };
-}
-
-const rows = [
-  createData("Corte de cabelo", 40, "30min"),
-  createData("Corte de cabelo + barba", 60, "1h"),
-  createData("Barba", 40, "30min"),
-  createData("Completo", 70, "1h30"),
-];
+import { useGetServicosQuery } from "../services/endpoins";
 
 const TableServicesList = () => {
-  return (
-    <TableContainer component={Paper}>
-      <Box display="flex" flexDirection="column" alignItems="flex-end">
-        <Button sx={{ margin: 1 }} size="small" variant="outlined">
-          Novo serviço
-        </Button>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ display: { sm: "", md: "none" } }}>
-                Informações
-              </TableCell>
-              <TableCell
-                sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-              >
-                Serviço
-              </TableCell>
-              <TableCell
-                sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-              >
-                Preço
-              </TableCell>
-              <TableCell
-                sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-              >
-                Tempo estimado
-              </TableCell>
-              <TableCell>Ações</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.service}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
+  const {
+    data: servicos,
+    isFetching: isFetchingServicos,
+    isError: isServcosError,
+  } = useGetServicosQuery();
+
+  return isFetchingServicos ? (
+    <Box component={Paper} p={2} mt={2}>
+      <LinearProgress />
+    </Box>
+  ) : isServcosError ? (
+    <Box component={Paper} p={2} mt={2} display="flex" justifyContent="center">
+      <Typography fontWeight="bold">
+        Ocorreu um erro ao buscar as informações.
+      </Typography>
+    </Box>
+  ) : (
+    <>
+      <TableContainer component={Paper}>
+        <Box display="flex" flexDirection="column" alignItems="flex-end">
+          <Button sx={{ margin: 1 }} size="small" variant="outlined">
+            Novo serviço
+          </Button>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ display: { sm: "", md: "none" } }}>
+                  Informações
+                </TableCell>
                 <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{ display: { sm: "", md: "none" } }}
+                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
                 >
-                  <Box
+                  Serviço
+                </TableCell>
+                <TableCell
+                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
+                >
+                  Preço
+                </TableCell>
+                <TableCell
+                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
+                >
+                  Tempo estimado
+                </TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {servicos?.map((row) => (
+                <TableRow
+                  key={row.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{ display: { sm: "", md: "none" } }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Typography variant="body2">
+                        Serviço: {row.nome}
+                      </Typography>
+                      <Typography variant="body2">
+                        Preço: {row.preco}
+                      </Typography>
+                      <Typography variant="body2">
+                        Tempo estimado: {row.dt_criacao}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
+                      display: { xs: "none", sm: "none", md: "table-cell" },
                     }}
                   >
-                    <Typography variant="body2">
-                      Serviço: {row.service}
-                    </Typography>
-                    <Typography variant="body2">Preço: {row.price}</Typography>
-                    <Typography variant="body2">
-                      Tempo estimado: {row.estimatedTime}
-                    </Typography>
-                  </Box>
-                </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-                >
-                  {row.service}
-                </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-                >
-                  {row.price}
-                </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-                >
-                  {row.estimatedTime}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  <Tooltip title="Editar" arrow>
-                    <IconButton color="primary" size="small">
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Excluir" arrow>
-                    <IconButton color="error" size="small">
-                      <CancelIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </TableContainer>
+                    {row.nome}
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{
+                      display: { xs: "none", sm: "none", md: "table-cell" },
+                    }}
+                  >
+                    {row.preco}
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{
+                      display: { xs: "none", sm: "none", md: "table-cell" },
+                    }}
+                  >
+                    {row.dt_criacao}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <Tooltip title="Editar" arrow>
+                      <IconButton color="primary" size="small">
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Excluir" arrow>
+                      <IconButton color="error" size="small">
+                        <CancelIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </TableContainer>
+    </>
   );
 };
 
