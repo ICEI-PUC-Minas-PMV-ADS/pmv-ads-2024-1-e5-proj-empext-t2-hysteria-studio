@@ -1,7 +1,5 @@
 import {
   Box,
-  Button,
-  IconButton,
   LinearProgress,
   Paper,
   Table,
@@ -10,12 +8,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { useGetServicosQuery } from "../services/endpoins";
+import CreateServiceDialog from "../dialogs/create-service-dialog";
+import DeleteServiceDialog from "../dialogs/delete-service-dialog";
+import EditServiceDialog from "../dialogs/edit-service-dialog";
 
 const TableServicesList = () => {
   const {
@@ -24,23 +22,29 @@ const TableServicesList = () => {
     isError: isServcosError,
   } = useGetServicosQuery();
 
-  return isFetchingServicos ? (
-    <Box component={Paper} p={2} mt={2}>
-      <LinearProgress />
-    </Box>
-  ) : isServcosError ? (
-    <Box component={Paper} p={2} mt={2} display="flex" justifyContent="center">
-      <Typography fontWeight="bold">
-        Ocorreu um erro ao buscar as informações.
-      </Typography>
-    </Box>
-  ) : (
-    <>
-      <TableContainer component={Paper}>
-        <Box display="flex" flexDirection="column" alignItems="flex-end">
-          <Button sx={{ margin: 1 }} size="small" variant="outlined">
-            Novo serviço
-          </Button>
+  return (
+    <Box component={Paper} display="flex" flexDirection="column" p={2}>
+      <Box display="flex" flexDirection="column" alignItems="flex-end">
+        <CreateServiceDialog />
+      </Box>
+      {isFetchingServicos ? (
+        <Box component={Paper} p={2} mt={2}>
+          <LinearProgress />
+        </Box>
+      ) : isServcosError ? (
+        <Box
+          component={Paper}
+          p={2}
+          mt={2}
+          display="flex"
+          justifyContent="center"
+        >
+          <Typography fontWeight="bold">
+            Ocorreu um erro ao buscar as informações.
+          </Typography>
+        </Box>
+      ) : (
+        <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -48,19 +52,25 @@ const TableServicesList = () => {
                   Informações
                 </TableCell>
                 <TableCell
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
+                  sx={{
+                    display: { xs: "none", sm: "none", md: "table-cell" },
+                  }}
                 >
                   Serviço
                 </TableCell>
                 <TableCell
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
+                  sx={{
+                    display: { xs: "none", sm: "none", md: "table-cell" },
+                  }}
                 >
                   Preço
                 </TableCell>
                 <TableCell
-                  sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
+                  sx={{
+                    display: { xs: "none", sm: "none", md: "table-cell" },
+                  }}
                 >
-                  Tempo estimado
+                  Descrição
                 </TableCell>
                 <TableCell>Ações</TableCell>
               </TableRow>
@@ -90,7 +100,7 @@ const TableServicesList = () => {
                         Preço: {row.preco}
                       </Typography>
                       <Typography variant="body2">
-                        Tempo estimado: {row.dt_criacao}
+                        Descrição: {row.descricao}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -119,27 +129,19 @@ const TableServicesList = () => {
                       display: { xs: "none", sm: "none", md: "table-cell" },
                     }}
                   >
-                    {row.dt_criacao}
+                    {row.descricao}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    <Tooltip title="Editar" arrow>
-                      <IconButton color="primary" size="small">
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Excluir" arrow>
-                      <IconButton color="error" size="small">
-                        <CancelIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <EditServiceDialog serviceId={row.id} />
+                    <DeleteServiceDialog serviceId={row.id} />
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </Box>
-      </TableContainer>
-    </>
+        </TableContainer>
+      )}
+    </Box>
   );
 };
 
