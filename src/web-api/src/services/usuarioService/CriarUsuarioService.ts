@@ -44,7 +44,7 @@ class CriarUsuarioService {
 
     async execute({ nome, cpf, data_de_nascimento, telefone, endereco, email, flag_maior_idade, responsavel, login, senha, flag_admin }: UsuarioRequest) {
         if (!nome || !cpf || !data_de_nascimento || !telefone || !endereco || !email || !login || !senha) {
-            throw new Error( "Dados incompletos, verifique os campos." );
+            throw new Error( "Dados incompletos, verifique os campos acima." );
         }
 
         if(flag_maior_idade == null) throw new Error( "Dados incompletos, verifique os campos." );
