@@ -62,7 +62,7 @@ const EditServiceDialog = ({ serviceId }: EditServiceDialogProps) => {
         nome: data.name,
         preco: data.price,
         descricao: data.description,
-      });
+      }).unwrap();
 
       toggleDialog();
     } catch {

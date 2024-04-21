@@ -31,7 +31,7 @@ const CreateServiceDialog = () => {
         nome: data.name,
         preco: Number(data.price),
         descricao: data.description,
-      });
+      }).unwrap();
 
       toggleDialog();
     } catch {

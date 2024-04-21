@@ -17,7 +17,7 @@ const DeleteServiceDialog = ({ serviceId }: DeleteServiceDialogProps) => {
 
   const onClick = async () => {
     try {
-      await excluirServico(serviceId);
+      await excluirServico(serviceId).unwrap();
       toggleDialog();
     } catch {
       console.error("Erro ao excluir servico");
