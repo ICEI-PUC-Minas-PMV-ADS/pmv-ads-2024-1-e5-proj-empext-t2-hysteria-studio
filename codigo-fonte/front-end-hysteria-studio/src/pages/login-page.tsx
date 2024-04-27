@@ -11,9 +11,10 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../services/endpoins";
 import Notify from "../components/notify";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/auth";
+import { useLoginMutation } from "../services/endpoins";
 
 interface LoginPageFormValues {
   email: string;
@@ -21,14 +22,17 @@ interface LoginPageFormValues {
 }
 
 const LoginPage = () => {
-  const [isNotifyErrorMessageOpen, setIsNotifyErrorMessageOpen] =
-    useState(false);
+  const { signIn } = useContext(AuthContext);
+  const [notifyErrorMessage, setNotifyErrorMessage] = useState({
+    isOpen: false,
+    message: "",
+  });
   const [login] = useLoginMutation();
 
   const toggleNotifyErrorMessage = () =>
-    setIsNotifyErrorMessageOpen((state) => !state);
+    setNotifyErrorMessage((state) => ({ ...state, isOpen: !state.isOpen }));
 
-  const formMethods = useForm<LoginPageFormValues>();
+  const formMethods = useForm<LoginPageFormValues>({ mode: "all" });
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -39,12 +43,16 @@ const LoginPage = () => {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await login(values).unwrap();
-
+      const loginInformation = await login(values).unwrap();
+      signIn(loginInformation);
       navigate("/inicio");
       reset();
-    } catch {
-      setIsNotifyErrorMessageOpen(true);
+    } catch (error: any) {
+      setNotifyErrorMessage({
+        isOpen: true,
+        message:
+          error.data.message || "Ocorreu um erro no login, tente novamente.",
+      });
     }
   });
 
@@ -98,7 +106,14 @@ const LoginPage = () => {
                     label="Email"
                     autoComplete="email"
                     autoFocus
-                    {...register("email", { required: "Campo obrigatório" })}
+                    {...register("email", {
+                      required: "Campo obrigatório",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message: "Email inválido",
+                      },
+                    })}
                     error={!!errors.email}
                     helperText={
                       errors.email?.message ? errors.email.message : null
@@ -135,9 +150,9 @@ const LoginPage = () => {
         </Container>
       </Box>
       <Notify
-        isOpen={isNotifyErrorMessageOpen}
+        isOpen={notifyErrorMessage.isOpen}
         severity="error"
-        message="Ocorreu um erro ao fazer login. Tente novamente."
+        message={notifyErrorMessage.message}
         onClose={toggleNotifyErrorMessage}
       />
     </>

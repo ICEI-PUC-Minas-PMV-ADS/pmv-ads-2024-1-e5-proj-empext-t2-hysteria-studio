@@ -8,6 +8,7 @@ import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import MenuDropdown from "./menu-dropdown";
+import { AuthContext } from "../contexts/auth";
 
 const logoStyle = {
   width: "160px",
@@ -16,10 +17,17 @@ const logoStyle = {
 };
 
 const AppAppBar = () => {
+  const { signed, signOut } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const toggleDrawer = () => setOpen((state) => !state);
+
+  const handleLogout = () => {
+    signOut();
+    navigate("/");
+    toggleDrawer();
+  };
 
   return (
     <AppBar
@@ -67,25 +75,30 @@ const AppAppBar = () => {
             alignItems: "center",
           }}
         >
-          <MenuDropdown />
-          <Button
-            color="primary"
-            variant="text"
-            size="small"
-            component="a"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            size="small"
-            component="a"
-            onClick={() => navigate("/cadastro")}
-          >
-            Cadastro
-          </Button>
+          {signed ? (
+            <MenuDropdown />
+          ) : (
+            <>
+              <Button
+                color="primary"
+                variant="text"
+                size="small"
+                component="a"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                size="small"
+                component="a"
+                onClick={() => navigate("/cadastro")}
+              >
+                Cadastro
+              </Button>
+            </>
+          )}
         </Box>
         <Box sx={{ display: { sm: "", md: "none" } }}>
           <Button
@@ -114,75 +127,79 @@ const AppAppBar = () => {
                   flexGrow: 1,
                 }}
               ></Box>
-              <MenuItem>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  component="a"
-                  onClick={() => {
-                    navigate("/login");
-                    toggleDrawer();
-                  }}
-                  sx={{ width: "100%" }}
-                >
-                  Login
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  component="a"
-                  onClick={() => {
-                    navigate("/cadastro");
-                    toggleDrawer();
-                  }}
-                  sx={{ width: "100%" }}
-                >
-                  Cadastro
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  component="a"
-                  onClick={() => {
-                    navigate("/pedidos-de-agendamento");
-                    toggleDrawer();
-                  }}
-                  sx={{ width: "100%" }}
-                >
-                  Pedidos de agendamento
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  component="a"
-                  onClick={() => {
-                    toggleDrawer();
-                  }}
-                  sx={{ width: "100%" }}
-                >
-                  Minhas informações
-                </Button>
-              </MenuItem>
-              <MenuItem>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  component="a"
-                  onClick={() => {
-                    navigate("/");
-                    toggleDrawer();
-                  }}
-                  sx={{ width: "100%" }}
-                >
-                  Sair
-                </Button>
-              </MenuItem>
+              {signed ? (
+                <>
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component="a"
+                      onClick={() => {
+                        navigate("/pedidos-de-agendamento");
+                        toggleDrawer();
+                      }}
+                      sx={{ width: "100%" }}
+                    >
+                      Pedidos de agendamento
+                    </Button>
+                  </MenuItem>
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component="a"
+                      onClick={() => {
+                        toggleDrawer();
+                      }}
+                      sx={{ width: "100%" }}
+                    >
+                      Minhas informações
+                    </Button>
+                  </MenuItem>
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component="a"
+                      onClick={handleLogout}
+                      sx={{ width: "100%" }}
+                    >
+                      Sair
+                    </Button>
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      component="a"
+                      onClick={() => {
+                        navigate("/login");
+                        toggleDrawer();
+                      }}
+                      sx={{ width: "100%" }}
+                    >
+                      Login
+                    </Button>
+                  </MenuItem>
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      component="a"
+                      onClick={() => {
+                        navigate("/cadastro");
+                        toggleDrawer();
+                      }}
+                      sx={{ width: "100%" }}
+                    >
+                      Cadastro
+                    </Button>
+                  </MenuItem>
+                </>
+              )}
             </Box>
           </Drawer>
         </Box>

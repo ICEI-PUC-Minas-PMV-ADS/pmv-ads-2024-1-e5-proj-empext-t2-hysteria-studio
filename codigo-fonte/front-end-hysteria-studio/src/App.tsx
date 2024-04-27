@@ -9,36 +9,34 @@ import ListsPage from "./pages/lists-page";
 import SchedulingRequestsPage from "./pages/scheduling-requests-page";
 import { Provider } from "react-redux";
 import { store } from "./services/store";
+import AuthProvider from "./contexts/auth";
+import Private from "./components/private";
 
 function App() {
   const theme = createTheme(customTheme);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <AppAppBar />
-          <Routes>
-            <Route path="/" element={<InitialPage />} />
-          </Routes>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-          <Routes>
-            <Route path="/cadastro" element={<RegisterPage />} />
-          </Routes>
-          <Routes>
-            <Route path="/inicio" element={<ListsPage />} />
-          </Routes>
-          <Routes>
-            <Route
-              path="/pedidos-de-agendamento"
-              element={<SchedulingRequestsPage />}
-            />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <AppAppBar />
+            <Routes>
+              <Route path="/" element={<InitialPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/cadastro" element={<RegisterPage />} />
+              <Route path="/inicio" element={<Private />}>
+                <Route path="/inicio" element={<ListsPage />} />
+              </Route>
+              <Route
+                path="/pedidos-de-agendamento"
+                element={<SchedulingRequestsPage />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </Provider>
+    </AuthProvider>
   );
 }
 

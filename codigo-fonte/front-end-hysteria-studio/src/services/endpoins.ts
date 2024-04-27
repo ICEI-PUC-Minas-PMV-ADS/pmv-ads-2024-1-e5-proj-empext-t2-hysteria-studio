@@ -48,6 +48,19 @@ interface LoginArg {
   password: string;
 }
 
+export interface LoginResult {
+  cpf: string;
+  createdAt: string;
+  data_de_nascimento: string;
+  email: string;
+  flag_admin: boolean;
+  id: number;
+  nome: string;
+  senha: string;
+  telefone: string;
+  updatedAt: string;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -85,7 +98,7 @@ export const endpointsApi = createApi({
       }),
       invalidatesTags: ["ServicosList"],
     }),
-    login: builder.mutation<any, LoginArg>({
+    login: builder.mutation<LoginResult, LoginArg>({
       query: (arg) => ({
         url: "login",
         method: "POST",
