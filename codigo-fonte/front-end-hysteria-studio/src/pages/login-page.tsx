@@ -11,6 +11,9 @@ import {
 import { FormProvider, useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../services/endpoins";
+import Notify from "../components/notify";
+import { useState } from "react";
 
 interface LoginPageFormValues {
   email: string;
@@ -18,13 +21,31 @@ interface LoginPageFormValues {
 }
 
 const LoginPage = () => {
+  const [isNotifyErrorMessageOpen, setIsNotifyErrorMessageOpen] =
+    useState(false);
+  const [login] = useLoginMutation();
+
+  const toggleNotifyErrorMessage = () =>
+    setIsNotifyErrorMessageOpen((state) => !state);
+
   const formMethods = useForm<LoginPageFormValues>();
   const navigate = useNavigate();
-  const { handleSubmit, register } = formMethods;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    reset,
+  } = formMethods;
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    navigate("/inicio");
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      await login(values).unwrap();
+
+      navigate("/inicio");
+      reset();
+    } catch {
+      setIsNotifyErrorMessageOpen(true);
+    }
   });
 
   return (
@@ -68,40 +89,57 @@ const LoginPage = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <FormProvider {...formMethods}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  autoComplete="email"
-                  autoFocus
-                  {...register("email")}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Senha"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  {...register("password")}
-                />
+                <form noValidate onSubmit={onSubmit}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email"
+                    autoComplete="email"
+                    autoFocus
+                    {...register("email", { required: "Campo obrigatório" })}
+                    error={!!errors.email}
+                    helperText={
+                      errors.email?.message ? errors.email.message : null
+                    }
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Senha"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    {...register("password", { required: "Campo obrigatório" })}
+                    error={!!errors.password}
+                    helperText={
+                      errors.password?.message ? errors.password.message : null
+                    }
+                  />
 
-                <LoadingButton
-                  onClick={onSubmit}
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Entrar
-                </LoadingButton>
+                  <LoadingButton
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    loading={isSubmitting}
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Entrar
+                  </LoadingButton>
+                </form>
               </FormProvider>
             </Box>
           </Stack>
         </Container>
       </Box>
+      <Notify
+        isOpen={isNotifyErrorMessageOpen}
+        severity="error"
+        message="Ocorreu um erro ao fazer login. Tente novamente."
+        onClose={toggleNotifyErrorMessage}
+      />
     </>
   );
 };

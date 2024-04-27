@@ -43,6 +43,11 @@ interface UpdateServicoResult {
   updatedAt: string;
 }
 
+interface LoginArg {
+  email: string;
+  password: string;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -80,6 +85,13 @@ export const endpointsApi = createApi({
       }),
       invalidatesTags: ["ServicosList"],
     }),
+    login: builder.mutation<any, LoginArg>({
+      query: (arg) => ({
+        url: "login",
+        method: "POST",
+        body: arg,
+      }),
+    }),
   }),
 });
 
@@ -89,4 +101,5 @@ export const {
   useDeleteServicoMutation,
   useGetOneServicoQuery,
   useUpdateServicoMutation,
+  useLoginMutation,
 } = endpointsApi;
