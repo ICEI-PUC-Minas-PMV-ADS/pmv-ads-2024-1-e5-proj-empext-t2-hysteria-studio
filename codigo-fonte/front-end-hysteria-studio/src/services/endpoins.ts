@@ -60,13 +60,34 @@ export interface LoginResult {
   telefone: string;
   updatedAt: string;
 }
+interface CreateUsuarioParams {
+  nome: string;
+  cpf: string;
+  data_de_nascimento: Date;
+  telefone: string;
+  endereco: string;
+  email: string;
+  flag_maior_idade: number;
+  responsavel: string;
+  login: string;
+  senha: string;
+  flag_admin: number;
+}
+
+interface CreateUsuarioResult {
+  id: string;
+  nome: string;
+  email: string;
+  flag_admin: number;
+  dt_criacao: string;
+}
 
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList"],
+  tagTypes: ["ServicosList", "UsuarioList"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -105,6 +126,14 @@ export const endpointsApi = createApi({
         body: arg,
       }),
     }),
+    createUsuario: builder.mutation<CreateUsuarioResult, CreateUsuarioParams>({
+      query: (body) => ({
+        url: "usuario",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["UsuarioList"],
+    }),
   }),
 });
 
@@ -115,4 +144,5 @@ export const {
   useGetOneServicoQuery,
   useUpdateServicoMutation,
   useLoginMutation,
+  useCreateUsuarioMutation,
 } = endpointsApi;
