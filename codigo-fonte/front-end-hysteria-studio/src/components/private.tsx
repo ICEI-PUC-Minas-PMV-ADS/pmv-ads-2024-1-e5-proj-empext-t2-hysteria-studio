@@ -8,4 +8,10 @@ const Private = () => {
   return signed ? <Outlet /> : <Navigate to="/login" />;
 };
 
-export default Private;
+const Public = () => {
+  const { signed } = useContext(AuthContext);
+
+  return signed ? <Navigate to="/inicio" /> : <Outlet />;
+};
+
+export { Private, Public };
