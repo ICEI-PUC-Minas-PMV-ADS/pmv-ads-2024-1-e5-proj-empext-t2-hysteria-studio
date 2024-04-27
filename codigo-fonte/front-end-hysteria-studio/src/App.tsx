@@ -12,6 +12,7 @@ import { store } from "./services/store";
 import AuthProvider from "./contexts/auth";
 import { Private, Public } from "./components/private";
 import AddNewAdminPage from "./pages/add-new-admin-user-page";
+import EditUsersInformationPage from "./pages/edit-users-information-page";
 
 function App() {
   const theme = createTheme(customTheme);
@@ -43,6 +44,12 @@ function App() {
                 <Route
                   path="/adicionar-administrador"
                   element={<AddNewAdminPage />}
+                />
+              </Route>
+              <Route path="/minhas-informacoes" element={<Private />}>
+                <Route
+                  path="/minhas-informacoes"
+                  element={<EditUsersInformationPage />}
                 />
               </Route>
             </Routes>
