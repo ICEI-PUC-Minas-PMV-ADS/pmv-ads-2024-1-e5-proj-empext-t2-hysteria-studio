@@ -60,6 +60,28 @@ export interface LoginResult {
   telefone: string;
   updatedAt: string;
 }
+interface CreateUsuarioParams {
+  nome: string;
+  cpf: string;
+  data_de_nascimento: Date;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+}
+
+interface CreateUsuarioResult {
+  id: number;
+  nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+  updatedAt: string;
+  createdAt: string;
+}
 
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
@@ -105,6 +127,13 @@ export const endpointsApi = createApi({
         body: arg,
       }),
     }),
+    createUsuario: builder.mutation<CreateUsuarioResult, CreateUsuarioParams>({
+      query: (body) => ({
+        url: "usuario",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -115,4 +144,5 @@ export const {
   useGetOneServicoQuery,
   useUpdateServicoMutation,
   useLoginMutation,
+  useCreateUsuarioMutation,
 } = endpointsApi;
