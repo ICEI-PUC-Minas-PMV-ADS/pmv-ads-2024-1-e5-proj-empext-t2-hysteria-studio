@@ -1,11 +1,13 @@
 import { Avatar } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/auth";
 
 const MenuDropdown = () => {
+  const { isAdmin, signOut } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
 
@@ -26,6 +28,7 @@ const MenuDropdown = () => {
   };
   const handleLogout = () => {
     setAnchorEl(null);
+    signOut();
     navigate("/");
   };
 
@@ -53,9 +56,11 @@ const MenuDropdown = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleSchedulingRequests}>
-          Pedidos de agendamento
-        </MenuItem>
+        {isAdmin && (
+          <MenuItem onClick={handleSchedulingRequests}>
+            Pedidos de agendamento
+          </MenuItem>
+        )}
         <MenuItem onClick={handleMyInformation}>Minhas informações</MenuItem>
         <MenuItem onClick={handleLogout}>Sair</MenuItem>
       </Menu>

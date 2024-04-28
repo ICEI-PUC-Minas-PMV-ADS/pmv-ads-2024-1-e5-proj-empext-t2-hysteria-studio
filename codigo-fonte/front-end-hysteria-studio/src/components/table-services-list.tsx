@@ -14,8 +14,12 @@ import { useGetServicosQuery } from "../services/endpoins";
 import CreateServiceDialog from "../dialogs/create-service-dialog";
 import DeleteServiceDialog from "../dialogs/delete-service-dialog";
 import EditServiceDialog from "../dialogs/edit-service-dialog";
+import { AuthContext } from "../contexts/auth";
+import { useContext } from "react";
 
 const TableServicesList = () => {
+  const { isAdmin } = useContext(AuthContext);
+
   const {
     data: servicos,
     isFetching: isFetchingServicos,
@@ -24,9 +28,11 @@ const TableServicesList = () => {
 
   return (
     <Box component={Paper} display="flex" flexDirection="column" p={2}>
-      <Box display="flex" flexDirection="column" alignItems="flex-end">
-        <CreateServiceDialog />
-      </Box>
+      {isAdmin && (
+        <Box display="flex" flexDirection="column" alignItems="flex-end">
+          <CreateServiceDialog />
+        </Box>
+      )}
       {isFetchingServicos ? (
         <Box component={Paper} p={2} mt={2}>
           <LinearProgress />
@@ -72,7 +78,7 @@ const TableServicesList = () => {
                 >
                   Descrição
                 </TableCell>
-                <TableCell>Ações</TableCell>
+                {isAdmin && <TableCell>Ações</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -131,10 +137,12 @@ const TableServicesList = () => {
                   >
                     {row.descricao}
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    <EditServiceDialog serviceId={row.id} />
-                    <DeleteServiceDialog serviceId={row.id} />
-                  </TableCell>
+                  {isAdmin && (
+                    <TableCell component="th" scope="row">
+                      <EditServiceDialog serviceId={row.id} />
+                      <DeleteServiceDialog serviceId={row.id} />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
