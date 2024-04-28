@@ -4,56 +4,78 @@ import {
   Box,
   Container,
   CssBaseline,
+  Grid,
   Paper,
   Stack,
   TextField,
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useCreateUsuarioMutation } from "../services/endpoins";
+import {
+  useCreateUsuarioMutation,
+  useLoginMutation,
+} from "../services/endpoins";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/auth";
+import { useContext, useState } from "react";
+import Notify from "../components/notify";
 
 interface RegisterPageFormValues {
   nome: string;
   cpf: string;
   data_de_nascimento: Date;
   telefone: string;
-  endereco: string;
   email: string;
-  flag_maior_idade: number;
-  responsavel: string;
-  login: string;
   senha: string;
-  flag_admin: number;
 }
 
 const RegisterPage = () => {
-  const formMethods = useForm<RegisterPageFormValues>();
-  const { handleSubmit, register } = formMethods;
+  const { signIn } = useContext(AuthContext);
+  const [notifyErrorMessage, setNotifyErrorMessage] = useState({
+    isOpen: false,
+    message: "",
+  });
+  const navigate = useNavigate();
   const [criarUsuario] = useCreateUsuarioMutation();
+  const [login] = useLoginMutation();
+
+  const toggleNotifyErrorMessage = () =>
+    setNotifyErrorMessage((state) => ({ ...state, isOpen: !state.isOpen }));
+
+  const formMethods = useForm<RegisterPageFormValues>({ mode: "all" });
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting, errors },
+    reset,
+  } = formMethods;
 
   const onSubmit = handleSubmit(async (data) => {
-
-    // O campo abaixo não existe no formulário, porém, é obrigatório. O usuário não deve escolher uma opção, então já está sendo definido que qualquer usuário será comum, e não adm.
-    data.flag_admin = 0;
-
     try {
-      await criarUsuario({
+      const userInformation = await criarUsuario({
         nome: data.nome,
         cpf: data.cpf,
         data_de_nascimento: data.data_de_nascimento,
         telefone: data.telefone,
-        endereco: data.endereco,
         email: data.email,
-        flag_maior_idade: Number(data.flag_maior_idade),
-        responsavel: data.responsavel,
-        login: data.login,
         senha: data.senha,
-        flag_admin: data.flag_admin,
+        flag_admin: false,
+      }).unwrap();
+
+      const loginInformation = await login({
+        email: userInformation.email,
+        password: userInformation.senha,
+      }).unwrap();
+
+      signIn(loginInformation);
+      navigate("/inicio");
+      reset();
+    } catch (error: any) {
+      setNotifyErrorMessage({
+        isOpen: true,
+        message:
+          error.data.message || "Ocorreu um erro no cadastro, tente novamente.",
       });
-      console.log("Usuário criado com sucesso!");
-    } catch (error) {
-      //console.log(error);
-      console.error("Erro ao criar usuário:", error);
     }
   });
 
@@ -82,7 +104,7 @@ const RegisterPage = () => {
           <Stack
             spacing={2}
             useFlexGap
-            sx={{ width: { xs: "100%", sm: "60%" } }}
+            sx={{ width: { xs: "100%", sm: "80%" } }}
           >
             <Box
               sx={{
@@ -98,116 +120,152 @@ const RegisterPage = () => {
                 <LockOutlinedIcon />
               </Avatar>
               <FormProvider {...formMethods}>
-                <form onSubmit={onSubmit}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="nome"
-                    label="Nome completo"
-                    autoComplete="nome"
-                    autoFocus
-                    {...register("nome")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="cpf"
-                    label="CPF (apenas números)"
-                    autoComplete="cpf"
-                    {...register("cpf")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="data_de_nascimento"
-                    label="Data de Nascimento"
-                    type="date"
-                    autoComplete="data_de_nascimento"
-                    {...register("data_de_nascimento")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="telefone"
-                    label="Telefone (apenas números)"
-                    autoComplete="telefone"
-                    {...register("telefone")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="endereco"
-                    label="Endereço Completo"
-                    autoComplete="endereco"
-                    {...register("endereco")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email"
-                    autoComplete="email"
-                    {...register("email")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="flag_maior_idade"
-                    type="number"
-                    //inputMode="numeric"
-                    label="Idade"
-                    autoComplete="flag_maior_idade"
-                    {...register("flag_maior_idade")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="responsavel"
-                    label="Responsável"
-                    autoComplete="responsavel"
-                    {...register("responsavel")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="login"
-                    label="Login"
-                    autoComplete="login"
-                    {...register("login")}
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Senha"
-                    type="password"
-                    id="senha"
-                    autoComplete="current-password"
-                    {...register("senha")}
-                  />
-                  <LoadingButton
-                    onClick={onSubmit}
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Cadastrar
-                  </LoadingButton>
+                <form noValidate onSubmit={onSubmit}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        id="nome"
+                        label="Nome completo"
+                        autoComplete="nome"
+                        autoFocus
+                        {...register("nome", { required: "Campo obrigatório" })}
+                        error={!!errors.nome}
+                        helperText={
+                          errors.nome?.message ? errors.nome.message : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        id="cpf"
+                        label="CPF"
+                        autoComplete="cpf"
+                        {...register("cpf", {
+                          required: "Campo obrigatório",
+                          pattern: {
+                            value: /^[0-9]*$/,
+                            message: "Telefone inválido",
+                          },
+                        })}
+                        error={!!errors.cpf}
+                        helperText={
+                          errors.cpf?.message ? errors.cpf.message : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        id="telefone"
+                        label="Telefone"
+                        autoComplete="telefone"
+                        {...register("telefone", {
+                          required: "Campo obrigatório",
+                          pattern: {
+                            value: /^[0-9]*$/,
+                            message: "Telefone inválido",
+                          },
+                        })}
+                        error={!!errors.telefone}
+                        helperText={
+                          errors.telefone?.message
+                            ? errors.telefone.message
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        id="data_de_nascimento"
+                        label="Data de Nascimento"
+                        type="date"
+                        autoComplete="data_de_nascimento"
+                        {...register("data_de_nascimento", {
+                          required: "Campo obrigatório",
+                        })}
+                        error={!!errors.data_de_nascimento}
+                        helperText={
+                          errors.data_de_nascimento?.message
+                            ? errors.data_de_nascimento.message
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email"
+                        autoComplete="email"
+                        {...register("email", {
+                          required: "Campo obrigatório",
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: "Email inválido",
+                          },
+                        })}
+                        error={!!errors.email}
+                        helperText={
+                          errors.email?.message ? errors.email.message : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        margin="none"
+                        required
+                        fullWidth
+                        label="Senha"
+                        type="password"
+                        id="senha"
+                        autoComplete="current-password"
+                        {...register("senha", {
+                          required: "Campo obrigatório",
+                        })}
+                        error={!!errors.senha}
+                        helperText={
+                          errors.senha?.message ? errors.senha.message : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <LoadingButton
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        loading={isSubmitting}
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Cadastrar
+                      </LoadingButton>
+                    </Grid>
+                  </Grid>
                 </form>
               </FormProvider>
             </Box>
           </Stack>
         </Container>
       </Box>
+      <Notify
+        isOpen={notifyErrorMessage.isOpen}
+        severity="error"
+        message={notifyErrorMessage.message}
+        onClose={toggleNotifyErrorMessage}
+      />
     </>
   );
 };

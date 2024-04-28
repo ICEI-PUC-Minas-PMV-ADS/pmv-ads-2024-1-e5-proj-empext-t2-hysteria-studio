@@ -65,21 +65,22 @@ interface CreateUsuarioParams {
   cpf: string;
   data_de_nascimento: Date;
   telefone: string;
-  endereco: string;
   email: string;
-  flag_maior_idade: number;
-  responsavel: string;
-  login: string;
   senha: string;
-  flag_admin: number;
+  flag_admin: boolean;
 }
 
 interface CreateUsuarioResult {
-  id: string;
+  id: number;
   nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
   email: string;
-  flag_admin: number;
-  dt_criacao: string;
+  senha: string;
+  flag_admin: boolean;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export const endpointsApi = createApi({
@@ -87,7 +88,7 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "UsuarioList"],
+  tagTypes: ["ServicosList"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -132,7 +133,6 @@ export const endpointsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["UsuarioList"],
     }),
   }),
 });
