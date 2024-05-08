@@ -20,7 +20,7 @@ const DeleteSchedulingDialog = ({ agendaId } : DeleteAgendaDialogProps) => {
       await excluirAgenda(agendaId).unwrap();
       toggleDialog();
     } catch {
-      console.error("Erro ao excluir agendamento");
+      console.error("Erro ao cancelar agendamento");
     }
   };
 

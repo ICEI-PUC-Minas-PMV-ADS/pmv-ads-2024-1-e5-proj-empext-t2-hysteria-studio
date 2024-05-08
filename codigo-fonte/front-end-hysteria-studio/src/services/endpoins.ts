@@ -82,6 +82,9 @@ interface CreateUsuarioResult {
   updatedAt: string;
   createdAt: string;
 }
+interface DeleteAgendaResult {
+  message: string;
+}
 
 export interface GetPedidosResult {
   id_agendamento: number;
@@ -131,6 +134,7 @@ export const endpointsApi = createApi({
       query: () => "servicos",
       providesTags: ["ServicosList"],
     }),
+
     createServico: builder.mutation<CreateServicoResult, CreateServicoParams>({
       query: (body) => ({
         url: "servico",
@@ -182,6 +186,13 @@ export const endpointsApi = createApi({
         body,
       }),
     }),
+    deleteAgenda: builder.mutation<DeleteAgendaResult, string>({
+      query: (id) => ({
+        url: `agenda/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [],
+    }),
   }),
 });
 
@@ -195,4 +206,5 @@ export const {
   useCreateUsuarioMutation,
   useGetPedidosQuery,
   useEditUsuarioMutation,
+  useDeleteAgendaMutation,
 } = endpointsApi;
