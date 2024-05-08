@@ -3,10 +3,26 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SimpleDialog from "../components/simple-dialog";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import { useDeleteAgendaMutation } from "../services/endpoins";
 
-const DeleteSchedulingDialog = () => {
+interface DeleteAgendaDialogProps{
+  agendaId: string;
+}
+
+const DeleteSchedulingDialog = ({ agendaId } : DeleteAgendaDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [excluirAgenda, {isLoading: isExcluirAgendaLoading}] = 
+  useDeleteAgendaMutation();
   const toggleDialog = () => setIsDialogOpen((state) => !state);
+
+  const onClick = async () => {
+    try {
+      await excluirAgenda(agendaId).unwrap();
+      toggleDialog();
+    } catch {
+      console.error("Erro ao excluir agendamento");
+    }
+  };
 
   return (
     <>
@@ -22,7 +38,7 @@ const DeleteSchedulingDialog = () => {
         toggleDialog={toggleDialog}
         maxWidth="xs"
         actions={[
-          <LoadingButton>Confirmar</LoadingButton>,
+          <LoadingButton loading= {isExcluirAgendaLoading} onClick={onClick}>Confirmar</LoadingButton>,
           <Button onClick={toggleDialog}>Fechar</Button>,
         ]}
       />
