@@ -11,6 +11,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
+import { useGetPedidosQuery } from "../services/endpoins";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
@@ -25,15 +26,12 @@ function createData(
   return { name, date, service, status };
 }
 
-const rows = [
-  createData("Amanda Cacholi", "18/03/2024 14:30", "Corte de cabelo", true),
-  createData("Marcus Vinicius", "18/03/2024 14:30", "Corte de cabelo", true),
-  createData("Patrick", "18/03/2024 14:30", "Corte de cabelo", true),
-  createData("Luiz", "18/03/2024 14:30", "Corte de cabelo", false),
-  createData("Stephanie", "18/03/2024 14:30", "Corte de cabelo", false),
-];
-
 const TableSchedulingLists = ({ listType }: TableListProps) => {
+
+  const {
+    data: agendamentos,
+  } = useGetPedidosQuery();
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -65,9 +63,9 @@ const TableSchedulingLists = ({ listType }: TableListProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {agendamentos?.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.nome}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell
@@ -75,7 +73,7 @@ const TableSchedulingLists = ({ listType }: TableListProps) => {
                 scope="row"
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.name}
+                {row.nome}
               </TableCell>
               <TableCell
                 component="th"
@@ -89,10 +87,10 @@ const TableSchedulingLists = ({ listType }: TableListProps) => {
                     alignItems: "flex-start",
                   }}
                 >
-                  <Typography variant="body2">Nome: {row.name}</Typography>
-                  <Typography variant="body2">Data: {row.date}</Typography>
+                  <Typography variant="body2">Nome: {row.nome}</Typography>
+                  <Typography variant="body2">Data: {row.data}</Typography>
                   <Typography variant="body2">
-                    Serviço: {row.service}
+                    Serviço: {row.servico}
                   </Typography>
                 </Box>
               </TableCell>
@@ -105,12 +103,12 @@ const TableSchedulingLists = ({ listType }: TableListProps) => {
                   },
                 }}
               >
-                {row.date}
+                {row.data}
               </TableCell>
               <TableCell
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.service}
+                {row.servico}
               </TableCell>
               {listType === "history" ? (
                 <TableCell>
