@@ -13,7 +13,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/auth";
-import { useEditUsuarioMutation } from "../services/endpoins";
+import {
+  EditUsuarioParams,
+  useEditUsuarioMutation,
+} from "../services/endpoins";
 import Notify from "../components/notify";
 
 interface EditUsersInformationFormValues {
@@ -62,7 +65,7 @@ const EditUsersInformationPage = () => {
         data_de_nascimento: values.birthdate,
         telefone: values.telephone,
         email: values.email,
-      }).unwrap();
+      } as EditUsuarioParams).unwrap();
 
       signIn(newInfo);
 
