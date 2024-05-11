@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/auth";
+import { useEditUsuarioMutation } from "../services/endpoins";
+import Notify from "../components/notify";
 
 interface EditUsersInformationFormValues {
   name: string;
@@ -20,14 +24,53 @@ interface EditUsersInformationFormValues {
 }
 
 const EditUsersInformationPage = () => {
+  const { user } = useContext(AuthContext);
+  const [notifyErrorMessage, setNotifyErrorMessage] = useState({
+    isOpen: false,
+    message: "",
+  });
+  const [editUsuario] = useEditUsuarioMutation();
+
+  const toggleNotifyErrorMessage = () =>
+    setNotifyErrorMessage((state) => ({ ...state, isOpen: !state.isOpen }));
+
   const formMethods = useForm<EditUsersInformationFormValues>({
     mode: "all",
+    defaultValues: {
+      name: user?.nome || "",
+      birthdate: user?.data_de_nascimento.slice(0, 10) || "",
+      telephone: user?.telefone || "",
+      email: user?.email || "",
+    },
   });
   const {
     handleSubmit,
     register,
     formState: { isValid, isSubmitting, errors },
   } = formMethods;
+
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      await editUsuario({
+        ...user,
+        nome: values.name,
+        data_de_nascimento: values.birthdate,
+        telefone: values.telephone,
+        email: values.email,
+      }).unwrap();
+
+      setNotifyErrorMessage({
+        isOpen: true,
+        message: "Informações atualizadas com sucesso.",
+      });
+    } catch (error: any) {
+      setNotifyErrorMessage({
+        isOpen: true,
+        message:
+          error.data.message || "Ocorreu um erro ao atualizar as informações.",
+      });
+    }
+  });
 
   return (
     <>
@@ -69,7 +112,7 @@ const EditUsersInformationPage = () => {
                 <AccountCircleIcon />
               </Avatar>
               <FormProvider {...formMethods}>
-                <form onSubmit={handleSubmit(() => {})}>
+                <form onSubmit={onSubmit}>
                   <TextField
                     required
                     margin="normal"
@@ -82,6 +125,7 @@ const EditUsersInformationPage = () => {
                     helperText={
                       errors.name?.message ? errors.name.message : null
                     }
+                    disabled={isSubmitting}
                   />
                   <TextField
                     required
@@ -100,6 +144,7 @@ const EditUsersInformationPage = () => {
                         ? errors.birthdate.message
                         : null
                     }
+                    disabled={isSubmitting}
                   />
                   <TextField
                     required
@@ -117,6 +162,7 @@ const EditUsersInformationPage = () => {
                         ? errors.telephone.message
                         : null
                     }
+                    disabled={isSubmitting}
                   />
                   <TextField
                     required
@@ -137,6 +183,7 @@ const EditUsersInformationPage = () => {
                     helperText={
                       errors.email?.message ? errors.email.message : null
                     }
+                    disabled={isSubmitting}
                   />
                   <LoadingButton
                     fullWidth
@@ -145,7 +192,7 @@ const EditUsersInformationPage = () => {
                     variant="contained"
                     loading={isSubmitting}
                   >
-                    Criar serviço
+                    Salvar
                   </LoadingButton>
                 </form>
               </FormProvider>
@@ -156,6 +203,12 @@ const EditUsersInformationPage = () => {
           </Stack>
         </Container>
       </Box>
+      <Notify
+        isOpen={notifyErrorMessage.isOpen}
+        severity="error"
+        message={notifyErrorMessage.message}
+        onClose={toggleNotifyErrorMessage}
+      />
     </>
   );
 };

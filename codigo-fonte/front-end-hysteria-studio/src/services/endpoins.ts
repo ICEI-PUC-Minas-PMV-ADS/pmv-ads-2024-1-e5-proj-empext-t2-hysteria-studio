@@ -145,6 +145,13 @@ export const endpointsApi = createApi({
     getPedidos: builder.query<Array<GetPedidosResult>, void>({
       query: () => "agendamentos",
     }),
+    editUsuario: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `usuario/${id}`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -157,4 +164,5 @@ export const {
   useLoginMutation,
   useCreateUsuarioMutation,
   useGetPedidosQuery,
+  useEditUsuarioMutation,
 } = endpointsApi;
