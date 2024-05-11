@@ -12,6 +12,7 @@ import { useState } from "react";
 import TableSchedulingLists from "../components/table-scheduling-lists";
 import TableServicesList from "../components/table-services-list";
 import NewSchedulingDialog from "../dialogs/new-scheduling-dialog";
+import SchedulingList from "./scheduling-list";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -80,9 +81,10 @@ const ListsPage = () => {
               <Tab label="Serviços" />
             </Tabs>
             <CustomTabPanel value={value} index={0}>
-              <TableSchedulingLists listType="scheduled" />
+              <SchedulingList />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+              {/* @ts-ignore */}
               <TableSchedulingLists listType="history" />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>

@@ -83,7 +83,7 @@ interface CreateUsuarioResult {
   createdAt: string;
 }
 
-interface GetPedidosResult {
+export interface GetPedidosResult {
   id: string;
   nome: string;
   data: string;
@@ -94,7 +94,7 @@ interface GetPedidosResult {
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3333",
+    baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
   tagTypes: ["ServicosList", "PedidosList"],
   endpoints: (builder) => ({
@@ -143,7 +143,7 @@ export const endpointsApi = createApi({
       }),
     }),
     getPedidos: builder.query<Array<GetPedidosResult>, void>({
-      query: () => "pedidos",
+      query: () => "agendamentos",
       providesTags: ["PedidosList"],
     }),
   }),

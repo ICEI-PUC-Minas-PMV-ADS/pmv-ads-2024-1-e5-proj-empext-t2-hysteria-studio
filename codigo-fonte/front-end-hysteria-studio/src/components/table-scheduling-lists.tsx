@@ -11,27 +11,14 @@ import CheckIcon from "@mui/icons-material/Check";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
-import { useGetPedidosQuery } from "../services/endpoins";
+import { GetPedidosResult } from "../services/endpoins";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
+  data: Array<GetPedidosResult>;
 }
 
-function createData(
-  name: string,
-  date: string,
-  service: string,
-  status?: boolean
-) {
-  return { name, date, service, status };
-}
-
-const TableSchedulingLists = ({ listType }: TableListProps) => {
-
-  const {
-    data: agendamentos,
-  } = useGetPedidosQuery();
-
+const TableSchedulingLists = ({ listType, data }: TableListProps) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -63,7 +50,7 @@ const TableSchedulingLists = ({ listType }: TableListProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {agendamentos?.map((row) => (
+          {data?.map((row) => (
             <TableRow
               key={row.nome}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
