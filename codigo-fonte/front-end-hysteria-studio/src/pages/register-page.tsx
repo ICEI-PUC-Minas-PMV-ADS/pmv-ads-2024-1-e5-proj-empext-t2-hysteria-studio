@@ -22,6 +22,7 @@ import Notify from "../components/notify";
 import {
   isValidCPF,
   isValidMobilePhone,
+  onlyNumbers,
 } from "@brazilian-utils/brazilian-utils";
 
 interface RegisterPageFormValues {
@@ -58,9 +59,9 @@ const RegisterPage = () => {
     try {
       const userInformation = await criarUsuario({
         nome: data.nome,
-        cpf: data.cpf,
+        cpf: onlyNumbers(data.cpf),
         data_de_nascimento: data.data_de_nascimento,
-        telefone: data.telefone,
+        telefone: onlyNumbers(data.telefone),
         email: data.email,
         senha: data.senha,
         flag_admin: false,
@@ -152,12 +153,8 @@ const RegisterPage = () => {
                         autoComplete="cpf"
                         {...register("cpf", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
                           validate: (value) =>
-                            isValidCPF(value) || "CPF inválido.",
+                            isValidCPF(onlyNumbers(value)) || "CPF inválido.",
                         })}
                         error={!!errors.cpf}
                         helperText={
@@ -175,10 +172,6 @@ const RegisterPage = () => {
                         autoComplete="telefone"
                         {...register("telefone", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
                           validate: (value) =>
                             isValidMobilePhone(value) || "Telefone inválido.",
                         })}

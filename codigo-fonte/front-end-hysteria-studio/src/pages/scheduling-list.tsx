@@ -1,13 +1,16 @@
 import { Box, LinearProgress, Paper, Typography } from "@mui/material";
 import TableSchedulingLists from "../components/table-scheduling-lists";
-import { GetPedidosResult, useGetPedidosQuery } from "../services/endpoins";
+import {
+  GetAgendamentosResult,
+  useGetAgendamentosQuery,
+} from "../services/endpoins";
 
 const SchedulingList = () => {
   const {
     data: agendamentos,
     isFetching: isFetchingAgendamentos,
     isError: isErrorAgendamentos,
-  } = useGetPedidosQuery();
+  } = useGetAgendamentosQuery();
 
   return (
     <Box component={Paper} display="flex" flexDirection="column" p={2}>
@@ -39,7 +42,7 @@ const SchedulingList = () => {
         </Box>
       ) : (
         <TableSchedulingLists
-          data={agendamentos as Array<GetPedidosResult>}
+          data={agendamentos as Array<GetAgendamentosResult>}
           listType="scheduled"
         />
       )}

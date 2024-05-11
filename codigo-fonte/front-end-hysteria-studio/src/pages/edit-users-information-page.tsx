@@ -18,7 +18,10 @@ import {
   useEditUsuarioMutation,
 } from "../services/endpoins";
 import Notify from "../components/notify";
-import { isValidMobilePhone } from "@brazilian-utils/brazilian-utils";
+import {
+  isValidMobilePhone,
+  onlyNumbers,
+} from "@brazilian-utils/brazilian-utils";
 
 interface EditUsersInformationFormValues {
   name: string;
@@ -64,7 +67,7 @@ const EditUsersInformationPage = () => {
         ...user,
         nome: values.name,
         data_de_nascimento: values.birthdate,
-        telefone: values.telephone,
+        telefone: onlyNumbers(values.telephone),
         email: values.email,
       } as EditUsuarioParams).unwrap();
 
@@ -170,7 +173,8 @@ const EditUsersInformationPage = () => {
                     {...register("telephone", {
                       required: "Campo obrigatório",
                       validate: (value) =>
-                        isValidMobilePhone(value) || "Telefone inválido.",
+                        isValidMobilePhone(onlyNumbers(value)) ||
+                        "Telefone inválido.",
                     })}
                     error={!!errors.telephone}
                     helperText={

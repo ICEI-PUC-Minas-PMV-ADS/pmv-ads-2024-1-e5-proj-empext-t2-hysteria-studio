@@ -86,7 +86,7 @@ interface DeleteAgendaResult {
   message: string;
 }
 
-export interface GetPedidosResult {
+export interface GetAgendamentosResult {
   id_agendamento: number;
   horario_agendamento: {
     id: number;
@@ -125,6 +125,23 @@ interface EditUsuarioResult {
   flag_admin: boolean;
   updatedAt: string;
   createdAt: string;
+}
+
+interface EditAgendamentosParams {
+  id: number;
+  id_usuario: number;
+  id_servico: number;
+  data_hora_atendimento: string;
+}
+
+interface EditAgendamentosResult {
+  id: number;
+  id_usuario: number;
+  id_servico: number;
+  data_hora_atendimento: string;
+  status_agendamento_confirmado: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const endpointsApi = createApi({
@@ -180,7 +197,7 @@ export const endpointsApi = createApi({
         body,
       }),
     }),
-    getPedidos: builder.query<Array<GetPedidosResult>, void>({
+    getAgendamentos: builder.query<Array<GetAgendamentosResult>, void>({
       query: () => "agendamentos",
       providesTags: ["AgendamentosList"],
     }),
@@ -198,6 +215,16 @@ export const endpointsApi = createApi({
       }),
       invalidatesTags: ["AgendamentosList"],
     }),
+    editAgendamento: builder.mutation<
+      EditAgendamentosResult,
+      EditAgendamentosParams
+    >({
+      query: ({ id, ...body }) => ({
+        url: `agendamento/${id}`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -209,7 +236,7 @@ export const {
   useUpdateServicoMutation,
   useLoginMutation,
   useCreateUsuarioMutation,
-  useGetPedidosQuery,
+  useGetAgendamentosQuery,
   useEditUsuarioMutation,
   useDeleteAgendaMutation,
 } = endpointsApi;

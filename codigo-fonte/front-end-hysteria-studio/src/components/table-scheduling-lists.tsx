@@ -11,12 +11,12 @@ import CheckIcon from "@mui/icons-material/Check";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
-import { GetPedidosResult } from "../services/endpoins";
+import { GetAgendamentosResult } from "../services/endpoins";
 import { format } from "date-fns";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
-  data: Array<GetPedidosResult>;
+  data: Array<GetAgendamentosResult>;
 }
 
 const TableSchedulingLists = ({ listType, data }: TableListProps) => {

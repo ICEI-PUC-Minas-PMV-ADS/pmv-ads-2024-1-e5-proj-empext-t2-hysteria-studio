@@ -10,7 +10,10 @@ import SimpleDialog from "../components/simple-dialog";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
-import { GetPedidosResult, useGetServicosQuery } from "../services/endpoins";
+import {
+  GetAgendamentosResult,
+  useGetServicosQuery,
+} from "../services/endpoins";
 
 const dates = [
   {
@@ -57,7 +60,7 @@ interface EditSchedulingFormValues {
 }
 
 interface EditSchedulingDialogProps {
-  data: GetPedidosResult;
+  data: GetAgendamentosResult;
 }
 
 const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
@@ -94,8 +97,7 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
       return [];
     }
   }, [servicos]);
-  console.log(serviceOptions);
-  console.log(errors);
+
   return (
     <>
       <Tooltip title="Editar" arrow>
