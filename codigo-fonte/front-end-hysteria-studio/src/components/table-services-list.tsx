@@ -49,6 +49,16 @@ const TableServicesList = () => {
             Ocorreu um erro ao buscar as informações.
           </Typography>
         </Box>
+      ) : !servicos?.length ? (
+        <Box
+          component={Paper}
+          p={2}
+          mt={2}
+          display="flex"
+          justifyContent="center"
+        >
+          <Typography fontWeight="bold">Nenhum serviço cadastrado.</Typography>
+        </Box>
       ) : (
         <TableContainer component={Paper}>
           <Table>

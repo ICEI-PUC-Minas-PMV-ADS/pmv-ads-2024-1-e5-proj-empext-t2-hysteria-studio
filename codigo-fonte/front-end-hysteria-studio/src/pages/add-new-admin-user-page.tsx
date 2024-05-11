@@ -85,7 +85,6 @@ const AddNewAdminPage = () => {
           width: "100%",
           backgroundSize: "100% 20%",
           backgroundRepeat: "no-repeat",
-          backgroundColor: "secondary.main",
           height: "100vh",
         }}
       >
@@ -94,7 +93,7 @@ const AddNewAdminPage = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            pt: { xs: 20 },
+            pt: { xs: 15 },
             pb: { xs: 8 },
           }}
         >
@@ -113,7 +112,7 @@ const AddNewAdminPage = () => {
               }}
               component={Paper}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
               <FormProvider {...formMethods}>

@@ -12,6 +12,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 import { GetPedidosResult } from "../services/endpoins";
+import { format } from "date-fns";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
@@ -52,7 +53,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
         <TableBody>
           {data?.map((row) => (
             <TableRow
-              key={row.nome}
+              key={row.id_usuario}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell
@@ -60,7 +61,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                 scope="row"
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.nome}
+                {row.id_usuario}
               </TableCell>
               <TableCell
                 component="th"
@@ -74,10 +75,18 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                     alignItems: "flex-start",
                   }}
                 >
-                  <Typography variant="body2">Nome: {row.nome}</Typography>
-                  <Typography variant="body2">Data: {row.data}</Typography>
                   <Typography variant="body2">
-                    Serviço: {row.servico}
+                    Nome: {row.id_usuario}
+                  </Typography>
+                  <Typography variant="body2">
+                    Data:{" "}
+                    {format(
+                      new Date(row.data_hora_atendimento),
+                      "dd/MM/yyyy HH:mm"
+                    )}
+                  </Typography>
+                  <Typography variant="body2">
+                    Serviço: {row.id_servico}
                   </Typography>
                 </Box>
               </TableCell>
@@ -90,15 +99,19 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   },
                 }}
               >
-                {row.data}
+                {format(
+                  new Date(row.data_hora_atendimento),
+                  "dd/MM/yyyy HH:mm"
+                )}
               </TableCell>
               <TableCell
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.servico}
+                {row.id_servico}
               </TableCell>
               {listType === "history" ? (
                 <TableCell>
+                  {/* @ts-ignore */}
                   {row.status ? (
                     <Tooltip title="Confirmado" arrow>
                       <CheckIcon color="success" fontSize="small" />

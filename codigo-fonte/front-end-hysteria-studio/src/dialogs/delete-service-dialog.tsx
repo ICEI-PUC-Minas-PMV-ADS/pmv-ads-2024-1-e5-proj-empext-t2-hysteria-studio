@@ -4,6 +4,7 @@ import SimpleDialog from "../components/simple-dialog";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import { useDeleteServicoMutation } from "../services/endpoins";
+import Notify from "../components/notify";
 
 interface DeleteServiceDialogProps {
   serviceId: string;
@@ -11,16 +12,40 @@ interface DeleteServiceDialogProps {
 
 const DeleteServiceDialog = ({ serviceId }: DeleteServiceDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [notifyDeleteMessage, setNotifyDeleteMessage] = useState<{
+    isOpen: boolean;
+    message: string;
+    severity: "error" | "warning" | "info" | "success";
+  }>({
+    isOpen: false,
+    message: "",
+    severity: "success",
+  });
   const [excluirServico, { isLoading: isExcluirServicoLoading }] =
     useDeleteServicoMutation();
+
   const toggleDialog = () => setIsDialogOpen((state) => !state);
+
+  const toggleNotifyDeleteMessage = () =>
+    setNotifyDeleteMessage((state) => ({ ...state, isOpen: !state.isOpen }));
 
   const onClick = async () => {
     try {
       await excluirServico(serviceId).unwrap();
+
+      setNotifyDeleteMessage({
+        isOpen: true,
+        message: "Serviço excluído com sucesso.",
+        severity: "success",
+      });
+
       toggleDialog();
-    } catch {
-      console.error("Erro ao excluir servico");
+    } catch (error: any) {
+      setNotifyDeleteMessage({
+        isOpen: true,
+        message: error.data.message || "Ocorreu um erro ao criar o serviço.",
+        severity: "error",
+      });
     }
   };
 
@@ -41,8 +66,16 @@ const DeleteServiceDialog = ({ serviceId }: DeleteServiceDialogProps) => {
           <LoadingButton loading={isExcluirServicoLoading} onClick={onClick}>
             Confirmar
           </LoadingButton>,
-          <Button onClick={toggleDialog}>Fechar</Button>,
+          <Button disabled={isExcluirServicoLoading} onClick={toggleDialog}>
+            Fechar
+          </Button>,
         ]}
+      />
+      <Notify
+        isOpen={notifyDeleteMessage.isOpen}
+        severity={notifyDeleteMessage.severity}
+        message={notifyDeleteMessage.message}
+        onClose={toggleNotifyDeleteMessage}
       />
     </>
   );
