@@ -17,7 +17,7 @@ const logoStyle = {
 };
 
 const AppAppBar = () => {
-  const { signed, signOut } = React.useContext(AuthContext);
+  const { signed, signOut, isAdmin } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -129,20 +129,38 @@ const AppAppBar = () => {
               ></Box>
               {signed ? (
                 <>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      onClick={() => {
-                        navigate("/pedidos-de-agendamento");
-                        toggleDrawer();
-                      }}
-                      sx={{ width: "100%" }}
-                    >
-                      Pedidos de agendamento
-                    </Button>
-                  </MenuItem>
+                  {isAdmin && (
+                    <>
+                      <MenuItem>
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          component="a"
+                          onClick={() => {
+                            navigate("/pedidos-de-agendamento");
+                            toggleDrawer();
+                          }}
+                          sx={{ width: "100%" }}
+                        >
+                          Pedidos de agendamento
+                        </Button>
+                      </MenuItem>
+                      <MenuItem>
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          component="a"
+                          onClick={() => {
+                            navigate("/adicionar-administrador");
+                            toggleDrawer();
+                          }}
+                          sx={{ width: "100%" }}
+                        >
+                          Adicionar novo administrador
+                        </Button>
+                      </MenuItem>
+                    </>
+                  )}
                   <MenuItem>
                     <Button
                       color="primary"
