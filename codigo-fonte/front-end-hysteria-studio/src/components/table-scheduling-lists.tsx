@@ -53,7 +53,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
         <TableBody>
           {data?.map((row) => (
             <TableRow
-              key={row.id_usuario}
+              key={row.id_agendamento}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell
@@ -61,7 +61,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                 scope="row"
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.id_usuario}
+                {row.usuario.nome}
               </TableCell>
               <TableCell
                 component="th"
@@ -76,7 +76,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   }}
                 >
                   <Typography variant="body2">
-                    Nome: {row.id_usuario}
+                    Nome: {row.usuario.nome}
                   </Typography>
                   <Typography variant="body2">
                     Data:{" "}
@@ -86,7 +86,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                     )}
                   </Typography>
                   <Typography variant="body2">
-                    Serviço: {row.id_servico}
+                    Serviço: {row.servico.nome}
                   </Typography>
                 </Box>
               </TableCell>
@@ -107,7 +107,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
               <TableCell
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.id_servico}
+                {row.servico.nome}
               </TableCell>
               {listType === "history" ? (
                 <TableCell>

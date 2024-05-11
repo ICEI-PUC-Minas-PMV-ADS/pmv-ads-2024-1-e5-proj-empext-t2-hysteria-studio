@@ -84,12 +84,16 @@ interface CreateUsuarioResult {
 }
 
 export interface GetPedidosResult {
-  id: number;
+  id_agendamento: number;
   data_hora_atendimento: string;
-  createdAt: string;
-  updatedAt: string;
-  id_usuario: number;
-  id_servico: number;
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
 }
 
 export interface EditUsuarioParams {
