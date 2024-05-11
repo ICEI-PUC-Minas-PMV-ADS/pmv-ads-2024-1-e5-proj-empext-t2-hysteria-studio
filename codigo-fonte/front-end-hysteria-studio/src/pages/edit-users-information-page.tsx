@@ -24,10 +24,15 @@ interface EditUsersInformationFormValues {
 }
 
 const EditUsersInformationPage = () => {
-  const { user } = useContext(AuthContext);
-  const [notifyErrorMessage, setNotifyErrorMessage] = useState({
+  const { user, signIn } = useContext(AuthContext);
+  const [notifyErrorMessage, setNotifyErrorMessage] = useState<{
+    isOpen: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
     isOpen: false,
     message: "",
+    severity: "success",
   });
   const [editUsuario] = useEditUsuarioMutation();
 
@@ -51,7 +56,7 @@ const EditUsersInformationPage = () => {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await editUsuario({
+      const newInfo = await editUsuario({
         ...user,
         nome: values.name,
         data_de_nascimento: values.birthdate,
@@ -59,15 +64,19 @@ const EditUsersInformationPage = () => {
         email: values.email,
       }).unwrap();
 
+      signIn(newInfo);
+
       setNotifyErrorMessage({
         isOpen: true,
         message: "Informações atualizadas com sucesso.",
+        severity: "success",
       });
     } catch (error: any) {
       setNotifyErrorMessage({
         isOpen: true,
         message:
           error.data.message || "Ocorreu um erro ao atualizar as informações.",
+        severity: "error",
       });
     }
   });
@@ -205,7 +214,7 @@ const EditUsersInformationPage = () => {
       </Box>
       <Notify
         isOpen={notifyErrorMessage.isOpen}
-        severity="error"
+        severity={notifyErrorMessage.severity}
         message={notifyErrorMessage.message}
         onClose={toggleNotifyErrorMessage}
       />

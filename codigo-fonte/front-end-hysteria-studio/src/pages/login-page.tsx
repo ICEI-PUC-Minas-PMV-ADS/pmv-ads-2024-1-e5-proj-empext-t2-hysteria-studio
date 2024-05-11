@@ -43,7 +43,10 @@ const LoginPage = () => {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const loginInformation = await login(values).unwrap();
+      const loginInformation = await login({
+        email: values.email,
+        senha: values.password,
+      }).unwrap();
       signIn(loginInformation);
       navigate("/inicio");
       reset();
@@ -51,7 +54,7 @@ const LoginPage = () => {
       setNotifyErrorMessage({
         isOpen: true,
         message:
-          error.data.message || "Ocorreu um erro no login, tente novamente.",
+          error?.data?.message || "Ocorreu um erro no login, tente novamente.",
       });
     }
   });

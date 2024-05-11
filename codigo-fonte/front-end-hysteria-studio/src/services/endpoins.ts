@@ -45,7 +45,7 @@ interface UpdateServicoResult {
 
 interface LoginArg {
   email: string;
-  password: string;
+  senha: string;
 }
 
 export interface LoginResult {
