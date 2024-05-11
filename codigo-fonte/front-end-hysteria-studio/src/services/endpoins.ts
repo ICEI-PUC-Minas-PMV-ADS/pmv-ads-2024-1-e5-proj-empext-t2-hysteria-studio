@@ -45,7 +45,7 @@ interface UpdateServicoResult {
 
 interface LoginArg {
   email: string;
-  password: string;
+  senha: string;
 }
 
 export interface LoginResult {
@@ -63,7 +63,7 @@ export interface LoginResult {
 interface CreateUsuarioParams {
   nome: string;
   cpf: string;
-  data_de_nascimento: Date;
+  data_de_nascimento: string;
   telefone: string;
   email: string;
   senha: string;
@@ -89,6 +89,30 @@ export interface GetPedidosResult {
   data: string;
   servico: string;
   status: boolean;
+}
+
+export interface EditUsuarioParams {
+  id: number;
+  nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+}
+
+interface EditUsuarioResult {
+  id: number;
+  nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export const endpointsApi = createApi({
@@ -145,6 +169,13 @@ export const endpointsApi = createApi({
     getPedidos: builder.query<Array<GetPedidosResult>, void>({
       query: () => "agendamentos",
     }),
+    editUsuario: builder.mutation<EditUsuarioResult, EditUsuarioParams>({
+      query: ({ id, ...body }) => ({
+        url: `usuario/${id}`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -157,4 +188,5 @@ export const {
   useLoginMutation,
   useCreateUsuarioMutation,
   useGetPedidosQuery,
+  useEditUsuarioMutation,
 } = endpointsApi;

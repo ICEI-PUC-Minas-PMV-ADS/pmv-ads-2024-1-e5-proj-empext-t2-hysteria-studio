@@ -23,7 +23,7 @@ import Notify from "../components/notify";
 interface RegisterPageFormValues {
   nome: string;
   cpf: string;
-  data_de_nascimento: Date;
+  data_de_nascimento: string;
   telefone: string;
   email: string;
   senha: string;
@@ -64,7 +64,7 @@ const RegisterPage = () => {
 
       const loginInformation = await login({
         email: userInformation.email,
-        password: userInformation.senha,
+        senha: userInformation.senha,
       }).unwrap();
 
       signIn(loginInformation);
