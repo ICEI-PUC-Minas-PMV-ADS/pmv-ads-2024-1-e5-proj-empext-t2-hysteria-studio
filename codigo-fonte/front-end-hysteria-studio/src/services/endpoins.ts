@@ -84,11 +84,12 @@ interface CreateUsuarioResult {
 }
 
 export interface GetPedidosResult {
-  id: string;
-  nome: string;
-  data: string;
-  servico: string;
-  status: boolean;
+  id: number;
+  data_hora_atendimento: string;
+  createdAt: string;
+  updatedAt: string;
+  id_usuario: number;
+  id_servico: number;
 }
 
 export interface EditUsuarioParams {
@@ -120,7 +121,7 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList"],
+  tagTypes: ["ServicosList", "OneServico"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -139,10 +140,11 @@ export const endpointsApi = createApi({
         url: `servico/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["ServicosList"],
+      invalidatesTags: ["ServicosList", "OneServico"],
     }),
     getOneServico: builder.query<GetServicosResult, string>({
       query: (id) => `servico/${id}`,
+      providesTags: ["OneServico"],
     }),
     updateServico: builder.mutation<UpdateServicoResult, UpdateServicoParams>({
       query: ({ id, ...body }) => ({
@@ -150,7 +152,7 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["ServicosList"],
+      invalidatesTags: ["ServicosList", "OneServico"],
     }),
     login: builder.mutation<LoginResult, LoginArg>({
       query: (arg) => ({

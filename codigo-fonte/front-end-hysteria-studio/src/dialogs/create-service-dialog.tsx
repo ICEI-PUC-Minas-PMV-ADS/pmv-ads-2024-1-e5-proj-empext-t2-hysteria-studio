@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { useCreateServicoMutation } from "../services/endpoins";
+import Notify from "../components/notify";
 
 interface CreateServiceFormValues {
   name: string;
@@ -13,7 +14,19 @@ interface CreateServiceFormValues {
 
 const CreateServiceDialog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [notifyCreateMessage, setNotifyCreateMessage] = useState<{
+    isOpen: boolean;
+    message: string;
+    severity: "error" | "warning" | "info" | "success";
+  }>({
+    isOpen: false,
+    message: "",
+    severity: "success",
+  });
   const [criarServico] = useCreateServicoMutation();
+
+  const toggleNotifyCreateMessage = () =>
+    setNotifyCreateMessage((state) => ({ ...state, isOpen: !state.isOpen }));
 
   const formMethods = useForm<CreateServiceFormValues>({
     mode: "all",
@@ -25,6 +38,11 @@ const CreateServiceDialog = () => {
     formState: { isValid, isSubmitting, errors },
   } = formMethods;
 
+  const toggleDialog = () => {
+    setIsDialogOpen((state) => !state);
+    reset();
+  };
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       await criarServico({
@@ -34,15 +52,19 @@ const CreateServiceDialog = () => {
       }).unwrap();
 
       toggleDialog();
-    } catch {
-      console.error("Erro ao criar serviço");
+      setNotifyCreateMessage({
+        isOpen: true,
+        message: "Serviço criado com sucesso.",
+        severity: "success",
+      });
+    } catch (error: any) {
+      setNotifyCreateMessage({
+        isOpen: true,
+        message: error.data.message || "Ocorreu um erro ao criar o serviço.",
+        severity: "error",
+      });
     }
   });
-
-  const toggleDialog = () => {
-    setIsDialogOpen((state) => !state);
-    reset();
-  };
 
   return (
     <>
@@ -72,6 +94,7 @@ const CreateServiceDialog = () => {
                 {...register("name", { required: "Campo obrigatório" })}
                 error={!!errors.name}
                 helperText={errors.name?.message ? errors.name.message : null}
+                disabled={isSubmitting}
               />
               <TextField
                 margin="normal"
@@ -89,6 +112,7 @@ const CreateServiceDialog = () => {
                 {...register("price", { required: "Campo obrigatório" })}
                 error={!!errors.price}
                 helperText={errors.price?.message ? errors.price.message : null}
+                disabled={isSubmitting}
               />
               <TextField
                 margin="normal"
@@ -104,6 +128,7 @@ const CreateServiceDialog = () => {
                     ? errors.description.message
                     : null
                 }
+                disabled={isSubmitting}
               />
               <LoadingButton
                 fullWidth
@@ -117,6 +142,12 @@ const CreateServiceDialog = () => {
             </form>
           </FormProvider>
         }
+      />
+      <Notify
+        isOpen={notifyCreateMessage.isOpen}
+        severity={notifyCreateMessage.severity}
+        message={notifyCreateMessage.message}
+        onClose={toggleNotifyCreateMessage}
       />
     </>
   );
