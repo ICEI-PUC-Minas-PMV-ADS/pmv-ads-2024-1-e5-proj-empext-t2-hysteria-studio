@@ -73,6 +73,8 @@ const EditUsersInformationPage = () => {
 
       signIn(newInfo);
 
+      signIn(newInfo);
+
       setNotifyErrorMessage({
         isOpen: true,
         message: "Informações atualizadas com sucesso.",
