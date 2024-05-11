@@ -83,6 +83,14 @@ interface CreateUsuarioResult {
   createdAt: string;
 }
 
+export interface GetPedidosResult {
+  id: string;
+  nome: string;
+  data: string;
+  servico: string;
+  status: boolean;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -134,6 +142,9 @@ export const endpointsApi = createApi({
         body,
       }),
     }),
+    getPedidos: builder.query<Array<GetPedidosResult>, void>({
+      query: () => "agendamentos",
+    }),
   }),
 });
 
@@ -145,4 +156,5 @@ export const {
   useUpdateServicoMutation,
   useLoginMutation,
   useCreateUsuarioMutation,
+  useGetPedidosQuery,
 } = endpointsApi;
