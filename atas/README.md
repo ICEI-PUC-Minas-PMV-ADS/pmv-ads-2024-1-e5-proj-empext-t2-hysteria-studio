@@ -2,7 +2,7 @@
 
 ## Ata de acordo inicial
 
-<a href="./ADS_-_Ata_Acordo_Inicial.docx.pdf">Acordo Inicial</a> 
+<a href="./ADS_-_Ata_Acordo_Inicial.docx.pdf">Acordo Inicial</a>
 
 ## Atas das Reuniões
 
@@ -13,3 +13,7 @@
 ### Reunião Etapa 2
 
 <a href="./Reunião Etapa 2/ADS - Ata de Reunião 2.pdf">Ata Etapa 2</a>
+
+### Reunião Etapa 3
+
+<a href="./Reunião Etapa 3/ADS - Ata de Reunião 3.pdf">Ata Etapa 3</a>
