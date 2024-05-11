@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import { store } from "./services/store";
 import AuthProvider from "./contexts/auth";
 import { Private, Public } from "./components/private";
+import AddNewAdminPage from "./pages/add-new-admin-user-page";
 
 function App() {
   const theme = createTheme(customTheme);
@@ -38,6 +39,12 @@ function App() {
                 path="/pedidos-de-agendamento"
                 element={<SchedulingRequestsPage />}
               />
+              <Route path="/adicionar-administrador" element={<Private />}>
+                <Route
+                  path="/adicionar-administrador"
+                  element={<AddNewAdminPage />}
+                />
+              </Route>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

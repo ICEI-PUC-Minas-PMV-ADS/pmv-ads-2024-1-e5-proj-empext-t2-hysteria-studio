@@ -22,6 +22,10 @@ const MenuDropdown = () => {
     setAnchorEl(null);
     navigate("/pedidos-de-agendamento");
   };
+  const handleAddAdmin = () => {
+    setAnchorEl(null);
+    navigate("/adicionar-administrador");
+  };
   const handleMyInformation = () => {
     setAnchorEl(null);
     navigate("/minhas-informacoes");
@@ -57,9 +61,14 @@ const MenuDropdown = () => {
         }}
       >
         {isAdmin && (
-          <MenuItem onClick={handleSchedulingRequests}>
-            Pedidos de agendamento
-          </MenuItem>
+          <>
+            <MenuItem onClick={handleSchedulingRequests}>
+              Pedidos de agendamento
+            </MenuItem>
+            <MenuItem onClick={handleAddAdmin}>
+              Adicionar novo administrador
+            </MenuItem>
+          </>
         )}
         <MenuItem onClick={handleMyInformation}>Minhas informações</MenuItem>
         <MenuItem onClick={handleLogout}>Sair</MenuItem>
