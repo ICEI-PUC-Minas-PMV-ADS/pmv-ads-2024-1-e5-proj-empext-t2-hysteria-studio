@@ -76,25 +76,36 @@ Apresentação dos cenários de testes utilizados na realização dos testes da 
 **Caso de Teste 01**
 #### Criar Usuario
 <br>
-![Listar](img/registros-backend/CadastrarUsuario.mp4)
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/659158f5-0092-4e01-9f0e-f936998c8cb5
+
+
+<br>
 
 
 **Caso de Teste 02**
 #### Login Usuario
 <br>
-![Listar](img/registros-backend/LoginUsuario.mp4)
 
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/d9e8f3c3-f3f9-4d22-b90c-e90fbda23e6d
+
+<br>
 
 **Caso de Teste 03** e **Caso de Teste 04**
 #### Efetuar logout e Gerenciamento de conta
 <br>
-![Listar](img/registros-backend/EditarESair.mp4)
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/b10af102-a3a8-44fc-9d20-0a2c82251e0b
+
+<br>
 
 **Caso de Teste 05**
 #### Gerenciamento de Serviço
+<br>
 
 **Caso de Teste 06**
 #### Histórico de Agendamentos
+<br>
 
 **Caso de Teste 07**
 #### Gerenciamento de Agendamentos
