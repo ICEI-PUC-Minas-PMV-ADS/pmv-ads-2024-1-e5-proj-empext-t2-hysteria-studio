@@ -103,9 +103,25 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 #### Gerenciamento de Serviço
 <br>
 
+![Serviço](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/33b1f778-48f3-400c-8593-ab98ad8a586e)
+
+
 **Caso de Teste 06**
 #### Histórico de Agendamentos
 <br>
 
+![historico](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/d6ec94ef-c23f-490b-9e18-7a8296b66458)
+
+
 **Caso de Teste 07**
 #### Gerenciamento de Agendamentos
+
+![novo agendamento](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/90fc3266-7b93-477b-a8d4-16ff044a27d3)
+
+
+![editar agendamento](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/2f9a3734-5b2b-43fa-be46-6c69aa01077b)
+
+
+![excluir agendamento](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/4560bf97-24b7-40ce-ba40-9f1c6dfad603)
+
+
