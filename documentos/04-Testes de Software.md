@@ -53,7 +53,6 @@ Apresentação dos cenários de testes utilizados na realização dos testes da 
 | Passos 	| - Acessar a aplicação web <br> - Fazer o login na aplicação web <br>  - Clicar em “Histórico” na barra de navegação <br> - Visualizar os registros de agendamento |
 |Critério de Êxito | - A tela foi redirecionada para a exibição dos histórico de agendamentos cadastrados. |
 |  	|  	|
-
 | **Caso de Teste** 	| **CT-08 - Gerenciamento de Agendamentos - Cadastrar e visualizar**	|
 |	Requisito Associado 	| RF-008 - A aplicação deve permitir ao usuário registrar os agendamentos |
 | Objetivo do Teste 	| Avaliar a capacidade do usuário cadastrar e visualizar os agendamentos na aplicação. |
@@ -71,3 +70,4 @@ Apresentação dos cenários de testes utilizados na realização dos testes da 
 | Objetivo do Teste 	| Verificar se o usuário consegue excluir os agendamentos registrados na aplicação. |
 | Passos 	| - Acessar a aplicação web <br> - Fazer o login na aplicação web <br>  - Clicar em “Agendamentos” na barra de navegação <br> - Clicar no botão “Excluir” <br> - Confirmar a exclusão do agendamento. <br> |
 |Critério de Êxito | - A tela foi redirecionada para a exibição de agendamentos cadastrados não exibindo o agendamento excluído. |
+|  	|  	|
