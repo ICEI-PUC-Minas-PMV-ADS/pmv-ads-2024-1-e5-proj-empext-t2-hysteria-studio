@@ -1,11 +1,7 @@
-# Instruções de utilização
+# BACK-END
 
-## Instalação do Site
+Clique aqui em _<a href="./back-end-hysteria-studio"> Back-end Hysteria Studio </a>_ contém a documentação para iniciar a aplicação backend.
 
-O site em HTML/CSS/JS é um projeto estático, logo pode ser utilizado tanto em servidores...
+# FRONT-END WEB
 
-## Histórico de versões
-
-### [0.1.0] - DD/MM/AAAA
-#### Adicionado
-- Adicionado ...
+Clique aqui em _<a href="./front-end-hysteria-studio/"> Front-end web Hysteria Studio </a>_ contém a documentação para iniciar a aplicação front-end web.
