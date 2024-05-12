@@ -54,3 +54,48 @@ model Agenda{
   usuario Usuario @relation(fields: [usuarioId], references: [id])
   usuarioId String
 }
+
+model UsuarioLog{
+  id String @id @default(uuid())
+  id_Usuario String
+  nome String?
+  cpf String?
+  data_de_nascimento DateTime? 
+  telefone String?
+  endereco String?
+  email String 
+  flag_maior_idade Int?
+  responsavel String?
+  login String?
+  senha String
+  flag_admin Int? @default(1)
+  dt_criacao DateTime? @default(now())
+  mtv_inclusao String?
+  dt_inclusao DateTime? @default(now())
+  
+  @@map("UsuariosLog")
+}
+
+model ServicoLog{
+  id String @id @default(uuid())
+  id_servico String
+  nome String 
+  preco Float
+  descricao String
+  dt_criacao DateTime? @default(now())
+  mtv_inclusao String?
+  dt_inclusao DateTime? @default(now())
+
+  @@map("ServicosLog")
+}
+
+model AgendaLog{
+  id String @id @default(uuid())
+  id_agenda String
+  data_hora_atendimento DateTime?
+  dt_criacao DateTime? @default(now())
+  mtv_inclusao String?
+  dt_inclusao DateTime? @default(now())
+
+  @@map("AgendasLog")
+}
