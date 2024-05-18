@@ -19,6 +19,10 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/auth";
 import { useContext, useState } from "react";
 import Notify from "../components/notify";
+import {
+  isValidCPF,
+  isValidMobilePhone,
+} from "@brazilian-utils/brazilian-utils";
 
 interface RegisterPageFormValues {
   nome: string;
@@ -152,6 +156,8 @@ const RegisterPage = () => {
                             value: /^[0-9]*$/,
                             message: "Telefone inválido",
                           },
+                          validate: (value) =>
+                            isValidCPF(value) || "CPF inválido.",
                         })}
                         error={!!errors.cpf}
                         helperText={
@@ -173,6 +179,8 @@ const RegisterPage = () => {
                             value: /^[0-9]*$/,
                             message: "Telefone inválido",
                           },
+                          validate: (value) =>
+                            isValidMobilePhone(value) || "Telefone inválido.",
                         })}
                         error={!!errors.telefone}
                         helperText={
@@ -200,6 +208,7 @@ const RegisterPage = () => {
                             ? errors.data_de_nascimento.message
                             : null
                         }
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>

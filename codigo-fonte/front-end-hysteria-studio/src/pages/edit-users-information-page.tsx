@@ -18,6 +18,7 @@ import {
   useEditUsuarioMutation,
 } from "../services/endpoins";
 import Notify from "../components/notify";
+import { isValidMobilePhone } from "@brazilian-utils/brazilian-utils";
 
 interface EditUsersInformationFormValues {
   name: string;
@@ -157,6 +158,7 @@ const EditUsersInformationPage = () => {
                         : null
                     }
                     disabled={isSubmitting}
+                    InputLabelProps={{ shrink: true }}
                   />
                   <TextField
                     required
@@ -167,6 +169,8 @@ const EditUsersInformationPage = () => {
                     autoComplete="telephone"
                     {...register("telephone", {
                       required: "Campo obrigatório",
+                      validate: (value) =>
+                        isValidMobilePhone(value) || "Telefone inválido.",
                     })}
                     error={!!errors.telephone}
                     helperText={
