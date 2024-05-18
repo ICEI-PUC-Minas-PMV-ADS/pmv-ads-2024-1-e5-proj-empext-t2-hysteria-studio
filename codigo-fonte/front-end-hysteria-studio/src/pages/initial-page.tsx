@@ -1,6 +1,16 @@
-import { Box, Container, CssBaseline, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const InitialPage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <CssBaseline />
@@ -19,27 +29,27 @@ const InitialPage = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            pt: { xs: 20 },
+            pt: { xs: 10 },
             pb: { xs: 8 },
           }}
         >
           <Stack
-            spacing={2}
-            useFlexGap
+            spacing={5}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
             sx={{ width: { xs: "100%", sm: "70%" } }}
           >
-            {/* <img
-              src="../../public/logo-branca.svg"
+            <img
+              src="../../public/logo-branca-completa.png"
               style={{
-                width: "50%",
-                maxWidth: "300px",
+                width: "80%",
                 height: "auto",
               }}
-              // onClick={() => navigate("/")}
-            /> */}
-            {/* <Typography
+            />
+            <Typography
               component="h1"
-              variant="h3"
+              variant="h4"
               color="white"
               sx={{
                 display: "flex",
@@ -48,8 +58,35 @@ const InitialPage = () => {
                 textAlign: "center",
               }}
             >
-              Marque um horário com a gente
-            </Typography> */}
+              Conheça nosso trabalho, marque um horário:
+            </Typography>
+            <Box
+              width="100%"
+              display="flex"
+              flexDirection={{ xs: "column", md: "row" }}
+              gap={2}
+            >
+              <Button
+                fullWidth
+                color="primary"
+                variant="outlined"
+                size="large"
+                component="a"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </Button>
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                size="large"
+                component="a"
+                onClick={() => navigate("/cadastro")}
+              >
+                Cadastro
+              </Button>
+            </Box>
           </Stack>
         </Container>
       </Box>
