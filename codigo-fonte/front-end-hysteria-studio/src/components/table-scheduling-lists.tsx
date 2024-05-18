@@ -124,7 +124,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
               ) : (
                 <TableCell>
                   {listType === "scheduled" ? (
-                    <EditSchedulingDialog />
+                    <EditSchedulingDialog data={row} />
                   ) : (
                     <Tooltip title="Confirmar" arrow>
                       <IconButton color="success" size="small">

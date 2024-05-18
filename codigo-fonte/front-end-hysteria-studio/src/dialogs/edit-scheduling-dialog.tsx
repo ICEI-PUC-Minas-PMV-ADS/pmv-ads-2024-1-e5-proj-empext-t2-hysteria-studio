@@ -7,9 +7,10 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SimpleDialog from "../components/simple-dialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+import { GetPedidosResult, useGetServicosQuery } from "../services/endpoins";
 
 const dates = [
   {
@@ -49,36 +50,25 @@ const time = [
   },
 ];
 
-const services = [
-  {
-    value: "Corte de cabelo",
-    label: "Corte de cabelo",
-  },
-  {
-    value: "Corte de cabelo + barba",
-    label: "Corte de cabelo + barba",
-  },
-  {
-    value: "Barba",
-    label: "Barba",
-  },
-  {
-    value: "Completo",
-    label: "Completo",
-  },
-];
-
 interface EditSchedulingFormValues {
   service: string;
   date: string;
   time: string;
 }
 
-const EditSchedulingDialog = () => {
+interface EditSchedulingDialogProps {
+  data: GetPedidosResult;
+}
+
+const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const formMethods = useForm<EditSchedulingFormValues>();
-  const { handleSubmit, register } = formMethods;
+  const formMethods = useForm<EditSchedulingFormValues>({ mode: "all" });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isValid, isSubmitting },
+  } = formMethods;
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -86,6 +76,26 @@ const EditSchedulingDialog = () => {
 
   const toggleDialog = () => setIsDialogOpen((state) => !state);
 
+  const {
+    data: servicos,
+    isFetching: isFetchingServicos,
+    isError: isServcosError,
+  } = useGetServicosQuery(undefined, {
+    skip: !isDialogOpen,
+  });
+
+  const serviceOptions = useMemo(() => {
+    if (servicos) {
+      return servicos?.map((servico) => ({
+        value: servico.id,
+        label: servico.nome,
+      }));
+    } else {
+      return [];
+    }
+  }, [servicos]);
+  console.log(serviceOptions);
+  console.log(errors);
   return (
     <>
       <Tooltip title="Editar" arrow>
@@ -97,61 +107,78 @@ const EditSchedulingDialog = () => {
         title="Editar agendamento"
         isOpen={isDialogOpen}
         toggleDialog={toggleDialog}
-        actions={[
-          <LoadingButton onClick={onSubmit}>Confirmar</LoadingButton>,
-          <Button onClick={toggleDialog}>Fechar</Button>,
-        ]}
+        actions={[<Button onClick={toggleDialog}>Fechar</Button>]}
         content={
           <FormProvider {...formMethods}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="service"
-              label="Serviço"
-              autoComplete="service"
-              autoFocus
-              select
-              {...register("service")}
-            >
-              {services.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="date"
-              label="Data"
-              autoComplete="date"
-              select
-              {...register("date")}
-            >
-              {dates.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="time"
-              label="Hora"
-              autoComplete="time"
-              select
-              {...register("time")}
-            >
-              {time.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+            <form noValidate onSubmit={onSubmit}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="service"
+                label="Serviço"
+                autoComplete="service"
+                select
+                disabled={isFetchingServicos || isServcosError}
+                {...register("service", { required: "Campo obrigatório" })}
+                error={!!errors.service}
+                helperText={
+                  errors.service?.message ? errors.service.message : null
+                }
+                defaultValue={data.servico.id}
+              >
+                {serviceOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="date"
+                label="Data"
+                autoComplete="date"
+                select
+                {...register("date", { required: "Campo obrigatório" })}
+                error={!!errors.date}
+                helperText={errors.date?.message ? errors.date.message : null}
+              >
+                {dates.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="time"
+                label="Hora"
+                autoComplete="time"
+                select
+                {...register("time", { required: "Campo obrigatório" })}
+                error={!!errors.time}
+                helperText={errors.time?.message ? errors.time.message : null}
+              >
+                {time.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <LoadingButton
+                fullWidth
+                variant="contained"
+                type="submit"
+                disabled={!isValid}
+                loading={isSubmitting}
+              >
+                Confirmar
+              </LoadingButton>
+            </form>
           </FormProvider>
         }
       />
