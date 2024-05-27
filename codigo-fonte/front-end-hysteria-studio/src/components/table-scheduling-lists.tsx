@@ -133,7 +133,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                       </IconButton>
                     </Tooltip>
                   )}
-                  <DeleteSchedulingDialog />
+                  <DeleteSchedulingDialog agendaId={row.id_agendamento} />
                 </TableCell>
               )}
             </TableRow>

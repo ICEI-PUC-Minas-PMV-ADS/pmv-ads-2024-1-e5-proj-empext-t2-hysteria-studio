@@ -82,6 +82,9 @@ interface CreateUsuarioResult {
   updatedAt: string;
   createdAt: string;
 }
+interface DeleteAgendaResult {
+  message: string;
+}
 
 export interface GetPedidosResult {
   id_agendamento: number;
@@ -125,12 +128,13 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "OneServico"],
+  tagTypes: ["ServicosList", "OneServico", "AgendamentosList"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
       providesTags: ["ServicosList"],
     }),
+
     createServico: builder.mutation<CreateServicoResult, CreateServicoParams>({
       query: (body) => ({
         url: "servico",
@@ -174,6 +178,7 @@ export const endpointsApi = createApi({
     }),
     getPedidos: builder.query<Array<GetPedidosResult>, void>({
       query: () => "agendamentos",
+      providesTags: ["AgendamentosList"],
     }),
     editUsuario: builder.mutation<EditUsuarioResult, EditUsuarioParams>({
       query: ({ id, ...body }) => ({
@@ -181,6 +186,13 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
+    }),
+    deleteAgenda: builder.mutation<DeleteAgendaResult, number>({
+      query: (id) => ({
+        url: `agendamento/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["AgendamentosList"],
     }),
   }),
 });
@@ -195,4 +207,5 @@ export const {
   useCreateUsuarioMutation,
   useGetPedidosQuery,
   useEditUsuarioMutation,
+  useDeleteAgendaMutation,
 } = endpointsApi;
