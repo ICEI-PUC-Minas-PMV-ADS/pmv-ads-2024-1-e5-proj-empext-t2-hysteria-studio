@@ -88,7 +88,10 @@ interface DeleteAgendaResult {
 
 export interface GetPedidosResult {
   id_agendamento: number;
-  data_hora_atendimento: string;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
   servico: {
     id: number;
     nome: string;
@@ -97,6 +100,7 @@ export interface GetPedidosResult {
     id: number;
     nome: string;
   };
+  status_agendamento_confirmado: boolean;
 }
 
 export interface EditUsuarioParams {

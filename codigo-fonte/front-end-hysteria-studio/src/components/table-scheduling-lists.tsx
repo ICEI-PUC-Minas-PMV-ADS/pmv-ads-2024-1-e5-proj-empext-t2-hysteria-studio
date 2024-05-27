@@ -81,7 +81,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   <Typography variant="body2">
                     Data:{" "}
                     {format(
-                      new Date(row.data_hora_atendimento),
+                      new Date(row.horario_agendamento.horario_disponivel),
                       "dd/MM/yyyy HH:mm"
                     )}
                   </Typography>
@@ -100,7 +100,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                 }}
               >
                 {format(
-                  new Date(row.data_hora_atendimento),
+                  new Date(row.horario_agendamento.horario_disponivel),
                   "dd/MM/yyyy HH:mm"
                 )}
               </TableCell>
@@ -111,8 +111,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
               </TableCell>
               {listType === "history" ? (
                 <TableCell>
-                  {/* @ts-ignore */}
-                  {row.status ? (
+                  {row.status_agendamento_confirmado ? (
                     <Tooltip title="Confirmado" arrow>
                       <CheckIcon color="success" fontSize="small" />
                     </Tooltip>
