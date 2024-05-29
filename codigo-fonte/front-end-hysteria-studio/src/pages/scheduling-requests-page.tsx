@@ -1,5 +1,5 @@
 import { Box, Container, CssBaseline, Stack } from "@mui/material";
-import TableSchedulingLists from "../components/table-scheduling-lists";
+import SchedulingRequestsList from "./scheduling-requests-list";
 
 const SchedulingRequestsPage = () => {
   return (
@@ -24,7 +24,7 @@ const SchedulingRequestsPage = () => {
           }}
         >
           <Stack spacing={2} useFlexGap sx={{ width: { xs: "100%" } }}>
-            <TableSchedulingLists listType="requests" />
+            <SchedulingRequestsList />
           </Stack>
         </Container>
       </Box>
