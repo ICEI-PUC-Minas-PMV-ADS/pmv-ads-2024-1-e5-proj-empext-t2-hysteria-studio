@@ -168,6 +168,10 @@ export interface GetAgendamentosUsuarioResult {
   status_agendamento_confirmado: boolean;
 }
 
+interface DeleteUsuarioResult {
+  message: string;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -259,6 +263,12 @@ export const endpointsApi = createApi({
     >({
       query: (id) => `agendamento/usuario/${id}`,
     }),
+    deleteUsuario: builder.mutation<DeleteUsuarioResult, number>({
+      query: (id) => ({
+        url: `usuario/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -276,4 +286,5 @@ export const {
   useEditAgendamentoMutation,
   useGetHorariosQuery,
   useGetAgendamentosUsuarioQuery,
+  useDeleteUsuarioMutation,
 } = endpointsApi;
