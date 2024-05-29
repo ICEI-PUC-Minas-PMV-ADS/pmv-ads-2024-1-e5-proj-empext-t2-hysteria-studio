@@ -7,55 +7,22 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SimpleDialog from "../components/simple-dialog";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import {
   GetAgendamentosResult,
+  useEditAgendamentoMutation,
+  useGetHorariosQuery,
   useGetServicosQuery,
 } from "../services/endpoins";
-
-const dates = [
-  {
-    value: "2024-04-01",
-    label: "01/04/2024",
-  },
-  {
-    value: "2024-04-02",
-    label: "02/04/2024",
-  },
-  {
-    value: "2024-04-03",
-    label: "03/04/2024",
-  },
-  {
-    value: "2024-04-04",
-    label: "04/04/2024",
-  },
-];
-
-const time = [
-  {
-    value: "10:00",
-    label: "10:00",
-  },
-  {
-    value: "11:00",
-    label: "11:00",
-  },
-  {
-    value: "12:00",
-    label: "12:00",
-  },
-  {
-    value: "13:00",
-    label: "13:00",
-  },
-];
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { AuthContext } from "../contexts/auth";
+import Notify from "../components/notify";
 
 interface EditSchedulingFormValues {
   service: string;
-  date: string;
   time: string;
 }
 
@@ -64,20 +31,59 @@ interface EditSchedulingDialogProps {
 }
 
 const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
+  const { user } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [notifyEditMessage, setNotifyEditMessage] = useState<{
+    isOpen: boolean;
+    message: string;
+    severity: "error" | "warning" | "info" | "success";
+  }>({
+    isOpen: false,
+    message: "",
+    severity: "success",
+  });
+  const [editAgendamento] = useEditAgendamentoMutation();
+
+  const toggleNotifyEditMessage = () =>
+    setNotifyEditMessage((state) => ({ ...state, isOpen: !state.isOpen }));
 
   const formMethods = useForm<EditSchedulingFormValues>({ mode: "all" });
   const {
     handleSubmit,
     register,
     formState: { errors, isValid, isSubmitting },
+    reset,
   } = formMethods;
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  const toggleDialog = () => {
+    setIsDialogOpen((state) => !state);
+    reset();
+  };
 
-  const toggleDialog = () => setIsDialogOpen((state) => !state);
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      await editAgendamento({
+        id: data.id_agendamento,
+        id_horario: Number(values.time),
+        id_servico: Number(values.service),
+        id_usuario: user?.id as number,
+      }).unwrap();
+
+      toggleDialog();
+      setNotifyEditMessage({
+        isOpen: true,
+        message: "Serviço atualizado com sucesso.",
+        severity: "success",
+      });
+    } catch (error: any) {
+      setNotifyEditMessage({
+        isOpen: true,
+        message:
+          error.data.message || "Ocorreu um erro ao atualizar o serviço.",
+        severity: "error",
+      });
+    }
+  });
 
   const {
     data: servicos,
@@ -86,6 +92,29 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
   } = useGetServicosQuery(undefined, {
     skip: !isDialogOpen,
   });
+
+  const {
+    data: horarios,
+    isFetching: isFetchingHorarios,
+    isError: isHorariosError,
+  } = useGetHorariosQuery();
+
+  const horariosOptions = useMemo(() => {
+    if (horarios) {
+      return horarios?.map((horario) => ({
+        value: horario.id,
+        label: format(
+          new Date(horario.horario_disponivel),
+          "EEEE dd/MM/yyyy HH:mm",
+          {
+            locale: ptBR,
+          }
+        ),
+      }));
+    } else {
+      return [];
+    }
+  }, [horarios]);
 
   const serviceOptions = useMemo(() => {
     if (servicos) {
@@ -121,7 +150,7 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
                 label="Serviço"
                 autoComplete="service"
                 select
-                disabled={isFetchingServicos || isServcosError}
+                disabled={isFetchingServicos || isServcosError || isSubmitting}
                 {...register("service", { required: "Campo obrigatório" })}
                 error={!!errors.service}
                 helperText={
@@ -139,33 +168,17 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
                 margin="normal"
                 required
                 fullWidth
-                id="date"
-                label="Data"
-                autoComplete="date"
-                select
-                {...register("date", { required: "Campo obrigatório" })}
-                error={!!errors.date}
-                helperText={errors.date?.message ? errors.date.message : null}
-              >
-                {dates.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
                 id="time"
-                label="Hora"
+                label="Data e hora"
                 autoComplete="time"
                 select
+                disabled={isFetchingHorarios || isHorariosError || isSubmitting}
                 {...register("time", { required: "Campo obrigatório" })}
                 error={!!errors.time}
                 helperText={errors.time?.message ? errors.time.message : null}
+                defaultValue={data.horario_agendamento.id}
               >
-                {time.map((option) => (
+                {horariosOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -183,6 +196,12 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
             </form>
           </FormProvider>
         }
+      />
+      <Notify
+        isOpen={notifyEditMessage.isOpen}
+        severity={notifyEditMessage.severity}
+        message={notifyEditMessage.message}
+        onClose={toggleNotifyEditMessage}
       />
     </>
   );

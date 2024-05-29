@@ -131,7 +131,7 @@ interface EditAgendamentosParams {
   id: number;
   id_usuario: number;
   id_servico: number;
-  data_hora_atendimento: string;
+  id_horario: number;
 }
 
 interface EditAgendamentosResult {
@@ -140,6 +140,13 @@ interface EditAgendamentosResult {
   id_servico: number;
   data_hora_atendimento: string;
   status_agendamento_confirmado: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface GetHorariosResult {
+  id: number;
+  horario_disponivel: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -224,6 +231,10 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
+      invalidatesTags: ["AgendamentosList"],
+    }),
+    getHorarios: builder.query<Array<GetHorariosResult>, void>({
+      query: () => "horarios",
     }),
   }),
 });
@@ -239,4 +250,6 @@ export const {
   useGetAgendamentosQuery,
   useEditUsuarioMutation,
   useDeleteAgendaMutation,
+  useEditAgendamentoMutation,
+  useGetHorariosQuery,
 } = endpointsApi;
