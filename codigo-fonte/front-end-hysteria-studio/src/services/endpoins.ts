@@ -151,6 +151,23 @@ interface GetHorariosResult {
   updatedAt: string;
 }
 
+export interface GetAgendamentosUsuarioResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status_agendamento_confirmado: boolean;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -236,6 +253,12 @@ export const endpointsApi = createApi({
     getHorarios: builder.query<Array<GetHorariosResult>, void>({
       query: () => "horarios",
     }),
+    getAgendamentosUsuario: builder.query<
+      Array<GetAgendamentosUsuarioResult>,
+      number
+    >({
+      query: (id) => `agendamento/usuario/${id}`,
+    }),
   }),
 });
 
@@ -252,4 +275,5 @@ export const {
   useDeleteAgendaMutation,
   useEditAgendamentoMutation,
   useGetHorariosQuery,
+  useGetAgendamentosUsuarioQuery,
 } = endpointsApi;

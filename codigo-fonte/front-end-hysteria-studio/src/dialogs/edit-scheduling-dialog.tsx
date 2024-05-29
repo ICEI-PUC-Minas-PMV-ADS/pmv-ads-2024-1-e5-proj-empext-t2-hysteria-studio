@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SimpleDialog from "../components/simple-dialog";
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -18,7 +18,6 @@ import {
 } from "../services/endpoins";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
-import { AuthContext } from "../contexts/auth";
 import Notify from "../components/notify";
 
 interface EditSchedulingFormValues {
@@ -31,7 +30,6 @@ interface EditSchedulingDialogProps {
 }
 
 const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
-  const { user } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [notifyEditMessage, setNotifyEditMessage] = useState<{
     isOpen: boolean;
@@ -66,7 +64,7 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
         id: data.id_agendamento,
         id_horario: Number(values.time),
         id_servico: Number(values.service),
-        id_usuario: user?.id as number,
+        id_usuario: Number(data.usuario.id),
       }).unwrap();
 
       toggleDialog();
