@@ -22,6 +22,7 @@ import {
   isValidMobilePhone,
   onlyNumbers,
 } from "@brazilian-utils/brazilian-utils";
+import DeleteUserAccountDialog from "../dialogs/delete-user-account-dialog";
 
 interface EditUsersInformationFormValues {
   name: string;
@@ -221,6 +222,7 @@ const EditUsersInformationPage = () => {
               <Box margin={4} width="100%">
                 <Divider />
               </Box>
+              <DeleteUserAccountDialog />
             </Box>
           </Stack>
         </Container>
