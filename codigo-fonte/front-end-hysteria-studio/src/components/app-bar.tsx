@@ -9,12 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import MenuDropdown from "./menu-dropdown";
 import { AuthContext } from "../contexts/auth";
-
-const logoStyle = {
-  width: "160px",
-  height: "auto",
-  cursor: "pointer",
-};
+import { Typography } from "@mui/material";
 
 const AppAppBar = () => {
   const { signed, signOut, isAdmin } = React.useContext(AuthContext);
@@ -61,12 +56,13 @@ const AppAppBar = () => {
             px: 0,
           }}
         >
-          <img
-            src="../../public/logo-branca.png"
-            style={logoStyle}
-            alt="logo hysteria studio"
+          <Typography
+            color="primary"
+            sx={{ cursor: "pointer" }}
             onClick={() => navigate("/")}
-          />
+          >
+            Home
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -167,6 +163,7 @@ const AppAppBar = () => {
                       variant="outlined"
                       component="a"
                       onClick={() => {
+                        navigate("/minhas-informacoes");
                         toggleDrawer();
                       }}
                       sx={{ width: "100%" }}

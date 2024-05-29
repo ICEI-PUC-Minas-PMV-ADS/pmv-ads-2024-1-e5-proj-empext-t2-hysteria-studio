@@ -14,11 +14,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useCreateUsuarioMutation } from "../services/endpoins";
 import { useState } from "react";
 import Notify from "../components/notify";
+import {
+  isValidCPF,
+  isValidMobilePhone,
+  onlyNumbers,
+} from "@brazilian-utils/brazilian-utils";
 
 interface RegisterPageFormValues {
   nome: string;
   cpf: string;
-  data_de_nascimento: Date;
+  data_de_nascimento: string;
   telefone: string;
   email: string;
   senha: string;
@@ -52,9 +57,9 @@ const AddNewAdminPage = () => {
     try {
       await criarUsuario({
         nome: data.nome,
-        cpf: data.cpf,
+        cpf: onlyNumbers(data.cpf),
         data_de_nascimento: data.data_de_nascimento,
-        telefone: data.telefone,
+        telefone: onlyNumbers(data.telefone),
         email: data.email,
         senha: data.senha,
         flag_admin: true,
@@ -144,10 +149,8 @@ const AddNewAdminPage = () => {
                         autoComplete="cpf"
                         {...register("cpf", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
+                          validate: (value) =>
+                            isValidCPF(onlyNumbers(value)) || "CPF inválido.",
                         })}
                         error={!!errors.cpf}
                         helperText={
@@ -165,10 +168,9 @@ const AddNewAdminPage = () => {
                         autoComplete="telefone"
                         {...register("telefone", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
+                          validate: (value) =>
+                            isValidMobilePhone(onlyNumbers(value)) ||
+                            "Telefone inválido.",
                         })}
                         error={!!errors.telefone}
                         helperText={
@@ -196,6 +198,7 @@ const AddNewAdminPage = () => {
                             ? errors.data_de_nascimento.message
                             : null
                         }
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>

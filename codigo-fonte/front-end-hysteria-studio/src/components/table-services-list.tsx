@@ -16,6 +16,7 @@ import DeleteServiceDialog from "../dialogs/delete-service-dialog";
 import EditServiceDialog from "../dialogs/edit-service-dialog";
 import { AuthContext } from "../contexts/auth";
 import { useContext } from "react";
+import { formatCurrency } from "@brazilian-utils/brazilian-utils";
 
 const TableServicesList = () => {
   const { isAdmin } = useContext(AuthContext);
@@ -113,7 +114,7 @@ const TableServicesList = () => {
                         Serviço: {row.nome}
                       </Typography>
                       <Typography variant="body2">
-                        Preço: {row.preco}
+                        Preço: {`R$ ${formatCurrency(Number(row.preco))}`}
                       </Typography>
                       <Typography variant="body2">
                         Descrição: {row.descricao}
@@ -136,7 +137,7 @@ const TableServicesList = () => {
                       display: { xs: "none", sm: "none", md: "table-cell" },
                     }}
                   >
-                    {row.preco}
+                    {`R$ ${formatCurrency(Number(row.preco))}`}
                   </TableCell>
                   <TableCell
                     component="th"

@@ -19,6 +19,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/auth";
 import { useContext, useState } from "react";
 import Notify from "../components/notify";
+import {
+  isValidCPF,
+  isValidMobilePhone,
+  onlyNumbers,
+} from "@brazilian-utils/brazilian-utils";
 
 interface RegisterPageFormValues {
   nome: string;
@@ -54,9 +59,9 @@ const RegisterPage = () => {
     try {
       const userInformation = await criarUsuario({
         nome: data.nome,
-        cpf: data.cpf,
+        cpf: onlyNumbers(data.cpf),
         data_de_nascimento: data.data_de_nascimento,
-        telefone: data.telefone,
+        telefone: onlyNumbers(data.telefone),
         email: data.email,
         senha: data.senha,
         flag_admin: false,
@@ -148,10 +153,8 @@ const RegisterPage = () => {
                         autoComplete="cpf"
                         {...register("cpf", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
+                          validate: (value) =>
+                            isValidCPF(onlyNumbers(value)) || "CPF inválido.",
                         })}
                         error={!!errors.cpf}
                         helperText={
@@ -169,10 +172,8 @@ const RegisterPage = () => {
                         autoComplete="telefone"
                         {...register("telefone", {
                           required: "Campo obrigatório",
-                          pattern: {
-                            value: /^[0-9]*$/,
-                            message: "Telefone inválido",
-                          },
+                          validate: (value) =>
+                            isValidMobilePhone(value) || "Telefone inválido.",
                         })}
                         error={!!errors.telefone}
                         helperText={
@@ -200,6 +201,7 @@ const RegisterPage = () => {
                             ? errors.data_de_nascimento.message
                             : null
                         }
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
