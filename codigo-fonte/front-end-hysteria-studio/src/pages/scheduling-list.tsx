@@ -16,7 +16,7 @@ import {
 import { AuthContext } from "../contexts/auth";
 import { useContext, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { compareAsc } from "date-fns";
+import { compareAsc, endOfDay, startOfDay } from "date-fns";
 
 interface SchedulingListFormValues {
   name?: string;
@@ -24,12 +24,18 @@ interface SchedulingListFormValues {
   finalDate?: string;
 }
 
+interface FilterValues {
+  name?: string;
+  startDate?: Date;
+  finalDate?: Date;
+}
+
 const SchedulingList = () => {
   const { isAdmin, user } = useContext(AuthContext);
-  const [filter, setFilter] = useState<SchedulingListFormValues>({
+  const [filter, setFilter] = useState<FilterValues>({
     name: "",
-    startDate: "",
-    finalDate: "",
+    startDate: undefined,
+    finalDate: undefined,
   });
 
   const formMethods = useForm<SchedulingListFormValues>({ mode: "all" });
@@ -61,10 +67,12 @@ const SchedulingList = () => {
   const listToShow = isAdmin ? agendamentos : agendamentosUsuario;
 
   const onSubmit = handleSubmit((values) => {
-    const startDate =
-      values.startDate && new Date(values.startDate.concat("T03:00:00"));
-    const finalDate =
-      values.finalDate && new Date(values.finalDate.concat("T03:00:00"));
+    const startDate = values.startDate
+      ? startOfDay(new Date(values.startDate.concat("T03:00:00")))
+      : undefined;
+    const finalDate = values.finalDate
+      ? endOfDay(new Date(values.finalDate.concat("T03:00:00")))
+      : undefined;
     const compareDate =
       startDate && finalDate && compareAsc(startDate, finalDate);
 
@@ -89,7 +97,7 @@ const SchedulingList = () => {
         message: "A data de fim deve ser maior que a data de início.",
       });
     } else {
-      setFilter(values);
+      setFilter({ ...values, startDate, finalDate });
     }
   });
 
@@ -119,6 +127,17 @@ const SchedulingList = () => {
             .includes(name.toLocaleLowerCase())
         );
       }
+    } else if (filter.startDate && filter.finalDate) {
+      const startDate = filter.startDate;
+      const finalDate = filter.finalDate;
+
+      return listToShow.filter(
+        (item) =>
+          new Date(item.horario_agendamento.horario_disponivel) >=
+            new Date(startDate) &&
+          new Date(item.horario_agendamento.horario_disponivel) <=
+            new Date(finalDate)
+      );
     } else {
       return listToShow;
     }
