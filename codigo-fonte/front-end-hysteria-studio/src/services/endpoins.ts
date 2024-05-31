@@ -100,13 +100,7 @@ export interface GetAgendamentosResult {
     id: number;
     nome: string;
   };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+  status_agendamento_confirmado: boolean;
 }
 
 export interface EditUsuarioParams {
@@ -171,17 +165,45 @@ export interface GetAgendamentosUsuarioResult {
     id: number;
     nome: string;
   };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+  status_agendamento_confirmado: boolean;
 }
 
 interface DeleteUsuarioResult {
   message: string;
+}
+
+export interface GetHistoricosResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status_agendamento_confirmado: boolean;
+}
+
+export interface GetHistoricosUsuarioResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status_agendamento_confirmado: boolean;
 }
 
 export const endpointsApi = createApi({
@@ -189,7 +211,7 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "OneServico", "AgendamentosList"],
+  tagTypes: ["ServicosList", "OneServico", "AgendamentosList", "HistoricoList"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -281,6 +303,13 @@ export const endpointsApi = createApi({
         method: "DELETE",
       }),
     }),
+    getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
+      query: () => "historicos",
+      providesTags: ["HistoricoList"],
+    }),
+    getHistoricosUsuario: builder.query<Array<GetHistoricosUsuarioResult>, number>({
+      query: (id) => `historico/usuario/${id}`,
+    }),
   }),
 });
 
@@ -299,4 +328,6 @@ export const {
   useGetHorariosQuery,
   useGetAgendamentosUsuarioQuery,
   useDeleteUsuarioMutation,
+  useGetHistoricosQuery,
+  useGetHistoricosUsuarioQuery,
 } = endpointsApi;

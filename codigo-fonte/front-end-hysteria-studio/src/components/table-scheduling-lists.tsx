@@ -6,19 +6,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckIcon from "@mui/icons-material/Check";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 import {
   GetAgendamentosResult,
-  GetAgendamentosUsuarioResult,
+  GetAgendamentosUsuarioResult, GetHistoricosResult, GetHistoricosUsuarioResult,
 } from "../services/endpoins";
 import { format } from "date-fns";
-import StatusChip from "./status-chip";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
-  data: Array<GetAgendamentosResult | GetAgendamentosUsuarioResult>;
+  data: Array<GetAgendamentosResult | GetAgendamentosUsuarioResult | GetHistoricosResult | GetHistoricosUsuarioResult>;
 }
 
 const TableSchedulingLists = ({ listType, data }: TableListProps) => {
@@ -45,13 +46,11 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
             >
               Serviço
             </TableCell>
-
-            <TableCell
-              sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-            >
-              Status
-            </TableCell>
-            {listType !== "history" && <TableCell>Ações</TableCell>}
+            {listType === "history" ? (
+              <TableCell>Status</TableCell>
+            ) : (
+              <TableCell>Ações</TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -77,7 +76,6 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: 1,
                   }}
                 >
                   <Typography variant="body2">
@@ -93,7 +91,6 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   <Typography variant="body2">
                     Serviço: {row.servico.nome}
                   </Typography>
-                  <StatusChip status={row.status.status_agendamento} />
                 </Box>
               </TableCell>
               <TableCell
@@ -115,12 +112,19 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
               >
                 {row.servico.nome}
               </TableCell>
-              <TableCell
-                sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
-              >
-                <StatusChip status={row.status.status_agendamento} />
-              </TableCell>
-              {listType !== "history" && (
+              {listType === "history" ? (
+                <TableCell>
+                  {row.status_agendamento_confirmado ? (
+                    <Tooltip title="Confirmado" arrow>
+                      <CheckIcon color="success" fontSize="small" />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Cancelado" arrow>
+                      <CloseIcon color="error" fontSize="small" />
+                    </Tooltip>
+                  )}
+                </TableCell>
+              ) : (
                 <TableCell>
                   {listType === "scheduled" ? (
                     <EditSchedulingDialog data={row} />
