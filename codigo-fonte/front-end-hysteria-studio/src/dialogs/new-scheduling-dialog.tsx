@@ -4,69 +4,50 @@ import { useState } from "react";
 import SimpleDialog from "../components/simple-dialog";
 import { LoadingButton } from "@mui/lab";
 import { FormProvider, useForm } from "react-hook-form";
-
-const dates = [
-  {
-    value: "2024-04-01",
-    label: "01/04/2024",
-  },
-  {
-    value: "2024-04-02",
-    label: "02/04/2024",
-  },
-  {
-    value: "2024-04-03",
-    label: "03/04/2024",
-  },
-  {
-    value: "2024-04-04",
-    label: "04/04/2024",
-  },
-];
-
-const time = [
-  {
-    value: "10:00",
-    label: "10:00",
-  },
-  {
-    value: "11:00",
-    label: "11:00",
-  },
-  {
-    value: "12:00",
-    label: "12:00",
-  },
-  {
-    value: "13:00",
-    label: "13:00",
-  },
-];
-
-const services = [
-  {
-    value: "Corte de cabelo",
-    label: "Corte de cabelo",
-  },
-  {
-    value: "Corte de cabelo + barba",
-    label: "Corte de cabelo + barba",
-  },
-  {
-    value: "Barba",
-    label: "Barba",
-  },
-  {
-    value: "Completo",
-    label: "Completo",
-  },
-];
+import { useCreateAgendamentoMutation, useGetServicosQuery, useGetPedidosQuery } from "../services/endpoins";
 
 interface SchedulingFormValues {
   service: string;
   date: string;
   time: string;
 }
+// const dates = [
+//   {
+//     value: "2024-04-01",
+//     label: "01/04/2024",
+//   },
+//   {
+//     value: "2024-04-02",
+//     label: "02/04/2024",
+//   },
+//   {
+//     value: "2024-04-03",
+//     label: "03/04/2024",
+//   },
+//   {
+//     value: "2024-04-04",
+//     label: "04/04/2024",
+//   },
+// ];
+
+// const times = [
+//   {
+//     value: "10:00",
+//     label: "10:00",
+//   },
+//   {
+//     value: "11:00",
+//     label: "11:00",
+//   },
+//   {
+//     value: "12:00",
+//     label: "12:00",
+//   },
+//   {
+//     value: "13:00",
+//     label: "13:00",
+//   },
+// ];
 
 const NewSchedulingDialog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -74,11 +55,44 @@ const NewSchedulingDialog = () => {
   const formMethods = useForm<SchedulingFormValues>();
   const { handleSubmit, register } = formMethods;
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const { data: servicos, isLoading: isLoadingServicos, error: errorServicos } = useGetServicosQuery();
+  const { data: pedidos, isLoading: isLoadingPedidos, error: errorPedidos } = useGetPedidosQuery();
+
+  const [createAgendamento] = useCreateAgendamentoMutation();
+
+  const onSubmit = handleSubmit(async (data) => {
+    const { service, date, time } = data;
+    const id_usuario = "1"; 
+    const id_horario = "2"; 
+    const data_hora_atendimento = `${date}T${time}:00`;
+
+    try {
+      await createAgendamento({
+        id_usuario,
+        id_servico: service,
+        data_hora_atendimento,
+        id_horario,
+      }).unwrap();
+      toggleDialog();
+    } catch (error) {
+      console.error("Erro ao criar agendamento", error);
+    }
   });
 
   const toggleDialog = () => setIsDialogOpen((state) => !state);
+
+  if (isLoadingServicos || isLoadingPedidos) {
+    return <div>Carregando...</div>;
+  }
+
+  if (errorServicos || errorPedidos) {
+    return <div>Erro!</div>;
+  }
+
+  const availableTimes = pedidos?.map(pedido => ({
+    value: pedido.horario_agendamento.id,
+    label: pedido.horario_agendamento.horario_disponivel,
+  })) || [];
 
   return (
     <>
@@ -117,9 +131,9 @@ const NewSchedulingDialog = () => {
               select
               {...register("service")}
             >
-              {services.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {servicos?.map((option) => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.nome}
                 </MenuItem>
               ))}
             </TextField>
@@ -133,7 +147,7 @@ const NewSchedulingDialog = () => {
               select
               {...register("date")}
             >
-              {dates.map((option) => (
+              {availableTimes.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
@@ -149,7 +163,7 @@ const NewSchedulingDialog = () => {
               select
               {...register("time")}
             >
-              {time.map((option) => (
+              {availableTimes.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>

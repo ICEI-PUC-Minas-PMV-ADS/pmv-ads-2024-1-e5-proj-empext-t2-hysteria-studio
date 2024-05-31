@@ -60,6 +60,7 @@ export interface LoginResult {
   telefone: string;
   updatedAt: string;
 }
+
 interface CreateUsuarioParams {
   nome: string;
   cpf: string;
@@ -82,6 +83,7 @@ interface CreateUsuarioResult {
   updatedAt: string;
   createdAt: string;
 }
+
 interface DeleteAgendaResult {
   message: string;
 }
@@ -138,6 +140,8 @@ interface EditAgendamentosParams {
   id_usuario: number;
   id_servico: number;
   id_horario: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface EditAgendamentosResult {
@@ -145,6 +149,20 @@ interface EditAgendamentosResult {
   id_usuario: number;
   id_servico: number;
   data_hora_atendimento: string;
+}
+interface CreateAgendamentoParams {
+  id_usuario: string;
+  id_servico: string;
+  data_hora_atendimento: string;
+  id_horario: string;
+}
+
+interface CreateAgendamentoResult {
+  id_agendamento: number;
+  id_usuario: string;
+  id_servico: string;
+  data_hora_atendimento: string;
+  id_horario: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -311,6 +329,17 @@ export const endpointsApi = createApi({
       }),
       invalidatesTags: ["AgendamentosList"],
     }),
+    createAgendamento: builder.mutation<
+      CreateAgendamentoResult,
+      CreateAgendamentoParams
+    >({
+      query: (body) => ({
+        url: "agendamento",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["AgendamentosList"],
+    }),
     getHorarios: builder.query<Array<GetHorariosResult>, void>({
       query: () => "horarios",
     }),
@@ -355,4 +384,5 @@ export const {
   useDeleteUsuarioMutation,
   useGetHistoricosQuery,
   useGetHistoricosUsuarioQuery,
+  useCreateAgendamentoMutation,
 } = endpointsApi;
