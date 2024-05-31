@@ -171,13 +171,46 @@ export interface GetAgendamentosUsuarioResult {
 interface DeleteUsuarioResult {
   message: string;
 }
+interface GetUsuariosList {
+  id: number;
+  nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface CreateAgendamentoParams {
+  id_usuario: number;
+  id_servico: number;
+  id_horario: number;
+}
+
+interface CreateAgendamentoResult {
+  id: number;
+  id_usuario: number;
+  id_servico: number;
+  id_horario: number;
+  status_agendamento_confirmado: boolean;
+  updatedAt: string;
+  createdAt: string;
+}
 
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "OneServico", "AgendamentosList"],
+  tagTypes: [
+    "ServicosList",
+    "OneServico",
+    "AgendamentosList",
+    "AgendamentosUsuarioList",
+  ],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -241,7 +274,7 @@ export const endpointsApi = createApi({
         url: `agendamento/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["AgendamentosList"],
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
     }),
     editAgendamento: builder.mutation<
       EditAgendamentosResult,
@@ -252,7 +285,7 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["AgendamentosList"],
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
     }),
     getHorarios: builder.query<Array<GetHorariosResult>, void>({
       query: () => "horarios",
@@ -262,6 +295,21 @@ export const endpointsApi = createApi({
       number
     >({
       query: (id) => `agendamento/usuario/${id}`,
+      providesTags: ["AgendamentosUsuarioList"],
+    }),
+    getUsuariosList: builder.query<Array<GetUsuariosList>, void>({
+      query: () => "usuarios",
+    }),
+    createAgendamento: builder.mutation<
+      CreateAgendamentoResult,
+      CreateAgendamentoParams
+    >({
+      query: (body) => ({
+        url: "agendamento",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
     }),
     deleteUsuario: builder.mutation<DeleteUsuarioResult, number>({
       query: (id) => ({
@@ -287,4 +335,6 @@ export const {
   useGetHorariosQuery,
   useGetAgendamentosUsuarioQuery,
   useDeleteUsuarioMutation,
+  useGetUsuariosListQuery,
+  useCreateAgendamentoMutation,
 } = endpointsApi;
