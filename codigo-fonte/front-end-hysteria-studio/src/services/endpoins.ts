@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// Interfaces de Servico
 interface GetServicosResult {
   id: string;
   nome: string;
@@ -43,6 +44,7 @@ interface UpdateServicoResult {
   updatedAt: string;
 }
 
+// Interfaces de Usuario
 interface LoginArg {
   email: string;
   senha: string;
@@ -162,7 +164,6 @@ interface CreateAgendamentoResult {
   id_usuario: string;
   id_servico: string;
   data_hora_atendimento: string;
-  id_horario: string;
   createdAt: string;
   updatedAt: string;
 }
