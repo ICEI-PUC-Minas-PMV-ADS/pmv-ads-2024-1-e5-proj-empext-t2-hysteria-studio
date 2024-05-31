@@ -100,7 +100,13 @@ export interface GetAgendamentosResult {
     id: number;
     nome: string;
   };
-  status_agendamento_confirmado: boolean;
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 export interface EditUsuarioParams {
@@ -165,7 +171,13 @@ export interface GetAgendamentosUsuarioResult {
     id: number;
     nome: string;
   };
-  status_agendamento_confirmado: boolean;
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 interface DeleteUsuarioResult {
