@@ -20,6 +20,7 @@ import {
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 import { AuthContext } from "../contexts/auth";
+import Notify from "../components/notify";
 
 interface SchedulingFormValues {
   service: number;
@@ -33,7 +34,19 @@ const NewSchedulingDialog = () => {
   const { isAdmin } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [otherClientToggle, setOtherClientToggle] = useState(false);
+  const [notifyCreateMessage, setNotifyCreateMessage] = useState<{
+    isOpen: boolean;
+    message: string;
+    severity: "error" | "warning" | "info" | "success";
+  }>({
+    isOpen: false,
+    message: "",
+    severity: "success",
+  });
   const [createAgendamento] = useCreateAgendamentoMutation();
+
+  const toggleNotifyCreateMessage = () =>
+    setNotifyCreateMessage((state) => ({ ...state, isOpen: !state.isOpen }));
 
   const formMethods = useForm<SchedulingFormValues>();
   const {
@@ -61,8 +74,17 @@ const NewSchedulingDialog = () => {
       }).unwrap();
 
       toggleDialog();
-    } catch {
-      console.error("Erro ao criar agendamento");
+      setNotifyCreateMessage({
+        isOpen: true,
+        message: "Serviço criado com sucesso.",
+        severity: "success",
+      });
+    } catch (error: any) {
+      setNotifyCreateMessage({
+        isOpen: true,
+        message: error.data.message || "Ocorreu um erro ao criar o serviço.",
+        severity: "error",
+      });
     }
   });
 
@@ -289,6 +311,12 @@ const NewSchedulingDialog = () => {
             </form>
           </FormProvider>
         }
+      />
+      <Notify
+        isOpen={notifyCreateMessage.isOpen}
+        severity={notifyCreateMessage.severity}
+        message={notifyCreateMessage.message}
+        onClose={toggleNotifyCreateMessage}
       />
     </>
   );

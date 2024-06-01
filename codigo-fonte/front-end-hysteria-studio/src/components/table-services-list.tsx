@@ -23,7 +23,7 @@ const TableServicesList = () => {
 
   const {
     data: servicos,
-    isFetching: isFetchingServicos,
+    isLoading: isLoadingServicos,
     isError: isServcosError,
   } = useGetServicosQuery();
 
@@ -34,7 +34,7 @@ const TableServicesList = () => {
           <CreateServiceDialog />
         </Box>
       )}
-      {isFetchingServicos ? (
+      {isLoadingServicos ? (
         <Box component={Paper} p={2} mt={2}>
           <LinearProgress />
         </Box>

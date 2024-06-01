@@ -104,7 +104,13 @@ export interface GetAgendamentosResult {
     id: number;
     nome: string;
   };
-  status_agendamento_confirmado: boolean;
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 export interface EditUsuarioParams {
@@ -133,7 +139,7 @@ interface EditUsuarioResult {
 
 interface EditAgendamentosParams {
   id: number;
-  id_usuario: number;
+  id_usuario?: number;
   id_servico: number;
   id_horario: number;
 }
@@ -280,7 +286,6 @@ export const endpointsApi = createApi({
       query: () => "servicos",
       providesTags: ["ServicosList"],
     }),
-
     createServico: builder.mutation<CreateServicoResult, CreateServicoParams>({
       query: (body) => ({
         url: "servico",

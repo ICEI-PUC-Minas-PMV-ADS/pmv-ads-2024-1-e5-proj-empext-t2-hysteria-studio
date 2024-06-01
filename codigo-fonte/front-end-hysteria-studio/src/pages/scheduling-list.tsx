@@ -48,7 +48,7 @@ const SchedulingList = () => {
 
   const {
     data: agendamentosUsuario,
-    isFetching: isFetchingAgendamentosUsuarios,
+    isLoading: isLoadingAgendamentosUsuarios,
     isError: isErrorAgendamentosUsuario,
   } = useGetAgendamentosUsuarioQuery(user?.id as number, {
     skip: isAdmin,
@@ -56,13 +56,13 @@ const SchedulingList = () => {
 
   const {
     data: agendamentos,
-    isFetching: isFetchingAgendamentos,
+    isLoading: isLoadingAgendamentos,
     isError: isErrorAgendamentos,
   } = useGetAgendamentosQuery(undefined, {
     skip: !isAdmin,
   });
 
-  const isLoading = isFetchingAgendamentos || isFetchingAgendamentosUsuarios;
+  const isLoading = isLoadingAgendamentos || isLoadingAgendamentosUsuarios;
   const isError = isErrorAgendamentos || isErrorAgendamentosUsuario;
   const listToShow = isAdmin ? agendamentos : agendamentosUsuario;
 
