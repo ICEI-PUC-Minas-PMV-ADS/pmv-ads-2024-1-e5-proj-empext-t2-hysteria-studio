@@ -96,7 +96,11 @@ export interface GetAgendamentosResult {
     id: number;
     nome: string;
   };
-  usuario: {
+  usuario?: {
+    id: number;
+    nome: string;
+  };
+  usuario_inexistente?: {
     id: number;
     nome: string;
   };
@@ -139,9 +143,15 @@ interface EditAgendamentosResult {
   id_usuario: number;
   id_servico: number;
   data_hora_atendimento: string;
-  status_agendamento_confirmado: boolean;
   createdAt: string;
   updatedAt: string;
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 interface GetHorariosResult {
@@ -165,7 +175,13 @@ export interface GetAgendamentosUsuarioResult {
     id: number;
     nome: string;
   };
-  status_agendamento_confirmado: boolean;
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 interface DeleteUsuarioResult {
@@ -185,7 +201,9 @@ interface GetUsuariosList {
 }
 
 interface CreateAgendamentoParams {
-  id_usuario: number;
+  nome?: string;
+  email?: string;
+  id_usuario?: number;
   id_servico: number;
   id_horario: number;
 }
@@ -198,6 +216,52 @@ interface CreateAgendamentoResult {
   status_agendamento_confirmado: boolean;
   updatedAt: string;
   createdAt: string;
+}
+
+export interface GetHistoricosResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
+}
+
+export interface GetHistoricosUsuarioResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
 }
 
 export const endpointsApi = createApi({
@@ -317,6 +381,15 @@ export const endpointsApi = createApi({
         method: "DELETE",
       }),
     }),
+    getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
+      query: () => "agendamentos/historico",
+    }),
+    getHistoricosUsuario: builder.query<
+      Array<GetHistoricosUsuarioResult>,
+      number
+    >({
+      query: (id) => `agendamentos/usuario/historico/id/${id}`,
+    }),
   }),
 });
 
@@ -337,4 +410,6 @@ export const {
   useDeleteUsuarioMutation,
   useGetUsuariosListQuery,
   useCreateAgendamentoMutation,
+  useGetHistoricosQuery,
+  useGetHistoricosUsuarioQuery,
 } = endpointsApi;

@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Fab,
   FormControlLabel,
@@ -25,11 +24,13 @@ import { AuthContext } from "../contexts/auth";
 interface SchedulingFormValues {
   service: number;
   time: number;
-  client?: number;
+  email?: string;
+  name?: string;
+  id?: number;
 }
 
 const NewSchedulingDialog = () => {
-  const { user, isAdmin } = useContext(AuthContext);
+  const { isAdmin } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [otherClientToggle, setOtherClientToggle] = useState(false);
   const [createAgendamento] = useCreateAgendamentoMutation();
@@ -54,7 +55,9 @@ const NewSchedulingDialog = () => {
       await createAgendamento({
         id_horario: Number(values.time),
         id_servico: Number(values.service),
-        id_usuario: Number(values.client) || (user?.id as number),
+        id_usuario: Number(values.id),
+        nome: values.name,
+        email: values.email,
       }).unwrap();
 
       toggleDialog();
@@ -155,46 +158,75 @@ const NewSchedulingDialog = () => {
           <FormProvider {...formMethods}>
             <form noValidate onSubmit={onSubmit}>
               {isAdmin && (
-                <Box display="flex" justifyContent="space-between" gap={2}>
+                <>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={() => {
+                          setOtherClientToggle((state) => !state);
+                          resetField("id");
+                        }}
+                      />
+                    }
+                    label="Deseja criar agendamento para cliente não cadastrado?"
+                  />
                   {otherClientToggle ? (
-                    <TextField
-                      required
-                      margin="normal"
-                      type="email"
-                      fullWidth
-                      id="client"
-                      label="Email do cliente"
-                      autoComplete="client"
-                      {...register("client", {
-                        required: "Campo obrigatório",
-                        pattern: {
-                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                          message: "Email inválido",
-                        },
-                      })}
-                      error={!!errors.client}
-                      helperText={
-                        errors.client?.message ? errors.client.message : null
-                      }
-                      disabled={isSubmitting}
-                    />
+                    <>
+                      <TextField
+                        required
+                        margin="normal"
+                        fullWidth
+                        id="name"
+                        label="Nome"
+                        autoComplete="name"
+                        {...register("name", {
+                          required: "Campo obrigatório",
+                        })}
+                        error={!!errors.name}
+                        helperText={
+                          errors.name?.message ? errors.name.message : null
+                        }
+                        disabled={isSubmitting}
+                      />
+                      <TextField
+                        required
+                        margin="normal"
+                        type="email"
+                        fullWidth
+                        id="email"
+                        label="Email"
+                        autoComplete="email"
+                        {...register("email", {
+                          required: "Campo obrigatório",
+                          pattern: {
+                            value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                            message: "Email inválido",
+                          },
+                        })}
+                        error={!!errors.email}
+                        helperText={
+                          errors.email?.message ? errors.email.message : null
+                        }
+                        disabled={isSubmitting}
+                      />
+                    </>
                   ) : (
                     <TextField
                       margin="normal"
                       required
                       fullWidth
-                      id="client"
+                      id="id"
                       label="Email do cliente"
                       autoComplete="client"
                       select
                       disabled={
                         isFetchingUsuarios || isUsuariosError || isSubmitting
                       }
-                      {...register("client", { required: "Campo obrigatório" })}
-                      error={!!errors.client}
-                      helperText={
-                        errors.client?.message ? errors.client.message : null
-                      }
+                      {...register("id", {
+                        required: "Campo obrigatório",
+                      })}
+                      error={!!errors.id}
+                      helperText={errors.id?.message ? errors.id.message : null}
                     >
                       {usuariosOptions.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -203,19 +235,7 @@ const NewSchedulingDialog = () => {
                       ))}
                     </TextField>
                   )}
-
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        onChange={() => {
-                          setOtherClientToggle((state) => !state);
-                          resetField("client");
-                        }}
-                      />
-                    }
-                    label="Outro cliente"
-                  />
-                </Box>
+                </>
               )}
               <TextField
                 margin="normal"

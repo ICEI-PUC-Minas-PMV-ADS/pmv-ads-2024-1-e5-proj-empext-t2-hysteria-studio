@@ -64,7 +64,7 @@ const EditSchedulingDialog = ({ data }: EditSchedulingDialogProps) => {
         id: data.id_agendamento,
         id_horario: Number(values.time),
         id_servico: Number(values.service),
-        id_usuario: Number(data.usuario.id),
+        id_usuario: Number(data.usuario?.id || data.usuario_inexistente?.id),
       }).unwrap();
 
       toggleDialog();

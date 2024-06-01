@@ -71,7 +71,8 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                 scope="row"
                 sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
               >
-                {row.usuario.nome}
+                {row.usuario?.nome ||
+                  (row as GetAgendamentosResult).usuario_inexistente?.nome}
               </TableCell>
               <TableCell
                 component="th"
@@ -87,7 +88,9 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   }}
                 >
                   <Typography variant="body2">
-                    Nome: {row.usuario.nome}
+                    Nome:{" "}
+                    {row.usuario?.nome ||
+                      (row as GetAgendamentosResult).usuario_inexistente?.nome}
                   </Typography>
                   <Typography variant="body2">
                     Data:{" "}
