@@ -304,11 +304,14 @@ export const endpointsApi = createApi({
       }),
     }),
     getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
-      query: () => "historicos",
+      query: () => "agendamentos/historico",
       providesTags: ["HistoricoList"],
     }),
-    getHistoricosUsuario: builder.query<Array<GetHistoricosUsuarioResult>, number>({
-      query: (id) => `historico/usuario/${id}`,
+    getHistoricosUsuario: builder.query<
+      Array<GetHistoricosUsuarioResult>,
+      number
+    >({
+      query: (id) => `agendamentos/usuario/historico/id/${id}`,
     }),
   }),
 });
