@@ -270,6 +270,52 @@ export interface GetHistoricosUsuarioResult {
   };
 }
 
+export interface GetAgendamentosFuturosResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
+}
+
+export interface GetUsuarioAgendamentosFuturosResult {
+  id_agendamento: number;
+  horario_agendamento: {
+    id: number;
+    horario_disponivel: string;
+  };
+  servico: {
+    id: number;
+    nome: string;
+  };
+  usuario: {
+    id: number;
+    nome: string;
+  };
+  status: {
+    status_agendamento:
+      | "SOLICITACAO_EM_ESPERA"
+      | "AGENDAMENTO_CONFIRMADO"
+      | "CONCLUIDO"
+      | "CANCELADO";
+  };
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -280,6 +326,8 @@ export const endpointsApi = createApi({
     "OneServico",
     "AgendamentosList",
     "AgendamentosUsuarioList",
+    "AgendamentosFuturosList",
+    "UsuarioAgendamentosFuturosList",
   ],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
@@ -343,7 +391,10 @@ export const endpointsApi = createApi({
         url: `agendamento/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
+      invalidatesTags: [
+        "AgendamentosFuturosList",
+        "UsuarioAgendamentosFuturosList",
+      ],
     }),
     editAgendamento: builder.mutation<
       EditAgendamentosResult,
@@ -354,7 +405,10 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
+      invalidatesTags: [
+        "AgendamentosFuturosList",
+        "UsuarioAgendamentosFuturosList",
+      ],
     }),
     getHorarios: builder.query<Array<GetHorariosResult>, void>({
       query: () => "horarios",
@@ -378,7 +432,10 @@ export const endpointsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
+      invalidatesTags: [
+        "AgendamentosFuturosList",
+        "UsuarioAgendamentosFuturosList",
+      ],
     }),
     deleteUsuario: builder.mutation<DeleteUsuarioResult, number>({
       query: (id) => ({
@@ -394,6 +451,20 @@ export const endpointsApi = createApi({
       number
     >({
       query: (id) => `agendamentos/usuario/historico/id/${id}`,
+    }),
+    getAgendamentosFuturos: builder.query<
+      Array<GetAgendamentosFuturosResult>,
+      void
+    >({
+      query: () => "agendamentos/futuros",
+      providesTags: ["AgendamentosFuturosList"],
+    }),
+    getUsuarioAgendamentosFuturos: builder.query<
+      Array<GetUsuarioAgendamentosFuturosResult>,
+      number
+    >({
+      query: (id) => `agendamentos/usuario/futuros/id/${id}`,
+      providesTags: ["UsuarioAgendamentosFuturosList"],
     }),
   }),
 });
@@ -417,4 +488,6 @@ export const {
   useCreateAgendamentoMutation,
   useGetHistoricosQuery,
   useGetHistoricosUsuarioQuery,
+  useGetAgendamentosFuturosQuery,
+  useGetUsuarioAgendamentosFuturosQuery,
 } = endpointsApi;

@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import TableSchedulingLists from "../components/table-scheduling-lists";
 import {
-  GetAgendamentosResult,
-  GetAgendamentosUsuarioResult,
-  useGetAgendamentosQuery,
-  useGetAgendamentosUsuarioQuery,
+  GetAgendamentosFuturosResult,
+  GetUsuarioAgendamentosFuturosResult,
+  useGetAgendamentosFuturosQuery,
+  useGetUsuarioAgendamentosFuturosQuery,
 } from "../services/endpoins";
 import { AuthContext } from "../contexts/auth";
 import { useContext, useMemo, useState } from "react";
@@ -50,7 +50,7 @@ const SchedulingList = () => {
     data: agendamentosUsuario,
     isLoading: isLoadingAgendamentosUsuarios,
     isError: isErrorAgendamentosUsuario,
-  } = useGetAgendamentosUsuarioQuery(user?.id as number, {
+  } = useGetUsuarioAgendamentosFuturosQuery(user?.id as number, {
     skip: isAdmin,
   });
 
@@ -58,7 +58,7 @@ const SchedulingList = () => {
     data: agendamentos,
     isLoading: isLoadingAgendamentos,
     isError: isErrorAgendamentos,
-  } = useGetAgendamentosQuery(undefined, {
+  } = useGetAgendamentosFuturosQuery(undefined, {
     skip: !isAdmin,
   });
 
@@ -145,64 +145,66 @@ const SchedulingList = () => {
 
   return (
     <Box component={Paper} display="flex" flexDirection="column" p={2} gap={3}>
-      <FormProvider {...formMethods}>
-        <form noValidate onSubmit={onSubmit}>
-          <Box
-            display="flex"
-            flexDirection={{ xs: "column", md: "row" }}
-            justifyContent="space-between"
-            alignItems="center"
-            gap={1}
-          >
-            <TextField
-              margin="normal"
-              fullWidth
-              id="name"
-              label="Nome do cliente"
-              autoComplete="name"
-              {...register("name")}
-              helperText="Pesquisar pelo nome do cliente."
-            />
-            <TextField
-              margin="normal"
-              type="date"
-              fullWidth
-              id="startDate"
-              label="Data de início"
-              autoComplete="startDate"
-              {...register("startDate")}
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.startDate}
-              helperText={
-                errors.startDate?.message
-                  ? errors.startDate.message
-                  : "Pesquisa pela data de início."
-              }
-            />
-            <TextField
-              margin="normal"
-              type="date"
-              fullWidth
-              id="finalDate"
-              label="Data de fim"
-              autoComplete="finalDate"
-              {...register("finalDate")}
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.finalDate}
-              helperText={
-                errors.finalDate?.message
-                  ? errors.finalDate.message
-                  : "Pesquisa pela data de fim."
-              }
-            />
-            <Box mb={2} width={{ xs: "100%", md: "auto" }}>
-              <Button fullWidth type="submit" variant="contained">
-                Pesquisar
-              </Button>
+      {isAdmin && (
+        <FormProvider {...formMethods}>
+          <form noValidate onSubmit={onSubmit}>
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", md: "row" }}
+              justifyContent="space-between"
+              alignItems="center"
+              gap={1}
+            >
+              <TextField
+                margin="normal"
+                fullWidth
+                id="name"
+                label="Nome do cliente"
+                autoComplete="name"
+                {...register("name")}
+                helperText="Pesquisar pelo nome do cliente."
+              />
+              <TextField
+                margin="normal"
+                type="date"
+                fullWidth
+                id="startDate"
+                label="Data de início"
+                autoComplete="startDate"
+                {...register("startDate")}
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.startDate}
+                helperText={
+                  errors.startDate?.message
+                    ? errors.startDate.message
+                    : "Pesquisa pela data de início."
+                }
+              />
+              <TextField
+                margin="normal"
+                type="date"
+                fullWidth
+                id="finalDate"
+                label="Data de fim"
+                autoComplete="finalDate"
+                {...register("finalDate")}
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.finalDate}
+                helperText={
+                  errors.finalDate?.message
+                    ? errors.finalDate.message
+                    : "Pesquisa pela data de fim."
+                }
+              />
+              <Box mb={2} width={{ xs: "100%", md: "auto" }}>
+                <Button fullWidth type="submit" variant="contained">
+                  Pesquisar
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      )}
       {isLoading ? (
         <Box component={Paper} p={2} mt={2}>
           <LinearProgress />
@@ -233,7 +235,7 @@ const SchedulingList = () => {
         <TableSchedulingLists
           data={
             filteredList as Array<
-              GetAgendamentosResult | GetAgendamentosUsuarioResult
+              GetAgendamentosFuturosResult | GetUsuarioAgendamentosFuturosResult
             >
           }
           listType="scheduled"

@@ -10,10 +10,12 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 import {
+  GetAgendamentosFuturosResult,
   GetAgendamentosResult,
   GetAgendamentosUsuarioResult,
   GetHistoricosResult,
   GetHistoricosUsuarioResult,
+  GetUsuarioAgendamentosFuturosResult,
 } from "../services/endpoins";
 import { format } from "date-fns";
 import StatusChip from "./status-chip";
@@ -25,6 +27,8 @@ interface TableListProps {
     | GetAgendamentosUsuarioResult
     | GetHistoricosResult
     | GetHistoricosUsuarioResult
+    | GetAgendamentosFuturosResult
+    | GetUsuarioAgendamentosFuturosResult
   >;
 }
 
