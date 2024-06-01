@@ -144,64 +144,66 @@ const HistoryList = () => {
 
   return (
     <Box component={Paper} display="flex" flexDirection="column" p={2}>
-      <FormProvider {...formMethods}>
-        <form noValidate onSubmit={onSubmit}>
-          <Box
-            display="flex"
-            flexDirection={{ xs: "column", md: "row" }}
-            justifyContent="space-between"
-            alignItems="center"
-            gap={1}
-          >
-            <TextField
-              margin="normal"
-              fullWidth
-              id="name"
-              label="Nome do cliente"
-              autoComplete="name"
-              {...register("name")}
-              helperText="Pesquisar pelo nome do cliente."
-            />
-            <TextField
-              margin="normal"
-              type="date"
-              fullWidth
-              id="startDate"
-              label="Data de início"
-              autoComplete="startDate"
-              {...register("startDate")}
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.startDate}
-              helperText={
-                errors.startDate?.message
-                  ? errors.startDate.message
-                  : "Pesquisa pela data de início."
-              }
-            />
-            <TextField
-              margin="normal"
-              type="date"
-              fullWidth
-              id="finalDate"
-              label="Data de fim"
-              autoComplete="finalDate"
-              {...register("finalDate")}
-              InputLabelProps={{ shrink: true }}
-              error={!!errors.finalDate}
-              helperText={
-                errors.finalDate?.message
-                  ? errors.finalDate.message
-                  : "Pesquisa pela data de fim."
-              }
-            />
-            <Box mb={2} width={{ xs: "100%", md: "auto" }}>
-              <Button fullWidth type="submit" variant="contained">
-                Pesquisar
-              </Button>
+      {isAdmin && (
+        <FormProvider {...formMethods}>
+          <form noValidate onSubmit={onSubmit}>
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", md: "row" }}
+              justifyContent="space-between"
+              alignItems="center"
+              gap={1}
+            >
+              <TextField
+                margin="normal"
+                fullWidth
+                id="name"
+                label="Nome do cliente"
+                autoComplete="name"
+                {...register("name")}
+                helperText="Pesquisar pelo nome do cliente."
+              />
+              <TextField
+                margin="normal"
+                type="date"
+                fullWidth
+                id="startDate"
+                label="Data de início"
+                autoComplete="startDate"
+                {...register("startDate")}
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.startDate}
+                helperText={
+                  errors.startDate?.message
+                    ? errors.startDate.message
+                    : "Pesquisa pela data de início."
+                }
+              />
+              <TextField
+                margin="normal"
+                type="date"
+                fullWidth
+                id="finalDate"
+                label="Data de fim"
+                autoComplete="finalDate"
+                {...register("finalDate")}
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.finalDate}
+                helperText={
+                  errors.finalDate?.message
+                    ? errors.finalDate.message
+                    : "Pesquisa pela data de fim."
+                }
+              />
+              <Box mb={2} width={{ xs: "100%", md: "auto" }}>
+                <Button fullWidth type="submit" variant="contained">
+                  Pesquisar
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </form>
-      </FormProvider>
+          </form>
+        </FormProvider>
+      )}
       {isLoading ? (
         <Box component={Paper} p={2} mt={2}>
           <LinearProgress />
