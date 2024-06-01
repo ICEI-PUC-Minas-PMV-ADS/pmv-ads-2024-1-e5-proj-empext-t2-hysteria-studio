@@ -112,7 +112,7 @@ const SchedulingList = () => {
 
         return listToShow.filter(
           (item) =>
-            item.usuario.nome
+            item.usuario?.nome
               .toLocaleLowerCase()
               .includes(name.toLocaleLowerCase()) &&
             new Date(item.horario_agendamento.horario_disponivel) >=
@@ -122,7 +122,7 @@ const SchedulingList = () => {
         );
       } else {
         return listToShow.filter((item) =>
-          item.usuario.nome
+          item.usuario?.nome
             .toLocaleLowerCase()
             .includes(name.toLocaleLowerCase())
         );
