@@ -60,7 +60,6 @@ export interface LoginResult {
   telefone: string;
   updatedAt: string;
 }
-
 interface CreateUsuarioParams {
   nome: string;
   cpf: string;
@@ -83,7 +82,6 @@ interface CreateUsuarioResult {
   updatedAt: string;
   createdAt: string;
 }
-
 interface DeleteAgendaResult {
   message: string;
 }
@@ -102,13 +100,7 @@ export interface GetAgendamentosResult {
     id: number;
     nome: string;
   };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+  status_agendamento_confirmado: boolean;
 }
 
 export interface EditUsuarioParams {
@@ -140,8 +132,6 @@ interface EditAgendamentosParams {
   id_usuario: number;
   id_servico: number;
   id_horario: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
 interface EditAgendamentosResult {
@@ -149,19 +139,7 @@ interface EditAgendamentosResult {
   id_usuario: number;
   id_servico: number;
   data_hora_atendimento: string;
-}
-interface CreateAgendamentoParams {
-  id_usuario: string;
-  id_servico: string;
-  data_hora_atendimento: string;
-  id_horario: string;
-}
-
-interface CreateAgendamentoResult {
-  id_agendamento: number;
-  id_usuario: string;
-  id_servico: string;
-  data_hora_atendimento: string;
+  status_agendamento_confirmado: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -187,63 +165,39 @@ export interface GetAgendamentosUsuarioResult {
     id: number;
     nome: string;
   };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+  status_agendamento_confirmado: boolean;
 }
 
 interface DeleteUsuarioResult {
   message: string;
 }
-
-export interface GetHistoricosResult {
-  id_agendamento: number;
-  horario_agendamento: {
-    id: number;
-    horario_disponivel: string;
-  };
-  servico: {
-    id: number;
-    nome: string;
-  };
-  usuario: {
-    id: number;
-    nome: string;
-  };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+interface GetUsuariosList {
+  id: number;
+  nome: string;
+  cpf: string;
+  data_de_nascimento: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  flag_admin: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface GetHistoricosUsuarioResult {
-  id_agendamento: number;
-  horario_agendamento: {
-    id: number;
-    horario_disponivel: string;
-  };
-  servico: {
-    id: number;
-    nome: string;
-  };
-  usuario: {
-    id: number;
-    nome: string;
-  };
-  status: {
-    status_agendamento:
-      | "SOLICITACAO_EM_ESPERA"
-      | "AGENDAMENTO_CONFIRMADO"
-      | "CONCLUIDO"
-      | "CANCELADO";
-  };
+interface CreateAgendamentoParams {
+  id_usuario: number;
+  id_servico: number;
+  id_horario: number;
+}
+
+interface CreateAgendamentoResult {
+  id: number;
+  id_usuario: number;
+  id_servico: number;
+  id_horario: number;
+  status_agendamento_confirmado: boolean;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export const endpointsApi = createApi({
@@ -251,7 +205,12 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "OneServico", "AgendamentosList"],
+  tagTypes: [
+    "ServicosList",
+    "OneServico",
+    "AgendamentosList",
+    "AgendamentosUsuarioList",
+  ],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -315,7 +274,7 @@ export const endpointsApi = createApi({
         url: `agendamento/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["AgendamentosList"],
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
     }),
     editAgendamento: builder.mutation<
       EditAgendamentosResult,
@@ -326,7 +285,20 @@ export const endpointsApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["AgendamentosList"],
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
+    }),
+    getHorarios: builder.query<Array<GetHorariosResult>, void>({
+      query: () => "horarios",
+    }),
+    getAgendamentosUsuario: builder.query<
+      Array<GetAgendamentosUsuarioResult>,
+      number
+    >({
+      query: (id) => `agendamento/usuario/${id}`,
+      providesTags: ["AgendamentosUsuarioList"],
+    }),
+    getUsuariosList: builder.query<Array<GetUsuariosList>, void>({
+      query: () => "usuarios",
     }),
     createAgendamento: builder.mutation<
       CreateAgendamentoResult,
@@ -337,31 +309,13 @@ export const endpointsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["AgendamentosList"],
-    }),
-    getHorarios: builder.query<Array<GetHorariosResult>, void>({
-      query: () => "horarios",
-    }),
-    getAgendamentosUsuario: builder.query<
-      Array<GetAgendamentosUsuarioResult>,
-      number
-    >({
-      query: (id) => `agendamento/usuario/${id}`,
+      invalidatesTags: ["AgendamentosList", "AgendamentosUsuarioList"],
     }),
     deleteUsuario: builder.mutation<DeleteUsuarioResult, number>({
       query: (id) => ({
         url: `usuario/${id}`,
         method: "DELETE",
       }),
-    }),
-    getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
-      query: () => "agendamentos/historico",
-    }),
-    getHistoricosUsuario: builder.query<
-      Array<GetHistoricosUsuarioResult>,
-      number
-    >({
-      query: (id) => `agendamentos/usuario/historico/id/${id}`,
     }),
   }),
 });
@@ -381,7 +335,6 @@ export const {
   useGetHorariosQuery,
   useGetAgendamentosUsuarioQuery,
   useDeleteUsuarioMutation,
-  useGetHistoricosQuery,
-  useGetHistoricosUsuarioQuery,
+  useGetUsuariosListQuery,
   useCreateAgendamentoMutation,
 } = endpointsApi;

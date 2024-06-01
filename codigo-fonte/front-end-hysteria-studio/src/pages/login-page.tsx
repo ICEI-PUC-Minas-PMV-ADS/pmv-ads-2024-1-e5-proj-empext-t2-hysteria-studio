@@ -106,6 +106,7 @@ const LoginPage = () => {
                     required
                     fullWidth
                     id="email"
+                    disabled={isSubmitting}
                     label="Email"
                     autoComplete="email"
                     autoFocus
@@ -129,6 +130,7 @@ const LoginPage = () => {
                     label="Senha"
                     type="password"
                     id="password"
+                    disabled={isSubmitting}
                     autoComplete="current-password"
                     {...register("password", { required: "Campo obrigatório" })}
                     error={!!errors.password}

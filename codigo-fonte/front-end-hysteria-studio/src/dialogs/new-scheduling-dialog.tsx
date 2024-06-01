@@ -1,98 +1,134 @@
-import { Button, Fab, MenuItem, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Fab,
+  FormControlLabel,
+  MenuItem,
+  Switch,
+  TextField,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import SimpleDialog from "../components/simple-dialog";
 import { LoadingButton } from "@mui/lab";
 import { FormProvider, useForm } from "react-hook-form";
-import { useCreateAgendamentoMutation, useGetServicosQuery, useGetPedidosQuery } from "../services/endpoins";
+import {
+  useCreateAgendamentoMutation,
+  useGetHorariosQuery,
+  useGetServicosQuery,
+  useGetUsuariosListQuery,
+} from "../services/endpoins";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale/pt-BR";
+import { AuthContext } from "../contexts/auth";
 
 interface SchedulingFormValues {
-  service: string;
-  date: string;
-  time: string;
+  service: number;
+  time: number;
+  client?: number;
 }
-// const dates = [
-//   {
-//     value: "2024-04-01",
-//     label: "01/04/2024",
-//   },
-//   {
-//     value: "2024-04-02",
-//     label: "02/04/2024",
-//   },
-//   {
-//     value: "2024-04-03",
-//     label: "03/04/2024",
-//   },
-//   {
-//     value: "2024-04-04",
-//     label: "04/04/2024",
-//   },
-// ];
-
-// const times = [
-//   {
-//     value: "10:00",
-//     label: "10:00",
-//   },
-//   {
-//     value: "11:00",
-//     label: "11:00",
-//   },
-//   {
-//     value: "12:00",
-//     label: "12:00",
-//   },
-//   {
-//     value: "13:00",
-//     label: "13:00",
-//   },
-// ];
 
 const NewSchedulingDialog = () => {
+  const { user, isAdmin } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const formMethods = useForm<SchedulingFormValues>();
-  const { handleSubmit, register } = formMethods;
-
-  const { data: servicos, isLoading: isLoadingServicos, error: errorServicos } = useGetServicosQuery();
-  const { data: pedidos, isLoading: isLoadingPedidos, error: errorPedidos } = useGetPedidosQuery();
-
+  const [otherClientToggle, setOtherClientToggle] = useState(false);
   const [createAgendamento] = useCreateAgendamentoMutation();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const { service, date, time } = data;
-    const id_usuario = "1"; 
-    const id_horario = "2"; 
-    const data_hora_atendimento = `${date}T${time}:00`;
+  const formMethods = useForm<SchedulingFormValues>();
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting, isValid, errors },
+    reset,
+    resetField,
+  } = formMethods;
 
+  const toggleDialog = () => {
+    setIsDialogOpen((state) => !state);
+    setOtherClientToggle(false);
+    reset();
+  };
+
+  const onSubmit = handleSubmit(async (values) => {
     try {
       await createAgendamento({
-        id_usuario,
-        id_servico: service,
-        data_hora_atendimento,
-        id_horario,
+        id_horario: Number(values.time),
+        id_servico: Number(values.service),
+        id_usuario: Number(values.client) || (user?.id as number),
       }).unwrap();
+
       toggleDialog();
-    } catch (error) {
-      console.error("Erro ao criar agendamento", error);
+    } catch {
+      console.error("Erro ao criar agendamento");
     }
   });
 
-  const toggleDialog = () => setIsDialogOpen((state) => !state);
+  const {
+    data: usuarios,
+    isFetching: isFetchingUsuarios,
+    isError: isUsuariosError,
+  } = useGetUsuariosListQuery(undefined, {
+    skip: !isDialogOpen,
+    selectFromResult: (result) => ({
+      ...result,
+      data: result.data?.filter((usuario) => !usuario.flag_admin),
+    }),
+  });
 
-  if (isLoadingServicos || isLoadingPedidos) {
-    return <div>Carregando...</div>;
-  }
+  const {
+    data: servicos,
+    isFetching: isFetchingServicos,
+    isError: isServicosError,
+  } = useGetServicosQuery(undefined, {
+    skip: !isDialogOpen,
+  });
 
-  if (errorServicos || errorPedidos) {
-    return <div>Erro!</div>;
-  }
+  const {
+    data: horarios,
+    isFetching: isFetchingHorarios,
+    isError: isHorariosError,
+  } = useGetHorariosQuery(undefined, {
+    skip: !isDialogOpen,
+  });
 
-  const availableTimes = pedidos?.map(pedido => ({
-    value: pedido.horario_agendamento.id,
-    label: pedido.horario_agendamento.horario_disponivel,
-  })) || [];
+  const usuariosOptions = useMemo(() => {
+    if (usuarios) {
+      return usuarios?.map((usuario) => ({
+        value: usuario.id,
+        label: usuario.email,
+      }));
+    } else {
+      return [];
+    }
+  }, [usuarios]);
+
+  const horariosOptions = useMemo(() => {
+    if (horarios) {
+      return horarios?.map((horario) => ({
+        value: horario.id,
+        label: format(
+          new Date(horario.horario_disponivel),
+          "EEEE dd/MM/yyyy HH:mm",
+          {
+            locale: ptBR,
+          }
+        ),
+      }));
+    } else {
+      return [];
+    }
+  }, [horarios]);
+
+  const serviceOptions = useMemo(() => {
+    if (servicos) {
+      return servicos?.map((servico) => ({
+        value: servico.id,
+        label: servico.nome,
+      }));
+    } else {
+      return [];
+    }
+  }, [servicos]);
 
   return (
     <>
@@ -114,61 +150,123 @@ const NewSchedulingDialog = () => {
         title="Novo agendamento"
         isOpen={isDialogOpen}
         toggleDialog={toggleDialog}
-        actions={[
-          <LoadingButton onClick={onSubmit}>Confirmar</LoadingButton>,
-          <Button onClick={toggleDialog}>Fechar</Button>,
-        ]}
+        actions={[<Button onClick={toggleDialog}>Fechar</Button>]}
         content={
           <FormProvider {...formMethods}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="service"
-              label="Serviço"
-              autoComplete="service"
-              autoFocus
-              select
-              {...register("service")}
-            >
-              {servicos?.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.nome}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="date"
-              label="Data"
-              autoComplete="date"
-              select
-              {...register("date")}
-            >
-              {availableTimes.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="time"
-              label="Hora"
-              autoComplete="time"
-              select
-              {...register("time")}
-            >
-              {availableTimes.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+            <form noValidate onSubmit={onSubmit}>
+              {isAdmin && (
+                <Box display="flex" justifyContent="space-between" gap={2}>
+                  {otherClientToggle ? (
+                    <TextField
+                      required
+                      margin="normal"
+                      type="email"
+                      fullWidth
+                      id="client"
+                      label="Email do cliente"
+                      autoComplete="client"
+                      {...register("client", {
+                        required: "Campo obrigatório",
+                        pattern: {
+                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                          message: "Email inválido",
+                        },
+                      })}
+                      error={!!errors.client}
+                      helperText={
+                        errors.client?.message ? errors.client.message : null
+                      }
+                      disabled={isSubmitting}
+                    />
+                  ) : (
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="client"
+                      label="Email do cliente"
+                      autoComplete="client"
+                      select
+                      disabled={
+                        isFetchingUsuarios || isUsuariosError || isSubmitting
+                      }
+                      {...register("client", { required: "Campo obrigatório" })}
+                      error={!!errors.client}
+                      helperText={
+                        errors.client?.message ? errors.client.message : null
+                      }
+                    >
+                      {usuariosOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        onChange={() => {
+                          setOtherClientToggle((state) => !state);
+                          resetField("client");
+                        }}
+                      />
+                    }
+                    label="Outro cliente"
+                  />
+                </Box>
+              )}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="service"
+                label="Serviço"
+                autoComplete="service"
+                select
+                disabled={isFetchingServicos || isServicosError || isSubmitting}
+                {...register("service", { required: "Campo obrigatório" })}
+                error={!!errors.service}
+                helperText={
+                  errors.service?.message ? errors.service.message : null
+                }
+              >
+                {serviceOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="time"
+                label="Data e hora"
+                autoComplete="time"
+                select
+                disabled={isFetchingHorarios || isHorariosError || isSubmitting}
+                {...register("time", { required: "Campo obrigatório" })}
+                error={!!errors.time}
+                helperText={errors.time?.message ? errors.time.message : null}
+              >
+                {horariosOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <LoadingButton
+                fullWidth
+                variant="contained"
+                type="submit"
+                disabled={!isValid}
+                loading={isSubmitting}
+              >
+                Confirmar
+              </LoadingButton>
+            </form>
           </FormProvider>
         }
       />
