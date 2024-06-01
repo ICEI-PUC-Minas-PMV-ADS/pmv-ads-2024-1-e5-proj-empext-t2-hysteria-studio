@@ -234,7 +234,7 @@ export const endpointsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://hysteria-studio-backend.onrender.com/",
   }),
-  tagTypes: ["ServicosList", "OneServico", "AgendamentosList", "HistoricoList"],
+  tagTypes: ["ServicosList", "OneServico", "AgendamentosList"],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
       query: () => "servicos",
@@ -328,7 +328,6 @@ export const endpointsApi = createApi({
     }),
     getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
       query: () => "agendamentos/historico",
-      providesTags: ["HistoricoList"],
     }),
     getHistoricosUsuario: builder.query<
       Array<GetHistoricosUsuarioResult>,
