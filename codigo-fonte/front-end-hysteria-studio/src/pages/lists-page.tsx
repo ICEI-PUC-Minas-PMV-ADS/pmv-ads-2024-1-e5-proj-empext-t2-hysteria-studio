@@ -9,10 +9,10 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
-import TableSchedulingLists from "../components/table-scheduling-lists";
 import TableServicesList from "../components/table-services-list";
 import NewSchedulingDialog from "../dialogs/new-scheduling-dialog";
 import SchedulingList from "./scheduling-list";
+import HistoryList from "./history-list";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -84,8 +84,7 @@ const ListsPage = () => {
               <SchedulingList />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              {/* @ts-ignore */}
-              <TableSchedulingLists listType="history" />
+              <HistoryList />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <TableServicesList />

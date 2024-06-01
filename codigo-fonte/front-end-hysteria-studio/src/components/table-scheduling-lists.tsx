@@ -12,13 +12,20 @@ import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 import {
   GetAgendamentosResult,
   GetAgendamentosUsuarioResult,
+  GetHistoricosResult,
+  GetHistoricosUsuarioResult,
 } from "../services/endpoins";
 import { format } from "date-fns";
 import StatusChip from "./status-chip";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
-  data: Array<GetAgendamentosResult | GetAgendamentosUsuarioResult>;
+  data: Array<
+    | GetAgendamentosResult
+    | GetAgendamentosUsuarioResult
+    | GetHistoricosResult
+    | GetHistoricosUsuarioResult
+  >;
 }
 
 const TableSchedulingLists = ({ listType, data }: TableListProps) => {
@@ -45,7 +52,6 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
             >
               Serviço
             </TableCell>
-
             <TableCell
               sx={{ display: { xs: "none", sm: "none", md: "table-cell" } }}
             >
