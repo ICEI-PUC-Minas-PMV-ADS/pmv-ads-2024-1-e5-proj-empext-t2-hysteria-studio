@@ -8,7 +8,7 @@ import {
 const SchedulingRequestsList = () => {
   const {
     data: agendamentos,
-    isFetching: isFetchingAgendamentos,
+    isLoading: isLoadingAgendamentos,
     isError: isErrorAgendamentos,
   } = useGetAgendamentosQuery(undefined, {
     selectFromResult: (result) => ({
@@ -22,7 +22,7 @@ const SchedulingRequestsList = () => {
 
   return (
     <Box component={Paper} display="flex" flexDirection="column" p={2}>
-      {isFetchingAgendamentos ? (
+      {isLoadingAgendamentos ? (
         <Box component={Paper} p={2} mt={2}>
           <LinearProgress />
         </Box>

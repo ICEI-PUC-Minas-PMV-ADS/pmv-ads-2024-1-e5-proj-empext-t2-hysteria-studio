@@ -316,6 +316,22 @@ export interface GetUsuarioAgendamentosFuturosResult {
   };
 }
 
+interface UpdateAgendamentoStatusParams {
+  id: number;
+  id_status: number;
+}
+
+interface UpdateAgendamentoStatusResult {
+  id: number;
+  id_usuario: number;
+  id_servico: number;
+  id_horario: number;
+  id_status: number;
+  id_usuarioInexistente: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export const endpointsApi = createApi({
   reducerPath: "endpointsApi",
   baseQuery: fetchBaseQuery({
@@ -328,6 +344,7 @@ export const endpointsApi = createApi({
     "AgendamentosUsuarioList",
     "AgendamentosFuturosList",
     "UsuarioAgendamentosFuturosList",
+    "HistoricosList",
   ],
   endpoints: (builder) => ({
     getServicos: builder.query<Array<GetServicosResult>, void>({
@@ -394,6 +411,7 @@ export const endpointsApi = createApi({
       invalidatesTags: [
         "AgendamentosFuturosList",
         "UsuarioAgendamentosFuturosList",
+        "AgendamentosList",
       ],
     }),
     editAgendamento: builder.mutation<
@@ -408,6 +426,7 @@ export const endpointsApi = createApi({
       invalidatesTags: [
         "AgendamentosFuturosList",
         "UsuarioAgendamentosFuturosList",
+        "AgendamentosList",
       ],
     }),
     getHorarios: builder.query<Array<GetHorariosResult>, void>({
@@ -435,6 +454,7 @@ export const endpointsApi = createApi({
       invalidatesTags: [
         "AgendamentosFuturosList",
         "UsuarioAgendamentosFuturosList",
+        "AgendamentosList",
       ],
     }),
     deleteUsuario: builder.mutation<DeleteUsuarioResult, number>({
@@ -445,6 +465,7 @@ export const endpointsApi = createApi({
     }),
     getHistoricos: builder.query<Array<GetHistoricosResult>, void>({
       query: () => "agendamentos/historico",
+      providesTags: ["HistoricosList"],
     }),
     getHistoricosUsuario: builder.query<
       Array<GetHistoricosUsuarioResult>,
@@ -465,6 +486,22 @@ export const endpointsApi = createApi({
     >({
       query: (id) => `agendamentos/usuario/futuros/id/${id}`,
       providesTags: ["UsuarioAgendamentosFuturosList"],
+    }),
+    updateAgendamentoStatus: builder.mutation<
+      UpdateAgendamentoStatusResult,
+      UpdateAgendamentoStatusParams
+    >({
+      query: ({ id, ...body }) => ({
+        url: `agendamento/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [
+        "AgendamentosFuturosList",
+        "UsuarioAgendamentosFuturosList",
+        "AgendamentosList",
+        "HistoricosList",
+      ],
     }),
   }),
 });
@@ -490,4 +527,5 @@ export const {
   useGetHistoricosUsuarioQuery,
   useGetAgendamentosFuturosQuery,
   useGetUsuarioAgendamentosFuturosQuery,
+  useUpdateAgendamentoStatusMutation,
 } = endpointsApi;

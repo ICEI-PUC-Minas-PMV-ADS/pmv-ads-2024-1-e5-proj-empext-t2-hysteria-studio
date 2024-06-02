@@ -3,12 +3,14 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SimpleDialog from "../components/simple-dialog";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import { useDeleteAgendaMutation } from "../services/endpoins";
+import { useUpdateAgendamentoStatusMutation } from "../services/endpoins";
 import Notify from "../components/notify";
 
 interface DeleteAgendaDialogProps {
   agendaId: number;
 }
+
+const CANCELED = 4;
 
 const DeleteSchedulingDialog = ({ agendaId }: DeleteAgendaDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -22,7 +24,7 @@ const DeleteSchedulingDialog = ({ agendaId }: DeleteAgendaDialogProps) => {
     severity: "success",
   });
   const [excluirAgenda, { isLoading: isExcluirAgendaLoading }] =
-    useDeleteAgendaMutation();
+    useUpdateAgendamentoStatusMutation();
 
   const toggleDialog = () => setIsDialogOpen((state) => !state);
   const toggleNotifyDeleteMessage = () =>
@@ -30,7 +32,7 @@ const DeleteSchedulingDialog = ({ agendaId }: DeleteAgendaDialogProps) => {
 
   const onClick = async () => {
     try {
-      await excluirAgenda(agendaId).unwrap();
+      await excluirAgenda({ id: agendaId, id_status: CANCELED }).unwrap();
 
       setNotifyDeleteMessage({
         isOpen: true,
@@ -42,7 +44,7 @@ const DeleteSchedulingDialog = ({ agendaId }: DeleteAgendaDialogProps) => {
     } catch (error: any) {
       setNotifyDeleteMessage({
         isOpen: true,
-        message: error.data.message || "Ocorreu um erro ao criar o serviço.",
+        message: error.data.message || "Ocorreu um erro ao cancelar o serviço.",
         severity: "error",
       });
     }

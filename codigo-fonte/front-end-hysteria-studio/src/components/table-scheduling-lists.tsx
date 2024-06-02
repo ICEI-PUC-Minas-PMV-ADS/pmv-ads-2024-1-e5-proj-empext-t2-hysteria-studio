@@ -5,8 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Box, Typography } from "@mui/material";
 import EditSchedulingDialog from "../dialogs/edit-scheduling-dialog";
 import DeleteSchedulingDialog from "../dialogs/delete-scheduling-dialog";
 import {
@@ -19,6 +18,7 @@ import {
 } from "../services/endpoins";
 import { format } from "date-fns";
 import StatusChip from "./status-chip";
+import UpdateSchedulingDialog from "../dialogs/update-scheduling-status-dialog";
 
 interface TableListProps {
   listType: "scheduled" | "history" | "requests";
@@ -138,11 +138,7 @@ const TableSchedulingLists = ({ listType, data }: TableListProps) => {
                   {listType === "scheduled" ? (
                     <EditSchedulingDialog data={row} />
                   ) : (
-                    <Tooltip title="Confirmar" arrow>
-                      <IconButton color="success" size="small">
-                        <CheckCircleIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <UpdateSchedulingDialog agendaId={row.id_agendamento} />
                   )}
                   <DeleteSchedulingDialog agendaId={row.id_agendamento} />
                 </TableCell>
