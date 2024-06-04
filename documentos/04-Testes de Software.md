@@ -135,11 +135,11 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 | Desenvolvido por  |             Anderson             |
 |    Testado por    |              Amanda              |
 
-![Cadastro usuário](img/teste-cadastro-usuario.png)
+![Cadastro usuário](img/registros-frontend/teste-cadastro-usuario.png)
 
 | **Caso de Teste** | **CT-07.2 - Gerenciamento de Agendamentos - Excluir** |
 | :---------------: | :---------------------------------------------------: |
 | Desenvolvido por  |                       Stephanie                       |
 |    Testado por    |                        Amanda                         |
 
-![Cadastro usuário](img/teste-cancelamento-agendamento.png)
+![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
