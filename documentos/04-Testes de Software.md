@@ -130,16 +130,63 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 
 # Avaliação por pares
 
-| **Caso de Teste** | **CT-01 - Cadastro de usuários** |
-| :---------------: | :------------------------------: |
-| Desenvolvido por  |             Anderson             |
-|    Testado por    |              Amanda              |
+| **Caso de Teste** 	| **CT-01 - Cadastro de usuários, CT-02 - Efetuar login  CT-03 - Efetuar logout e CT-04 - Gerenciamento de conta** 	|
+|:---:	|:---:	|
+|	Desenvolvido por 	| Anderson |
+| Testado por 	| Amanda |
 
-![Cadastro usuário](img/registros-frontend/teste-cadastro-usuario.png)
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/df067469-d437-47a0-a9db-c5481ef21a03
+
+
+
+
+
+| **Caso de Teste** | **CT-05, CT-05.1,CT-05.2- Gerenciar Serviços - Cadastrar ,visualizar e Excluir** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Amanda                        |
+|    Testado por    |                       Marcus                        |
+
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/575387a2-ca03-4af1-9b81-a2bd802a782d
+
+
+
+| **Caso de Teste** | **CT-06 - Administrar Histórico de Agendamentos - Visualizar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Patrick                       |
+|    Testado por    |                       Luiz                        |
+
+
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/210359e1-7ba7-4816-a331-6f4bb494190c
+
+
+
+| **Caso de Teste** | **CT-07 - Gerenciamento de Agendamentos - Cadastrar e visualizar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Luiz                       |
+|    Testado por    |                      Patrick                         |
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/4ae54285-774c-408a-b975-95aae619b156
+
+
+
+
+| **Caso de Teste** | **CT-07.1 - Gerenciamento de Agendamentos - Editar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Marcus                       |
+|    Testado por    |                      Anderson                         |
+
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/130176cb-5f7f-4b30-b4c4-70972b5452da
+
+
+
 
 | **Caso de Teste** | **CT-07.2 - Gerenciamento de Agendamentos - Excluir** |
 | :---------------: | :---------------------------------------------------: |
-| Desenvolvido por  |                       Stephanie                       |
-|    Testado por    |                        Amanda                         |
+| Desenvolvido por  |                      Stephanie                       |
+|    Testado por    |                      Amanda                         |
 
-![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/07e4ddfe-7887-46af-9162-d517b51f2b5f
+
