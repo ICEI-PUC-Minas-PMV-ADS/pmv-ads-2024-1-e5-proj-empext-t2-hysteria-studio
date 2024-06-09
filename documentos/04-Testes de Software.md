@@ -130,16 +130,46 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 
 # Avaliação por pares
 
-| **Caso de Teste** | **CT-01 - Cadastro de usuários** |
-| :---------------: | :------------------------------: |
-| Desenvolvido por  |             Anderson             |
-|    Testado por    |              Amanda              |
+| **Caso de Teste** 	| **CT-01 - Cadastro de usuários, CT-02 - Efetuar login  CT-03 - Efetuar logout e CT-04 - Gerenciamento de conta** 	|
+|:---:	|:---:	|
+|	Desenvolvido por 	| Anderson |
+| Testado por 	| Amanda |
+
 
 ![Cadastro usuário](img/registros-frontend/teste-cadastro-usuario.png)
 
+| **Caso de Teste** | **CT-05, CT-05.1,CT-05.2- Gerenciar Serviços - Cadastrar ,visualizar e Excluir** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Amanda                        |
+|    Testado por    |                       Marcus                        |
+
+![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+
+| **Caso de Teste** | **CT-06 - Administrar Histórico de Agendamentos - Visualizar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Patrick                       |
+|    Testado por    |                       Luiz                        |
+
+![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+
+| **Caso de Teste** | **CT-07 - Gerenciamento de Agendamentos - Cadastrar e visualizar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Luiz                       |
+|    Testado por    |                      Patrick                         |
+
+![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+
+| **Caso de Teste** | **CT-07.1 - Gerenciamento de Agendamentos - Editar** |
+| :---------------: | :---------------------------------------------------: |
+| Desenvolvido por  |                       Marcus                       |
+|    Testado por    |                      Patrick                         |
+
+![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+
+
 | **Caso de Teste** | **CT-07.2 - Gerenciamento de Agendamentos - Excluir** |
 | :---------------: | :---------------------------------------------------: |
-| Desenvolvido por  |                       Stephanie                       |
-|    Testado por    |                        Amanda                         |
+| Desenvolvido por  |                      Stephanie                       |
+|    Testado por    |                      Amanda                         |
 
 ![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
