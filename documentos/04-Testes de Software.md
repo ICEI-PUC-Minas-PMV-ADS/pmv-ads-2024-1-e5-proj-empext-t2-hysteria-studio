@@ -158,7 +158,7 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 
 
 
-![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/210359e1-7ba7-4816-a331-6f4bb494190c
 
 
 
@@ -167,14 +167,20 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 | Desenvolvido por  |                       Luiz                       |
 |    Testado por    |                      Patrick                         |
 
-![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/4ae54285-774c-408a-b975-95aae619b156
+
+
+
 
 | **Caso de Teste** | **CT-07.1 - Gerenciamento de Agendamentos - Editar** |
 | :---------------: | :---------------------------------------------------: |
 | Desenvolvido por  |                       Marcus                       |
-|    Testado por    |                      Patrick                         |
+|    Testado por    |                      Anderson                         |
 
-![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/130176cb-5f7f-4b30-b4c4-70972b5452da
+
+
 
 
 | **Caso de Teste** | **CT-07.2 - Gerenciamento de Agendamentos - Excluir** |
@@ -182,4 +188,5 @@ https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hyste
 | Desenvolvido por  |                      Stephanie                       |
 |    Testado por    |                      Amanda                         |
 
-![Cadastro usuário](img/registros-frontend/teste-cancelamento-agendamento.png)
+https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio/assets/97108151/07e4ddfe-7887-46af-9162-d517b51f2b5f
+
