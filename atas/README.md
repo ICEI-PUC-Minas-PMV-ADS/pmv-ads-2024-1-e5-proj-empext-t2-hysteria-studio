@@ -17,3 +17,7 @@
 ### Reunião Etapa 3
 
 <a href="./Reunião Etapa 3/ADS - Ata de Reunião 3.pdf">Ata Etapa 3</a>
+
+### Reunião Etapa 4
+
+<a href="./Reunião Etapa 4/ADS - Ata Reunião 4.pdf">Ata Etapa 4</a>
