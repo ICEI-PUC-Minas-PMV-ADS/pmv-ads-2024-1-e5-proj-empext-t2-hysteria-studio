@@ -41,7 +41,7 @@ const InitialPage = () => {
             sx={{ width: { xs: "100%", sm: "70%" } }}
           >
             <img
-              src="../../public/logo-branca-completa.png"
+              src="/logo-branca-completa.png"
               style={{
                 width: "80%",
                 height: "auto",
