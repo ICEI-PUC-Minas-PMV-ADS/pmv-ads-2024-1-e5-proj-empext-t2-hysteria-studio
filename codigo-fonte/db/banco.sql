@@ -1,35 +1,70 @@
-CREATE TABLE `usuario` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `cpf` varchar(20) NOT NULL,
-  `data_de_nascimento` timestamp NOT NULL,
-  `telefone` varchar(20) NOT NULL,
-  `endereco` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `flag_maior_idade` int NOT NULL,
-  `responsavel` varchar(100),
-  `login` varchar(20) NOT NULL,
-  `senha` varchar(20) NOT NULL,
-  `flag_admin` int NOT NULL,
-  `dt_criacao` timestamp NOT NULL DEFAULT (CURRENT_TIMESTAMP)
+CREATE TABLE `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `cpf` varchar(255) NOT NULL,
+  `data_de_nascimento` datetime NOT NULL,
+  `telefone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `flag_admin` tinyint(1) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `servico` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) NOT NULL,
-  `preco` decimal(4,2) NOT NULL,
-  `descricao` varchar(255),
-  `dt_criacao` timestamp NOT NULL DEFAULT (CURRENT_TIMESTAMP)
+CREATE TABLE `usuarios_inexistentes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `status_agendamentos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status_agendamento` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `servicos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `preco` varchar(255) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `horarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `horario_disponivel` datetime NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `agendamentos` (
-  `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL,
   `id_servico` int NOT NULL,
-  `data_hora_atendimento` timestamp NOT NULL,
-  `dt_criacao` timestamp NOT NULL DEFAULT (CURRENT_TIMESTAMP)
+  `id_horario` int NOT NULL,
+  `id_status` int NOT NULL,
+  `id_usuarioInexistente` int NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `id_servico` (`id_servico`),
+  KEY `id_horario` (`id_horario`),
+  KEY `id_status` (`id_status`),
+  KEY `id_usuarioInexistente` (`id_usuarioInexistente`),
+  CONSTRAINT `agendamentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `agendamentos_ibfk_2` FOREIGN KEY (`id_servico`) REFERENCES `servicos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `agendamentos_ibfk_3` FOREIGN KEY (`id_horario`) REFERENCES `horarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `agendamentos_ibfk_4` FOREIGN KEY (`id_status`) REFERENCES `status_agendamentos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `agendamentos_ibfk_5` FOREIGN KEY (`id_usuarioInexistente`) REFERENCES `usuarios_inexistentes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE `usuario` ADD CONSTRAINT `FK_usuario` FOREIGN KEY (`id`) REFERENCES `agendamentos` (`id_usuario`);
-
-ALTER TABLE `servico` ADD CONSTRAINT `FK_servico` FOREIGN KEY (`id`) REFERENCES `agendamentos` (`id_servico`);

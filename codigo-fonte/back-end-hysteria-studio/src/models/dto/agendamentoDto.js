@@ -1,9 +1,11 @@
 class AgendamentoDto {
-    constructor(idAgendamento, data_hora_atendimento, servicoResumidoDto, usuarioResumidoDto) {
+    constructor(idAgendamento, dataHoraAtendimento, servicoResumidoDto, usuarioResumidoDto, statusAgendamento, usuarioInexistente) {
         this.id_agendamento = idAgendamento;
-        this.data_hora_atendimento = data_hora_atendimento;
+        this.horario_agendamento = dataHoraAtendimento;
         this.servico = servicoResumidoDto;
-        this.usuario = usuarioResumidoDto;
+        if(usuarioResumidoDto.id != -1) this.usuario = usuarioResumidoDto;
+        this.status = statusAgendamento;
+        if(usuarioInexistente.id != -1) this.usuario_inexistente = usuarioInexistente;
     }
 }
 

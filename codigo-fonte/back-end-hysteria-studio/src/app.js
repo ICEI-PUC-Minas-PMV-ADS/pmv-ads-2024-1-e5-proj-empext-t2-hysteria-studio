@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const servicosRoutes = require('./routes/servicos.js');
-const agendamentos = require('./routes/agendamento.js');
-const usuarios = require('./routes/usuario.js');
-const login = require('./routes/login.js');
+const servicosRoutes = require('./routes/servicosRoute.js');
+const agendamentos = require('./routes/agendamentoRoute.js');
+const usuarios = require('./routes/usuarioRoute.js');
+const horarios = require('./routes/horarioRoute.js');
+const login = require('./routes/loginRoute.js');
 const cors = require('cors');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use('/', servicosRoutes);
 app.use('/', agendamentos)
 app.use('/', usuarios)
 app.use('/', login)
+app.use('/', horarios)
 
 app.get('/', (req, res)=>{
     res.json("Hysteria Studio - API");

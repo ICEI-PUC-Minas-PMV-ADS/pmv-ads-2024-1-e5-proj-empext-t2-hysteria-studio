@@ -1,19 +1,15 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config_db/database");
 
-const Servico = sequelize.define("servicos", {
+const UsuarioSemRegistro = sequelize.define("usuarios_inexistentes", {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  preco: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  descricao: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+  }
 });
 
-module.exports = Servico;
+module.exports = UsuarioSemRegistro;

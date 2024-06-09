@@ -4,6 +4,7 @@ const Usuario = require('../models/usuariosModel');
 async function buscarUsuarios(req, res) {
   try {
     const usuarios = await Usuario.findAll();
+    usuarios.shift()
     res.json(usuarios);
   } catch (error) {
     res.status(500).json({ error: error.message });
