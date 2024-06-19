@@ -31,7 +31,7 @@ interface SchedulingFormValues {
 }
 
 const NewSchedulingDialog = () => {
-  const { isAdmin } = useContext(AuthContext);
+  const { user, isAdmin } = useContext(AuthContext);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [otherClientToggle, setOtherClientToggle] = useState(false);
   const [notifyCreateMessage, setNotifyCreateMessage] = useState<{
@@ -68,7 +68,7 @@ const NewSchedulingDialog = () => {
       await createAgendamento({
         id_horario: Number(values.time),
         id_servico: Number(values.service),
-        id_usuario: Number(values.id),
+        id_usuario: isAdmin ? Number(values.id) : user?.id,
         nome: values.name,
         email: values.email,
       }).unwrap();
@@ -76,7 +76,7 @@ const NewSchedulingDialog = () => {
       toggleDialog();
       setNotifyCreateMessage({
         isOpen: true,
-        message: "Serviço criado com sucesso.",
+        message: "Agendamento criado com sucesso.",
         severity: "success",
       });
     } catch (error: any) {

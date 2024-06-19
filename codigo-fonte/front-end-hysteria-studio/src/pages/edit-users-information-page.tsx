@@ -29,6 +29,7 @@ interface EditUsersInformationFormValues {
   birthdate: string;
   telephone: string;
   email: string;
+  password: string;
 }
 
 const EditUsersInformationPage = () => {
@@ -54,6 +55,7 @@ const EditUsersInformationPage = () => {
       birthdate: user?.data_de_nascimento.slice(0, 10) || "",
       telephone: user?.telefone || "",
       email: user?.email || "",
+      password: user?.senha || "",
     },
   });
   const {
@@ -70,6 +72,7 @@ const EditUsersInformationPage = () => {
         data_de_nascimento: values.birthdate,
         telefone: onlyNumbers(values.telephone),
         email: values.email,
+        senha: values.password,
       } as EditUsuarioParams).unwrap();
 
       signIn(newInfo);
@@ -208,10 +211,25 @@ const EditUsersInformationPage = () => {
                     }
                     disabled={isSubmitting}
                   />
+                  <TextField
+                    required
+                    margin="normal"
+                    fullWidth
+                    id="password"
+                    label="Senha"
+                    autoComplete="password"
+                    {...register("password", {
+                      required: "Campo obrigatório",
+                    })}
+                    error={!!errors.password}
+                    helperText={
+                      errors.password?.message ? errors.password.message : null
+                    }
+                    disabled={isSubmitting}
+                  />
                   <LoadingButton
                     fullWidth
                     type="submit"
-                    disabled={!isValid}
                     variant="contained"
                     loading={isSubmitting}
                   >
