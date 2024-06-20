@@ -15,12 +15,12 @@ authors:
     given-names: Stephanie
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: Soraia 
-    given-names: Lúcia da Silva
+    family-names: Lúcia da Silva
+    given-names: Soraia 
 keywords:
   - Gestão
   - Biblioteca
   - Livros
 repository-code: https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio
 version: 1.0.0
-date-released: 2024-06-24
+date-released: 2024-06-23
