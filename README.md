@@ -27,7 +27,7 @@ O projeto em desenvolvimento visa a criação de uma aplicação abrangente, con
 
 Clique aqui em _<a href="./codigo-fonte/back-end-hysteria-studio/README.md"> Back-end Hysteria Studio </a>_ contém o projeto e a documentação para iniciar a aplicação backend.
 
-#### FRONT-END WEB
+#### FRONT-END
 
 Clique aqui em _<a href="./codigo-fonte/front-end-hysteria-studio/README.md"> Front-end Hysteria Studio </a>_ contém o projeto e a documentação para iniciar a aplicação front-end.
 
