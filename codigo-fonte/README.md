@@ -8,4 +8,4 @@ Clique aqui em _<a href="./front-end-hysteria-studio/"> Front-end web Hysteria S
 
 # ESTRUTURA BANCO DE DADOS
 
-Clique aqui em _<a href="./db/"> Banco de Dados Hysteria Studio </a>_ contém a estrutura do banco de dados.
+Clique aqui em _<a href="./db/banco.sql"> Banco de Dados Hysteria Studio </a>_ contém a estrutura do banco de dados.
