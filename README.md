@@ -1,4 +1,4 @@
-# TÍTULO DO PROJETO
+# Systeria Studio
 
 `Análise e Desenvolvimento de Sistemas`
 
@@ -23,7 +23,13 @@ O projeto em desenvolvimento visa a criação de uma aplicação abrangente, con
 
 ## Instruções de utilização
 
-Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
+#### BACK-END
+
+Clique aqui em _<a href="./codigo-fonte/back-end-hysteria-studio"> Back-end Hysteria Studio </a>_ contém a documentação para iniciar a aplicação backend.
+
+#### FRONT-END WEB
+
+Clique aqui em _<a href="./codigo-fonte/front-end-hysteria-studio/"> Front-end web Hysteria Studio </a>_ contém a documentação para iniciar a aplicação front-end web.
 
 # Documentação
 
