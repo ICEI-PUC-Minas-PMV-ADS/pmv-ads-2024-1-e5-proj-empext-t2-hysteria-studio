@@ -1,9 +1,29 @@
 const Horario = require("../models/horarioModel")
 const moment = require('moment-timezone');
+const Agendamentos = require("../models/agendamentosModel");
+const { Op } = require('sequelize');
 
 async function buscarHorarios(req, res) {
     try {
-        const horarios = await Horario.findAll();
+        const agendamentos = await Agendamentos.findAll();
+
+        let idshorariosAgendamentos = []
+
+        for(agendamento of agendamentos){
+            idshorariosAgendamentos.push(agendamento.id_horario)
+        }
+
+        console.log(idshorariosAgendamentos)
+
+        const horarios = await Horario.findAll({
+            where: {
+              id: {
+                [Op.notIn]: idshorariosAgendamentos
+              }
+            },
+            order: [['horario_disponivel', 'ASC']]
+          });
+
         res.json(horarios);
     } catch (error) {
         res.status(500).json({ error: error.message });
