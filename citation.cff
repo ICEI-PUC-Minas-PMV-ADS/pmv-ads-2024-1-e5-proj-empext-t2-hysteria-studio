@@ -2,11 +2,11 @@ message: Please cite this software using these metadata.
 title: Hysteria Studio
 authors:
   - family-names: Eufrasio Cacholi
-    given-names: Amanda 
+    given-names: Amanda
   - family-names: Marques Rosa
     given-names: Anderson
   - family-names: Fernando Ribeiro Ferreira
-    given-names: Luiz 
+    given-names: Luiz
   - family-names: Vinicius Marinho Ferreira
     given-names: Marcus
   - family-names: Douglas dos Santos
@@ -16,11 +16,11 @@ authors:
   - name-suffix: Professor
     affiliation: PUC Minas
     family-names: Lúcia da Silva
-    given-names: Soraia 
+    given-names: Soraia
 keywords:
   - Gestão
-  - Biblioteca
-  - Livros
+  - Barbearia
+  - Agendamentos
 repository-code: https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2024-1-e5-proj-empext-t2-hysteria-studio
 version: 1.0.0
 date-released: 2024-06-23
