@@ -6,5 +6,5 @@
 
 ### Cliente Vinculado ao Projeto
 
-<a href="./pdf/Apresentacao_do_projeto.pdf">Apresentação detalhada do cliente e do projeto</a>
-<a href="./pdf/Apresentação Hysteria Studio - Mostra extensionista.pdf">Apresentação mostra extensionista</a>
+- <a href="./pdf/Apresentacao_do_projeto.pdf">Apresentação detalhada do cliente e do projeto</a>
+- <a href="./pdf/Apresentação Hysteria Studio - Mostra extensionista.pdf">Apresentação mostra extensionista</a>
