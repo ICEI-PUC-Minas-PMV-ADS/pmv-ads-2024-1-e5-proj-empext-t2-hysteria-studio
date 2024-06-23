@@ -1,4 +1,4 @@
-# Systeria Studio
+# Hysteria Studio
 
 `Análise e Desenvolvimento de Sistemas`
 
@@ -25,11 +25,11 @@ O projeto em desenvolvimento visa a criação de uma aplicação abrangente, con
 
 #### BACK-END
 
-Clique aqui em _<a href="./codigo-fonte/back-end-hysteria-studio"> Back-end Hysteria Studio </a>_ contém a documentação para iniciar a aplicação backend.
+Clique aqui em _<a href="./codigo-fonte/back-end-hysteria-studio/README.md"> Back-end Hysteria Studio </a>_ contém a documentação para iniciar a aplicação backend.
 
 #### FRONT-END WEB
 
-Clique aqui em _<a href="./codigo-fonte/front-end-hysteria-studio/"> Front-end web Hysteria Studio </a>_ contém a documentação para iniciar a aplicação front-end web.
+Clique aqui em _<a href="./codigo-fonte/front-end-hysteria-studio/README.md"> Front-end web Hysteria Studio </a>_ contém a documentação para iniciar a aplicação front-end web.
 
 # Documentação
 
