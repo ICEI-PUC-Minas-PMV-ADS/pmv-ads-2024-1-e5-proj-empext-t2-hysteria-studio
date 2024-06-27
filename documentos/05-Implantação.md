@@ -13,7 +13,7 @@ Agora, você pode acessá-la diretamente através do link fornecido.
 
 A aplicação BACK-END foi hospedada no [Render](https://dashboard.render.com/).
 
-O Banco de Dados utilizado na aplicação geral foi hospedada no [Railway](railway.app/).
+O Banco de Dados utilizado na aplicação geral foi hospedada no [Railway](https://railway.app/).
 
 Relacionamento das tabelas dentro da aplicação.
 
