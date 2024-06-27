@@ -1,6 +1,6 @@
 # Implantação do Software
 
-A aplicação FRONT-END foi hospedada no [Vercel](https://vercel.com/), garantindo alta performance e disponibilidade. 
+A aplicação FRONT-END foi feita em REACT hospedada no [Vercel](https://vercel.com/), garantindo alta performance e disponibilidade. 
 
 Agora, você pode acessá-la diretamente através do link fornecido.
 
@@ -11,9 +11,9 @@ Agora, você pode acessá-la diretamente através do link fornecido.
 ![Deploy Application](/documentos/img/application_deploy.jpeg)
 
 
-A aplicação BACK-END foi hospedada no [Render](https://dashboard.render.com/).
+A aplicação BACK-END foi feito em NODE hospedada no [Render](https://dashboard.render.com/).
 
-O Banco de Dados utilizado na aplicação geral foi hospedada no [Railway](https://railway.app/).
+O Banco de Dados utilizado na aplicação geral foi feito em MYSQL hospedada no [Railway](https://railway.app/).
 
 Relacionamento das tabelas dentro da aplicação.
 
